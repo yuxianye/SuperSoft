@@ -1,0 +1,29 @@
+﻿<Metro:MetroWindow xmlns:View="clr-namespace:SuperSoft.View.View;assembly=SuperSoft.View"
+                   x:Class="SuperSoft.App.MainWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                   xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"
+                   xmlns:local="clr-namespace:SuperSoft.App"
+                   Style="{DynamicResource CleanWindowStyleKey}"
+                   GlowBrush="{DynamicResource AccentColorBrush}"
+                   Fluent:RibbonProperties.TitleBarHeight="0"
+                   WindowState="Normal"
+                   WindowStartupLocation="CenterScreen"
+                   mc:Ignorable="d"
+                   Height="{DynamicResource MainWindowsMinHeight}"
+                   Width="{DynamicResource MainWindowsMinWidth}"
+                   MinHeight="{DynamicResource MainWindowsMinHeight}"
+                   MinWidth="{DynamicResource MainWindowsMinWidth}"
+                   Icon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo_White.png">
+    <Window.DataContext>
+        <Binding Path="MainViewModel"
+                 Source="{StaticResource   ResourceKey=Locator}"></Binding>
+    </Window.DataContext>
+    <Grid>
+        <View:MainView x:Name="mainView" />
+    </Grid>
+</Metro:MetroWindow>
+

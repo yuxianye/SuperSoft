@@ -1,0 +1,224 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    mc:Ignorable="options">
+    <!--CMYK-->
+    <!--100,50,50,0-->
+    <!--RGB-->
+    <!--0,105,121-->
+    <!--16 Hex-->
+    <!--006979-->
+
+    <!--CMYK-->
+    <!--100,0,60,0-->
+    <!--RGB-->
+    <!--0,157,133-->
+    <!--16 Hex-->
+    <!--009D85-->
+
+    <!--CMYK-->
+    <!--70,0,100,0-->
+    <!--RGB-->
+    <!--70,176,53-->
+    <!--16 Hex-->
+    <!--46B035-->
+
+    <!--CMYK-->
+    <!--100,10,100,0-->
+    <!--RGB-->
+    <!--0,145,,67-->
+    <!--16 Hex-->
+    <!--009143-->
+
+    <Color x:Key="RespircareColor1">#006979</Color>
+    <Color x:Key="RespircareColor2">#009D85</Color>
+    <Color x:Key="RespircareColor3">#46B035</Color>
+    <Color x:Key="RespircareColor4">#009143</Color>
+
+    <SolidColorBrush x:Key="RespircareColorBrush1"
+                     Color="{StaticResource RespircareColor1}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="RespircareColorBrush2"
+                     Color="{StaticResource RespircareColor2}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="RespircareColorBrush3"
+                     Color="{StaticResource RespircareColor3}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="RespircareColorBrush4"
+                     Color="{StaticResource RespircareColor4}"
+                     options:Freeze="True" />
+    <!--100%-->
+    <!--60%-->
+    <!--40%-->
+    <!--20%-->
+    <Color x:Key="AccentColor">#FF006979</Color>
+    <Color x:Key="AccentColor2">#99006979</Color>
+    <Color x:Key="AccentColor3">#66006979</Color>
+    <Color x:Key="AccentColor4">#33006979</Color>
+
+    <!--100%-->
+    <!--60%-->
+    <!--40%-->
+    <!--20%-->
+    <!--<Color x:Key="AccentColor">#FF009D85</Color>
+    <Color x:Key="AccentColor2">#99009D85</Color>
+    <Color x:Key="AccentColor3">#66009D85</Color>
+    <Color x:Key="AccentColor4">#33009D85</Color>-->
+
+    <!--100%-->
+    <!--60%-->
+    <!--40%-->
+    <!--20%-->
+    <!--<Color x:Key="AccentColor">#FF46B035</Color>
+    <Color x:Key="AccentColor2">#9946B035</Color>
+    <Color x:Key="AccentColor3">#6646B035</Color>
+    <Color x:Key="AccentColor4">#3346B035</Color>-->
+
+    <SolidColorBrush x:Key="AccentColorBrush"
+                     Color="{StaticResource AccentColor}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush2"
+                     Color="{StaticResource AccentColor2}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush3"
+                     Color="{StaticResource AccentColor3}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush4"
+                     Color="{StaticResource AccentColor4}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="WindowTitleColorBrush"
+                     Color="{StaticResource AccentColor}"
+                     options:Freeze="True" />
+
+    <!--RespircareColor:006979,009D85,46B035-->
+    <!--<Color x:Key="HighlightColor">#FF006979</Color>-->
+    <!--
+    <Color x:Key="HighlightColor">#FF009D85</Color>
+    -->
+    <!--<Color x:Key="HighlightColor">#FF46B035</Color>-->
+    <!--
+
+    <Color x:Key="AccentColor">#CC006979</Color>
+    -->
+    <!--<Color x:Key="AccentColor">#FF006979</Color>-->
+
+    <!--60%-->
+    <!--
+    <Color x:Key="AccentColor2">#99006979</Color>
+
+    -->
+    <!--40%-->
+    <!--
+    <Color x:Key="AccentColor3">#66006979</Color>
+
+    -->
+    <!--20%-->
+    <!--
+    <Color x:Key="AccentColor4">#33006979</Color>
+
+
+    <Color x:Key="RespircareColor1">#006979</Color>
+    <Color x:Key="RespircareColor2">#009D85</Color>
+    <Color x:Key="RespircareColor3">#46B035</Color>
+    -->
+    <!--blue-->
+    <!--
+    <Color x:Key="RespircareColor4">#0092D7</Color>
+    <Color x:Key="RespircareColor5">#009EFF</Color>
+    -->
+    <!--yellow-->
+    <!--
+    <Color x:Key="RespircareColor6">#F39803</Color>
+
+
+    <Color x:Key="Value1Color">#FF0172FF</Color>
+    <Color x:Key="Value2Color">#FFAD96FE</Color>
+    <Color x:Key="Value3Color">#FF707FFE</Color>
+    <SolidColorBrush x:Key="Value1ColorBrush" Color="{StaticResource Value1Color}" />
+    <SolidColorBrush x:Key="Value2ColorBrush" Color="{StaticResource Value2Color}" />
+    <SolidColorBrush x:Key="Value3ColorBrush" Color="{StaticResource Value3Color}" />
+
+
+    <SolidColorBrush x:Key="RespircareColorBrush4" Color="{StaticResource RespircareColor4}" />
+    <SolidColorBrush x:Key="RespircareColorBrush5" Color="{StaticResource RespircareColor5}" />
+    <SolidColorBrush x:Key="RespircareColorBrush6" Color="{StaticResource RespircareColor6}" />
+
+    -->
+    <!--<Color x:Key="AccentColor">#CC009D85</Color>
+    -->
+    <!--60%-->
+    <!--
+    <Color x:Key="AccentColor2">#99009D85</Color>
+    -->
+    <!--40%-->
+    <!--
+    <Color x:Key="AccentColor3">#66009D85</Color>
+    -->
+    <!--20%-->
+    <!--
+    <Color x:Key="AccentColor4">#33009D85</Color>-->
+
+    <!--<Color x:Key="AccentColor">#CC46B035</Color>
+    -->
+    <!--60%-->
+    <!--
+    <Color x:Key="AccentColor2">#9946B035</Color>
+    -->
+    <!--40%-->
+    <!--
+    <Color x:Key="AccentColor3">#6646B035</Color>
+    -->
+    <!--20%-->
+    <!--
+    <Color x:Key="AccentColor4">#3346B035</Color>-->
+
+    <!-- re-set brushes too -->
+    <!--
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="RespircareColorBrush1" Color="{StaticResource RespircareColor1}" options:Freeze="True" />
+    <SolidColorBrush x:Key="RespircareColorBrush2" Color="{StaticResource RespircareColor2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="RespircareColorBrush3" Color="{StaticResource RespircareColor3}" options:Freeze="True" />
+
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    -->
+    <!--<SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource RespircareColor1}" />-->
+    <!--
+
+
+    <LinearGradientBrush x:Key="ProgressBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5" options:Freeze="True">
+        <GradientStop Color="{StaticResource HighlightColor}" Offset="0" />
+        <GradientStop Color="{StaticResource AccentColor3}" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="CheckmarkFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="RightArrowFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
+
+    <Color x:Key="IdealForegroundColor">White</Color>
+    <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{StaticResource IdealForegroundColor}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="{StaticResource IdealForegroundColor}" Opacity="0.4"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="{StaticResource IdealForegroundColor}"
+                     options:Freeze="True" />
+
+    -->
+    <!-- DataGrid brushes -->
+    <!--
+    <SolidColorBrush x:Key="MetroDataGrid.HighlightBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.HighlightTextBrush" Color="{StaticResource IdealForegroundColor}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.MouseOverHighlightBrush" Color="{StaticResource AccentColor3}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.FocusBorderBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightBrush" Color="{StaticResource AccentColor2}"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightTextBrush"
+                     Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />-->
+
+</ResourceDictionary>

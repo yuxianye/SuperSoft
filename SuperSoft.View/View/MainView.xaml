@@ -1,0 +1,452 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.View.MainView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:Fluent="urn:fluent-ribbon"
+                    xmlns:local="clr-namespace:SuperSoft.View.View"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--tab菜单-->
+        <Fluent:Ribbon Grid.Row="0"
+                       AutomaticStateManagement="False"
+                       CanCustomizeQuickAccessToolBar="False">
+            <!--患者管理菜单-->
+            <Fluent:RibbonTabItem Header="{DynamicResource PatientManagement}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource PatientManagement}">
+                    <Fluent:Button Command="{Binding PatientAddCommand}"
+                                   Header="{DynamicResource NewCase}"
+                                   ToolTip="{DynamicResource NewCase}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Add_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientListCommand}"
+                                   Header="{DynamicResource CaseLibrary}"
+                                   ToolTip="{DynamicResource CaseLibrary}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/List_32x32.png" />
+                </Fluent:RibbonGroupBox>
+                <!--自动分析-->
+                <Fluent:RibbonGroupBox Header="{DynamicResource AutoAnalysis}">
+                    <Fluent:Button Command="{Binding RespiratoryEventAnalysisCommand}"
+                                   Header="{DynamicResource RespiratoryEventAnalysis}"
+                                   ToolTip="{DynamicResource RespiratoryEventAnalysis}"
+                                   IsEnabled="{Binding RespiratoryEventAnalysisCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Event_32x32.png" />
+                    <Fluent:Button Command="{Binding SnoreAnalysisCommand}"
+                                   Header="{DynamicResource SnoreAnalysis}"
+                                   ToolTip="{DynamicResource SnoreAnalysis}"
+                                   IsEnabled="{Binding SnoreAnalysisCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Microphone_32x32.png" />
+                </Fluent:RibbonGroupBox>
+                <!--趋势图-->
+                <!--<Fluent:RibbonGroupBox Header="{DynamicResource TrendChart}"
+                                       Visibility="Collapsed">
+                    <Fluent:Button Command="{Binding DeleteSelectedParameter}"
+                                   Header="{DynamicResource DeleteSelectedParameter}"
+                                   ToolTip="{DynamicResource DeleteSelectedParameter}"
+                                   IsEnabled="{Binding PatientAddCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Add_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientEditCommand}"
+                                   Header="{DynamicResource DeleteSpO2Parameter}"
+                                   ToolTip="{DynamicResource DeleteSpO2Parameter}"
+                                   IsEnabled="{Binding PatientEditCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Edit_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource DeleteHeartRateParameter}"
+                                   ToolTip="{DynamicResource DeleteHeartRateParameter}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource DeleteRespiratoryRateParameter}"
+                                   ToolTip="{DynamicResource DeleteRespiratoryRateParameter}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource Sleep}"
+                                   ToolTip="{DynamicResource Sleep}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
+                    <Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource Awake}"
+                                   ToolTip="{DynamicResource Awake}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
+
+                </Fluent:RibbonGroupBox>-->
+                <!--呼吸事件-->
+                <Fluent:RibbonGroupBox Header="{DynamicResource RespiratoryEvent}">
+                    <Fluent:Button Command="{Binding PreviousEventsCommand}"
+                                   Header="{DynamicResource PreviousEvents}"
+                                   ToolTip="{DynamicResource PreviousEvents}"
+                                   IsEnabled="{Binding PreviousEventsCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Previous_32x32.png" />
+                    <Fluent:Button Command="{Binding NextEventsCommand}"
+                                   Header="{DynamicResource NextEvents}"
+                                   ToolTip="{DynamicResource NextEvents}"
+                                   IsEnabled="{Binding NextEventsCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Next_32x32.png" />
+                    <!--<Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource CSA}"
+                                   ToolTip="{DynamicResource CSA}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />-->
+                    <!--<Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource MSA}"
+                                   ToolTip="{DynamicResource MSA}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />-->
+                </Fluent:RibbonGroupBox>
+                <!--图形缩放-->
+                <Fluent:RibbonGroupBox Header="{DynamicResource GraphZoom}"
+                                       IsEnabled="False">
+                    <Fluent:Button Command="{Binding GraphZoomInCommand}"
+                                   Header="{DynamicResource GraphZoomIn}"
+                                   ToolTip="{DynamicResource GraphZoomIn}"
+                                   IsEnabled="{Binding GraphZoomInCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/ZoomIn_32x32.png" />
+                    <Fluent:Button Command="{Binding GraphZoomOutCommand}"
+                                   Header="{DynamicResource GraphZoomOut}"
+                                   ToolTip="{DynamicResource GraphZoomOut}"
+                                   IsEnabled="{Binding GraphZoomOutCommandIsEnabled}"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/ZoomOut_32x32.png" />
+                    <!--<Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource CSA}"
+                                   ToolTip="{DynamicResource CSA}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />-->
+                    <!--<Fluent:Button Command="{Binding PatientDeleteCommand}"
+                                   Header="{DynamicResource MSA}"
+                                   ToolTip="{DynamicResource MSA}"
+                                   IsEnabled="{Binding PatientDeleteCommandIsEnabled }"
+                                   LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />-->
+
+                </Fluent:RibbonGroupBox>
+                <!--<Fluent:RibbonGroupBox Header="{DynamicResource PatientSearch}">
+                    <Fluent:ComboBox IsEditable="False"
+                                     SelectedIndex="0"
+                                     Width="{DynamicResource SearchControlWidth}"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding PatientSearchConditionList}"
+                                     DisplayMemberPath="Value"
+                                     SelectedValuePath="Key"
+                                     SelectedItem="{Binding SelectedSearchCondition}" />
+                    <Fluent:TextBox Width="{DynamicResource SearchControlWidth}"
+                                    Text="{Binding ConditionContain}" />
+                    <Fluent:ToggleButton Command="{Binding PatientSearchCommand}"
+                                         Header="{DynamicResource PatientSearch}"
+                                         ToolTip="{DynamicResource PatientSearch}"
+                                         GroupName="PatientManagement"
+                                         IsChecked="{Binding PatientSearchCommandIsChecked }"
+                                         IsEnabled="{Binding PatientSearchCommandIsEnabled }"
+                                         LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Search_32x32.png" />
+                </Fluent:RibbonGroupBox>-->
+                <!--<Fluent:RibbonGroupBox Header="{StaticResource TherapyData}">
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Header="{StaticResource Statistics}"
+                                         ToolTip="{StaticResource Statistics}"
+                                         Command="{Binding PatientStatisticsCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Statistics_32x32.png" />
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Header="{StaticResource Summary}"
+                                         ToolTip="{StaticResource Summary}"
+                                         Command="{Binding PatientSummaryCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Summary_32x32.png" />
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Header="{StaticResource Detailed}"
+                                         ToolTip="{StaticResource Detailed}"
+                                         Command="{Binding PatientDetailedCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Detailed_32x32.png" />
+                    -->
+                <!--<Fluent:ToggleButton GroupName="PatientManagement" Header="{StaticResource Prescription}" Command="{Binding PatientPrescriptionCommand}" LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Prescription_32x32.png"  />-->
+                <!--
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Header="{StaticResource ProductConfig}"
+                                         ToolTip="{StaticResource ProductConfig}"
+                                         Command="{Binding PatientProductConfigCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Settings3_32x32.png" />
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Header="{StaticResource StatisticsReport}"
+                                         ToolTip="{StaticResource StatisticsReport}"
+                                         Command="{Binding PatientStatisticsReportCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Report_32x32.png" />
+                </Fluent:RibbonGroupBox>-->
+                <!--<Fluent:RibbonGroupBox Header="{StaticResource PatientSearch}">
+                    <Fluent:ComboBox IsEditable="False"
+                                     SelectedIndex="0"
+                                     Width="{StaticResource SearchControlWidth}"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding PatientSearchConditionList}"
+                                     DisplayMemberPath="Value"
+                                     SelectedValuePath="Key"
+                                     SelectedItem="{Binding SelectedSearchCondition}" />
+                    <Fluent:TextBox Name="PatientSearchConditionContainTextBox1"
+                                    Width="{StaticResource SearchControlWidth}"
+                                    Text="{Binding ConditionContain}"
+                                    />
+                    <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Name="PatientSearchButton1"
+                                         IsChecked="{Binding ElementName=PatientSearchButton2, Path=IsChecked}"
+                                        
+                                         Header="{StaticResource PatientSearch}"
+                                         ToolTip="{StaticResource PatientSearch}"
+                                         Command="{Binding PatientSearchCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Search_32x32.png" />
+                </Fluent:RibbonGroupBox>-->
+            </Fluent:RibbonTabItem>
+            <!--医生管理菜单-->
+            <!--
+            <Fluent:RibbonTabItem Header="{StaticResource DoctorManagement}"
+                                  Selector.Selected="DoctorManagementRibbonTabItem_Selected">
+                <Fluent:RibbonGroupBox Header="{StaticResource DoctorManagement}">
+                    <Fluent:ToggleButton GroupName="DoctorManagement"
+                                         Name="doctorListButton"
+                                         Header="{StaticResource DoctorList}"
+                                         ToolTip="{StaticResource DoctorList}"
+                                         IsChecked="True"
+                                         Command="{Binding DoctorListCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/List_32x32.png" />
+                    <Fluent:ToggleButton GroupName="DoctorManagement"
+                                         Name="doctorListRefreshButton"
+                                         Header="{StaticResource Refresh}"
+                                         ToolTip="{StaticResource Refresh}"
+                                         IsChecked="True"
+                                         Command="{Binding DoctorListCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Refresh_32x32.png" />
+                    <Fluent:Button Header="{StaticResource Add}"
+                                   ToolTip="{StaticResource Add}"
+                                   Command="{Binding DoctorAddCommand}"
+                                   LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Add_32x32.png" />
+                    <Fluent:Button Header="{StaticResource Edit}"
+                                   ToolTip="{StaticResource Edit}"
+                                   Command="{Binding DoctorEditCommand}"
+                                   LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Edit_32x32.png" />
+                    <Fluent:Button Header="{StaticResource Delete}"
+                                   ToolTip="{StaticResource Delete}"
+                                   Command="{Binding DoctorDeleteCommand}"
+                                   LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Del_32x32.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="{StaticResource DoctorSearch}">
+                    <Fluent:ComboBox IsEditable="False"
+                                     SelectedIndex="0"
+                                     Width="{StaticResource SearchControlWidth}"
+                                     IsReadOnly="True"
+                                     ItemsSource="{Binding DoctorSearchConditionList}"
+                                     DisplayMemberPath="Value"
+                                     SelectedValuePath="Key"
+                                     SelectedItem="{Binding SelectedSearchConditionDoctor}" />
+                    <Fluent:TextBox Name="DoctorSearchConditionContainTextBox1"
+                                    Width="{StaticResource SearchControlWidth}"
+                                    Text="{Binding ConditionContainDoctor}"
+                                    KeyUp="DoctorSearchConditionContainTextBox1_KeyUp" />
+                    <Fluent:ToggleButton GroupName="DoctorManagement"
+                                         Name="DoctorSearchButton1"
+                                         KeyUp="DoctorSearchButton1_KeyUp"
+                                         Header="{StaticResource DoctorSearch}"
+                                         ToolTip="{StaticResource DoctorSearch}"
+                                         Command="{Binding DoctorSearchCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Search_32x32.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            -->
+            <!--下载菜单-->
+            <!--
+            <Fluent:RibbonTabItem Header="{StaticResource DownloadData}"
+                                  Selector.Selected="DownloadDataRibbonTabItem_Selected">
+                <Fluent:RibbonGroupBox Header="{StaticResource DownloadData}">
+                    <Fluent:ToggleButton GroupName="DownloadData"
+                                         Header="{StaticResource DownloadData}"
+                                         Visibility="Collapsed"
+                                         Name="downloadButton"
+                                         Command="{Binding DownloadCommand}"
+                                         LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Folder_32x32.png" />
+                    <Fluent:Button Header="{StaticResource Open}"
+                                   ToolTip="{StaticResource Open}"
+                                   Command="{Binding DownloadFormFileCommand}"
+                                   LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Folder_32x32.png" />
+                    <Fluent:Button Header="{StaticResource Import}"
+                                   ToolTip="{StaticResource Import}"
+                                   Command="{Binding DownloadFormSdCommand}"
+                                   LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Download3_32x32.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            -->
+            <!--报告菜单-->
+            <!--<Fluent:RibbonTabItem Header="{StaticResource BusinessReport}" Selector.Selected="BusinessReportRibbonTabItem_Selected">
+                 <Fluent:RibbonGroupBox Header="{StaticResource BusinessReport}">
+                 <Fluent:Button Header="{StaticResource PatientInfoReport}" Command="{Binding PatientInfoReportCommand}" LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Report_32x32.png"  />
+                 <Fluent:Button  Header="{StaticResource DoctorInfoReport}" Command="{Binding DoctorInfoReportCommand}"  LargeIcon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Report_32x32.png" />
+                 </Fluent:RibbonGroupBox>
+                 </Fluent:RibbonTabItem>-->
+            <!--设置菜单-->
+            <Fluent:RibbonTabItem Header="{DynamicResource SystemSettings}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource SystemSettings}">
+                    <!--<Fluent:ToggleButton  Command="{Binding SettingsCommand}"
+                                          Header="{DynamicResource SoftwareParameter}"
+                                          ToolTip="{DynamicResource SoftwareParameter}"
+                                          GroupName="SoftwareSettings"
+                                          IsChecked="{Binding SettingsCommandIsChecked }"
+                                          IsEnabled="{Binding SettingsCommandIsEnabled }"
+                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings2_32x32.png" />-->
+                    <Fluent:Button  Command="{Binding ChannelSettingsCommand}"
+                                    Header="{DynamicResource ChannelSettings}"
+                                    ToolTip="{DynamicResource ChannelSettings}"
+                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings3_32x32.png"
+                                    IsEnabled="False" />
+                    <Fluent:Button  Command="{Binding AutoAnalysisSettingsCommand}"
+                                    Header="{DynamicResource AutoAnalysisSettings}"
+                                    ToolTip="{DynamicResource AutoAnalysisSettings}"
+                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings2_32x32.png" />
+                    <Fluent:Button  Command="{Binding SwitchLanguageCommand}"
+                                    Header="{DynamicResource SwitchLanguage}"
+                                    ToolTip="{DynamicResource SwitchLanguage}"
+                                    IsEnabled="{Binding SwitchLanguageCommandIsEnabled }"
+                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Language_32x32.png" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <!--工具栏 患者搜索、帮助按钮-->
+
+            <Fluent:Ribbon.ToolBarItems>
+                <!--<StackPanel Visibility="{Binding DownloadDataProgressVisibility}"
+                            Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource DownloadProgress}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text=":"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding DownloadDataProgress,StringFormat={}{0:N0}%}"
+                               VerticalAlignment="Center" />
+                    <ProgressBar Width="{StaticResource ProgressBarWidth}"
+                                 Maximum="100"
+                                 Value="{Binding DownloadDataProgress}"
+                                 ToolTip="{Binding DownloadDataProgress}" />
+                </StackPanel>
+                <TextBlock Text="{DynamicResource PatientSearch}"
+                           VerticalAlignment="Center" />
+                <Fluent:ComboBox Width="{StaticResource SearchControlWidth}"
+                                 IsReadOnly="True"
+                                 IsEditable="False"
+                                 ItemsSource="{Binding PatientSearchConditionList}"
+                                 DisplayMemberPath="Value"
+                                 SelectedValuePath="Key"
+                                 SelectedItem="{Binding SelectedSearchCondition}" />
+                <TextBlock Text="{DynamicResource Contain}"
+                           VerticalAlignment="Center" />
+                <Fluent:TextBox Name="PatientSearchConditionContainTextBox2"
+                                Width="{StaticResource SearchControlWidth}"
+                                Text="{Binding ConditionContain}"
+                                KeyUp="PatientSearchConditionContainTextBox2_KeyUp" />
+                <Fluent:ToggleButton GroupName="PatientManagement"
+                                     Name="PatientSearchButton2"
+                                     Click="PatientSearchButton2_Click"
+                                     KeyUp="PatientSearchButton2_KeyUp"
+                                     Size="Middle"
+                                     ToolTip="{StaticResource PatientSearch}"
+                                     Command="{Binding PatientSearchCommand}"
+                                     Icon="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/Images/Search_32x32.png" />-->
+                <Fluent:Button Size="Small"
+                               Icon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Help_32x32.png"
+                               Command="{Binding HelpCommand}"
+                               ToolTip="{ DynamicResource  HelpCommandToolTip}">
+                </Fluent:Button>
+            </Fluent:Ribbon.ToolBarItems>
+        </Fluent:Ribbon>
+
+        <!--<TabControl>
+            <TabItem Header="患者管理">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content=" 123"></Button>
+                    <Separator Width=" 20"
+                               Background="Red"
+                               RenderTransformOrigin="0.5,0.5">
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform />
+                                <SkewTransform />
+                                <RotateTransform Angle="90" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
+                    
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 Command="{ Binding ChangeTitleCommand}"
+                                 Content="Add Patient Management">
+                    </RadioButton>
+                    -->
+        <!--<Separator></Separator>-->
+        <!--
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 IsEnabled="False"
+                                 Content="Edit Doctor Settings">
+                    </RadioButton>
+                    -->
+        <!--<Separator></Separator>-->
+        <!--
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 Content="Delete Patient Settings">
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 Content="xinz">
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 Content="xinz">
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource YxyRadioButton}"
+                                 Content="xinz">
+                    </RadioButton>
+                </StackPanel>
+            </TabItem>
+            <TabItem  Header="医生管理">
+                <StackPanel Orientation="Horizontal">
+                    <ToggleButton Content="fsdaf"></ToggleButton>
+                    <ToggleButton Content="fsdaf"></ToggleButton>
+                    <ToggleButton Content="fsdaf"></ToggleButton>
+                    <ToggleButton Content="fsdaf"></ToggleButton>
+                    <ToggleButton Content="fsdaf"></ToggleButton>
+                    <RadioButton Width="32"
+                                 Height="32"></RadioButton>
+                    <RadioButton Width="36"
+                                 Height="32"></RadioButton>
+                    <RadioButton Width="36"
+                                 Height="32"></RadioButton>
+                    <RadioButton Width="36"
+                                 Height="32"></RadioButton>
+                </StackPanel>
+            </TabItem>
+        </TabControl>-->
+
+        <!--右下角的公司图标-->
+        <Grid  Grid.Row="1"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               Width="746"
+               Height="110"
+               Margin=" 0,0,40,40"
+               Opacity="0.2"
+               Background="{StaticResource Logo-cn}">
+        </Grid>
+
+        <!--主区域内容-->
+        <UserControl  x:Name="mainCounten"
+                      Grid.Row="1"
+                      Focusable="False"
+                      Margin="2"
+                      Content="{Binding MainContent}" />
+
+        <!--<UserControl Grid.Row="1"
+                     Focusable="False">
+            <Grid Background="{StaticResource Logo}">
+            </Grid>
+            -->
+        <!--<Grid Background="AliceBlue">
+            </Grid>-->
+        <!--
+        </UserControl>-->
+
+    </Grid>
+</ss:UserControlBase>
