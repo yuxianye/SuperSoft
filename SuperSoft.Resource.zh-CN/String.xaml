@@ -255,6 +255,10 @@
     <sys:String x:Key="MilliSecForHalfMinutes">30秒</sys:String>
     <sys:String x:Key="MilliSecFor10Sec">10秒</sys:String>
 
+    <!--Help-->
+    <sys:String x:Key="HelpTitle">迈思患者管理系统-帮助</sys:String>
+    <sys:String x:Key="OpenHelpDocument">打开帮助文档/使用说明</sys:String>
+    <!--Help-->
     <!--<sys:String x:Key="DeleteSelectedParameter">删除所选参数</sys:String>
     <sys:String x:Key="DeleteSpO2Parameter">删除血氧</sys:String>
     <sys:String x:Key="DeleteHeartRateParameter">删除心率</sys:String>
@@ -479,8 +483,8 @@
     <!--Report-->
     <!--SoftwareSettings-->
 
-    <!--<sys:String x:Key="LanguageMessage">请选择显示语言，然后点击[确定]按钮.</sys:String>-->
-    <!--<sys:String x:Key="LanguageMessage1">语言设置完成后，重启软件生效。</sys:String>-->
+    <sys:String x:Key="LanguageMessage">请选择界面要显示语言，然后点击[确定]按钮.</sys:String>
+    <sys:String x:Key="LanguageMessage1">点击[确定]按钮将立即切换界面语言.</sys:String>
     <!--SoftwareSettings-->
     <!--Help-->
     <!--<sys:String x:Key="HelpTitle">迈思患者管理系统-帮助</sys:String>

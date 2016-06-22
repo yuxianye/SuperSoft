@@ -18,7 +18,7 @@ namespace SuperSoft.View.ViewModel
         {
             LangList = new ObservableCollection<KeyValuePair<string, string>>();
             LangList.Add(new KeyValuePair<string, string>(@"zh-CN", @"中文"));
-            //LangList.Add(new KeyValuePair<string, string>("en-US", "English"));
+            LangList.Add(new KeyValuePair<string, string>("en-US", "English"));
 
             loadConfigValue();
             ConfirmCommand = new RelayCommand(OnExecuteConfirmCommand, OnCanExecuteConfirmCommand);
@@ -79,12 +79,14 @@ namespace SuperSoft.View.ViewModel
 
         private bool OnCanExecuteConfirmCommand()
         {
-            //只有中文
-            //if (LangList != null && LangList.Count() > 0)
-            //{
-            //    return true;
-            //}
-            return false;
+            if (LangList != null && LangList.Count() > 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion

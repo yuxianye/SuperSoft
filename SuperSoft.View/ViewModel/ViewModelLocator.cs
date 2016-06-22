@@ -54,6 +54,8 @@ namespace SuperSoft.View.ViewModel
 
 
             SimpleIoc.Default.Register<SwitchLanguageViewModel>();
+            SimpleIoc.Default.Register<HelpViewModel>();
+
             SimpleIoc.Default.Register<AutoAnalysisSettingsViewModel>();
             SimpleIoc.Default.Register<ChannelSettingsViewModel>();
 
@@ -113,6 +115,14 @@ namespace SuperSoft.View.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<SwitchLanguageViewModel>();
+            }
+        }
+
+        public HelpViewModel HelpViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<HelpViewModel>();
             }
         }
 

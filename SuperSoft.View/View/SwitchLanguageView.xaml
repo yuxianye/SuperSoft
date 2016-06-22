@@ -1,0 +1,73 @@
+﻿<ss:UserControlBase  x:Class="SuperSoft.View.View.SwitchLanguageView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:ss="clr-namespace:SuperSoft.View"
+                     xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     mc:Ignorable="d"
+                     Tag="{DynamicResource SwitchLanguage}"
+                     Width="{DynamicResource PopupWinodwsWidth}"
+                     Height="{DynamicResource PopupWinodwsHeight}"
+                     d:DesignHeight="300"
+                     d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="SwitchLanguageViewModel"
+                 Source="{StaticResource   ResourceKey=Locator}"></Binding>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource PopupWinodwsContentHeight}" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{DynamicResource PopupWinodwsColumn3Width1}" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="{DynamicResource PopupWinodwsColumn3Width1}" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3"
+                       Text="{DynamicResource LanguageMessage}"
+                       Style="{DynamicResource TextBlockDefaultStyle}" />
+            <ListBox Grid.Row="1"
+                     Grid.Column="1"
+                     ItemsSource="{Binding LangList}"
+                     SelectedItem="{Binding SelectItem, Mode=TwoWay}"
+                     DisplayMemberPath="Value"
+                     SelectedValuePath="Key"
+                     BorderThickness=" 1"
+                     BorderBrush="{DynamicResource ControlBorderBrush}" />
+            <TextBlock Grid.Row="2"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="3"
+                       Text="{DynamicResource LanguageMessage}"
+                       Style="{DynamicResource TextBlockDefaultStyle}" />
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Confirm}"
+                    Command="{Binding ConfirmCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+            <Button Grid.Column="1"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Cancel}"
+                    Command="{Binding CancelCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+        </Grid>
+    </Grid>
+</ss:UserControlBase>

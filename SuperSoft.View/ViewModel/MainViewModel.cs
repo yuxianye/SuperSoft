@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using SuperSoft.Model;
 using SuperSoft.View.View;
 using SuperSoft.View;
+using System.Windows.Media.Imaging;
 
 namespace SuperSoft.View.ViewModel
 {
@@ -165,7 +166,7 @@ namespace SuperSoft.View.ViewModel
                     MainContent = view;
                     break;
 
-                case ViewType.SingleWindow://单个视图
+                case ViewType.SingleWindow://单个视图。主要为了显示帮助窗口
                     MahApps.Metro.Controls.MetroWindow singleWindows = new MahApps.Metro.Controls.MetroWindow();
                     singleWindows.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     //popupWindows.Style = Utility.ResourceHelper.FindResource("CleanWindowStyleKey") as Style;
@@ -176,11 +177,15 @@ namespace SuperSoft.View.ViewModel
                     singleWindows.SetBinding(MahApps.Metro.Controls.MetroWindow.HeightProperty, new Binding(@"Height") { Source = view });
                     singleWindows.Content = view;
                     singleWindows.ResizeMode = ResizeMode.NoResize;
-                    singleWindows.IsCloseButtonEnabled = false;
-                    singleWindows.ShowCloseButton = false;
-                    //popupWindows.Owner = Application.Current.MainWindow;
+                    //singleWindows.ShowIconOnTitleBar = true;
+                    singleWindows.Icon = new BitmapImage(new Uri("pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo_White.png", UriKind.Absolute));
+                    //singleWindows.Icon = Utility.Windows.ResourceHelper.FindResource("pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo_White.png");
+                    //singleWindows.IsCloseButtonEnabled = true;
+                    //singleWindows.ShowCloseButton = true;
+                    //singleWindows.Owner = Application.Current.MainWindow;
+                    singleWindows.Topmost = true;
+                    singleWindows.Show();
                     singleWindows.Focus();
-                    singleWindows.ShowDialog();
                     break;
             }
         }
@@ -911,7 +916,7 @@ namespace SuperSoft.View.ViewModel
         /// </summary>
         private void OnExecuteHelpCommand()
         {
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.SwitchLanguageView, ViewType.Popup), Model.MessengerToken.Navigate);
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.HelpView, ViewType.SingleWindow), Model.MessengerToken.Navigate);
         }
 
         #endregion

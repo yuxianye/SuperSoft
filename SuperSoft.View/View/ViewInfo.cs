@@ -41,7 +41,7 @@ namespace SuperSoft.View.View
         //DownloadView,
         //SettingsView,
         SwitchLanguageView,
-        //HelpView
+        HelpView
     }
 
     /// <summary>

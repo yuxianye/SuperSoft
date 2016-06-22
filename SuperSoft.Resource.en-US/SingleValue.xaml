@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sysWin="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--主窗体最小尺寸-->
+    <!--<sys:Double x:Key="MainWindowsMinWidth">1366</sys:Double>
+    <sys:Double x:Key="MainWindowsMinHeight">739</sys:Double>
+
+    <sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>-->
+    <sys:Double x:Key="SearchControlWidth">150</sys:Double>
+
+    <!--<sys:Double x:Key="PopupWinodwsWidth">600</sys:Double>
+    <sys:Double x:Key="PopupWinodwsHeight">600</sys:Double>
+    <sys:Double x:Key="PopupWinodwsHeight3">170</sys:Double>
+    <sysWin:GridLength x:Key="PopupWinodwsColumnWidth">102</sysWin:GridLength>
+    
+    
+    <sys:Double x:Key="ContentFontSize">14</sys:Double>
+    <sys:Double x:Key="ContentFontSizeMin">11</sys:Double>
+    <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
+    <Thickness x:Key="ControlMargin2">5 0 0 0</Thickness>
+    <Thickness x:Key="ControlMargin3">5</Thickness>
+    <Thickness x:Key="ControlMargin4">0 5 5 0</Thickness>
+    <Thickness x:Key="ControlMargin5">5 5 5 0</Thickness>
+    <Thickness x:Key="ControlMargin6">5 5 0 0</Thickness>
+    <sys:Double x:Key="ProgressBarWidth">200</sys:Double>
+    <sys:Double x:Key="DefaultButtonWidth">100</sys:Double>
+    <sys:Int32 x:Key="OneStackedColumnWidth">21</sys:Int32>
+    <sys:Double x:Key="OneStackedColumnHeight">150</sys:Double>
+    <sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>
+    <sysWin:GridLength x:Key="LengedPanelWidth">90</sysWin:GridLength>
+    <sysWin:GridLength x:Key="AxesYPanelWidth">30</sysWin:GridLength>
+    <sys:Double x:Key="AxesXHeight">40</sys:Double>
+    <sys:Double x:Key="AxesXHeight2">26</sys:Double>
+    <sys:Double x:Key="AxesXFontSize">10</sys:Double>
+    <sys:Double x:Key="AxesXFontSize1">9.5</sys:Double>
+    <sys:Double x:Key="SearchControlWidth">140</sys:Double>
+    -->
+    <!--1000*60*60-->
+    <!--
+    <sys:Int32 x:Key="OneHourTotalMilliseconds">3600000</sys:Int32>
+    -->
+    <!--1000*60*60*24-->
+    <!--
+    <sys:Double x:Key="OneDayTotalMilliseconds">86400000</sys:Double>
+
+    <sys:Double x:Key="MenuWidth">48</sys:Double>
+    <sys:Double x:Key="MenuHeight">64</sys:Double>-->
+
+</ResourceDictionary>
