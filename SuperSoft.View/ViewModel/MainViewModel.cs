@@ -243,7 +243,7 @@ namespace SuperSoft.View.ViewModel
         #region 主区域内容，默认为PatientListView（除了上部菜单之外的其他主要内容）
 
         //默认页面为患者列表
-        private UserControlBase mainContent;//= new PatientListView();
+        private UserControlBase mainContent= new PatientListView();
 
         /// <summary>
         /// 主区域内容

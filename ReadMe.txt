@@ -18,14 +18,21 @@ SuperSoft解决方案介绍
 						PatientListView		患者列表视图
 						xxxView				xx视图
 			ViewModel	页面相关的ViewModel
-						MainViewModel			主视图的处理逻辑
-						MyViewModelBase			继承自 GalaSoft.MvvmLight ViewModelBase 和 IDisposable,用于传递Parameter参数
-						Token					令牌定义
-						ViewModelLocator		ViewModel定位程序
-						PatientListViewModel	患者列表业务处理逻辑
-						xxxViewModel			xxx业务处理逻辑
-	SuperSoft.Resource							资源文件夹（在APP中根据配置文件加载不同语言的资源，资源包括界面文字、控件布局、控件样式等）
-			SuperSoft.Resource					通用的资源，不分语言，用于存储图形、图片等，使用StaticResource绑定，如需动态改变图片，在相应的语言资源中覆盖key值，然后使用DynamicResource绑定
+						MainViewModel							主视图的处理逻辑
+						MyViewModelBase							继承自 GalaSoft.MvvmLight ViewModelBase 和 IDisposable,用于传递Parameter参数
+						Token									令牌定义
+						ViewModelLocator						ViewModel定位程序
+						PatientListViewModel					患者列表业务处理逻辑
+						xxxViewModel							xxx业务处理逻辑
+	SuperSoft.Resource											资源文件夹（在APP中根据配置文件加载不同语言的资源，资源包括界面文字、控件布局、控件样式等）
+			SuperSoft.Resource.Default							通用的资源，不分语言，用于存储图形、图片等，使用StaticResource绑定
+										Images					图像
+											Images.cdr			图像的CorelDRAW源文件
+											Add_32x32.png		图像32x32像素
+										ColorBrush.xaml			颜色相关资源
+										DefaultResources.xaml	资源总引用入口
+										SharpBrush.xaml			形状资源
+										SingleValue.xaml		单个的值资源，例如控件宽度等
 			SuperSoft.Resource.en-US			英文相关的资源，使用DynamicResource绑定，切换语言时动态改变
 			SuperSoft.Resource.zh-CN			中文相关的资源，使用DynamicResource绑定，切换语言时动态改变
 			SuperSoft.Resource.xx-xx			xx文相关的资源(扩展多语言)

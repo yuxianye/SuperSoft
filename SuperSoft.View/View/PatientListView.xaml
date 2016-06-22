@@ -1,4 +1,4 @@
-﻿<ss:UserControlBase x:Class="SuperSoft.View.View.HelpView"
+﻿<ss:UserControlBase x:Class="SuperSoft.View.View.PatientListView"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,14 +7,8 @@
                     xmlns:ss="clr-namespace:SuperSoft.View"
                     mc:Ignorable="d"
                     d:DesignHeight="300"
-                    d:DesignWidth="300"
-                    Tag="{DynamicResource HelpView_HelpTitle}">
-    <UserControl.DataContext>
-        <Binding Path="HelpViewModel"
-                 Source="{StaticResource ResourceKey=Locator}"></Binding>
-    </UserControl.DataContext>
+                    d:DesignWidth="300">
     <Grid>
-        <DocumentViewer x:Name="documentViewer"
-                        Document="{Binding HelpDocument}" />
+<CheckBox />
     </Grid>
 </ss:UserControlBase>

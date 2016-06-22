@@ -101,6 +101,9 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuInfo.cs" />
+    <Compile Include="View\PatientListView.xaml.cs">
+      <DependentUpon>PatientListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SwitchLanguageView.xaml.cs">
       <DependentUpon>SwitchLanguageView.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PatientListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

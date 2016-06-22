@@ -22,7 +22,7 @@
 
         <!--优先级比其他语言的低，如果其他语言资源有相同的值那么使用其他语言的设置值-->
         <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.Default;component/ColorBrush.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.Default;component/SharpBrush.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.Default;component/ShapeBrush.xaml" />
         <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.Default;component/SingleValue.xaml" />
 
     </ResourceDictionary.MergedDictionaries>

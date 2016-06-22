@@ -18,10 +18,6 @@
                    MinHeight="{DynamicResource MainWindowsMinHeight}"
                    MinWidth="{DynamicResource MainWindowsMinWidth}"
                    Icon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo_White.png">
-    <Window.DataContext>
-        <Binding Path="MainViewModel"
-                 Source="{StaticResource   ResourceKey=Locator}"></Binding>
-    </Window.DataContext>
     <Grid>
         <View:MainView x:Name="mainView" />
     </Grid>

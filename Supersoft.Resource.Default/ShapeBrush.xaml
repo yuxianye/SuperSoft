@@ -9,4 +9,5 @@
     <ImageBrush x:Key="Logo-cn"
                 Stretch="Uniform"
                 ImageSource="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo-cn.png" />
+
 </ResourceDictionary>

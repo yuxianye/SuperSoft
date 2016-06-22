@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sysWin="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--MainView-->
+    <sys:Double x:Key="PatientSearchControlWidth">140</sys:Double>
+    <sys:Double x:Key="DoctorSearchControlWidth">140</sys:Double>
+
     <!--主窗体最小尺寸-->
     <!--<sys:Double x:Key="MainWindowsMinWidth">1366</sys:Double>
     <sys:Double x:Key="MainWindowsMinHeight">739</sys:Double>

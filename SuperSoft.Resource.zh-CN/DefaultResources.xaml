@@ -28,27 +28,27 @@
         <!--
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/ColorBrush.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/ColorBrush.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/SharpBrush.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/SharpBrush.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/SingleValue.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/SingleValue.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/String.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/String.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/TextBlock.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/TextBlock.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/TextBox.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/TextBox.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/ComboBox.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/ComboBox.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/CheckBox.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/CheckBox.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/DatePicker.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/DatePicker.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/VisifireCharts.xaml" />
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/VisifireCharts.xaml" />
         <ResourceDictionary
-            Source="pack://application:,,,/Respircare.PatientManagementSystem.Res;component/zh-CN/Controls/ScrollViewer.xaml" />-->
+            Source="pack://application:,,,/SuperSoft.Resource.Default;component/zh-CN/Controls/ScrollViewer.xaml" />-->
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
