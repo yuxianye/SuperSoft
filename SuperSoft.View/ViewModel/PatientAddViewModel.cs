@@ -97,14 +97,16 @@ namespace SuperSoft.View.ViewModel
 
         private bool OnCanExecuteConfirmCommand()
         {
-            if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         #endregion

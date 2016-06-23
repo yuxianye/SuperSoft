@@ -8,7 +8,12 @@
                     mc:Ignorable="d"
                     d:DesignHeight="300"
                     d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="PatientListViewModel"
+                 Source="{StaticResource ResourceKey=Locator}"></Binding>
+    </UserControl.DataContext>
     <Grid>
-<CheckBox />
+        <TextBlock Text="{Binding Count}"></TextBlock>
+
     </Grid>
 </ss:UserControlBase>

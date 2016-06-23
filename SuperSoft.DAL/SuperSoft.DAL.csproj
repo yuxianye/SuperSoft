@@ -72,7 +72,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="DataBase\db" />
+    <None Include="DataBase\SuperSoft.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

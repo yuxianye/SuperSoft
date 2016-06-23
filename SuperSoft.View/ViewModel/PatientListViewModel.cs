@@ -26,45 +26,62 @@ namespace SuperSoft.View.ViewModel
             EditCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteEditCommand, OnCanExecuteEditCommand);
             DeleteCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteDeleteCommand, OnCanExecuteDeleteCommand);
             CancelCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteCancelCommand);
+
+            BLL.PatientBLL patientBLL = new BLL.PatientBLL();
+            Model.Patient patient = new Model.Patient();
+            patient.Id = System.Guid.NewGuid();
+            // patient.Name = "FirstName";
+            patient.FirstName = "FirstName";
+            patient.LastName = "LastName";
+            patientBLL.Insert(patient);
+            // patientBLL.SaveChanges();
+            //patientBLL.ExecuteSqlCommand("delete from Patients");
+
+            string a = patientBLL.Count() + "ChangeTitleHello MvvmLight";
+
+
+
+
+
         }
 
         #region 取得患者列表
 
         public void initPatientList()
         {
-            var taskResult = getPatientListAsync();
-            if (!Equals(PatientList, null))
-            {
-                PatientList.Clear();
-            }
+            //var taskResult = getPatientListAsync();
+            //if (!Equals(PatientList, null))
+            //{
+            //    PatientList.Clear();
+            //}
 
-            PatientList = taskResult.Result;
-            taskResult.Dispose();
-            taskResult = null;
+            //PatientList = taskResult.Result;
+            //taskResult.Dispose();
+            //taskResult = null;
 
-            if (PatientList != null && PatientList.Count() > 0)//有患者
-            {
-                if (StaticDatas.CurrentOpenedPatient == null) //默认选择第一个
-                {
-                    Patient = PatientList.FirstOrDefault();
-                }
-                else//选择原有的患者
-                {
-                    var v = PatientList.Where(a => a.Number == StaticDatas.CurrentOpenedPatient.Number);
-                    if (v != null && v.Count() > 0)
-                    {
-                        Patient = v.FirstOrDefault();
-                    }
-                    else
-                    {
-                        Patient = PatientList.FirstOrDefault();
-                    }
-                }
-            }
-            else
-            {
-                Patient = null;
-            }
+            //if (PatientList != null && PatientList.Count() > 0)//有患者
+            //{
+            //    if (StaticDatas.CurrentOpenedPatient == null) //默认选择第一个
+            //    {
+            //        Patient = PatientList.FirstOrDefault();
+            //    }
+            //    else//选择原有的患者
+            //    {
+            //        var v = PatientList.Where(a => a.Number == StaticDatas.CurrentOpenedPatient.Number);
+            //        if (v != null && v.Count() > 0)
+            //        {
+            //            Patient = v.FirstOrDefault();
+            //        }
+            //        else
+            //        {
+            //            Patient = PatientList.FirstOrDefault();
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    Patient = null;
+            //}
         }
 
         private Task<ObservableCollection<Model.Patient>> getPatientListAsync()
@@ -145,14 +162,16 @@ namespace SuperSoft.View.ViewModel
 
         private bool OnCanExecuteOpenCommand()
         {
-            if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         #endregion
@@ -178,14 +197,16 @@ namespace SuperSoft.View.ViewModel
 
         private bool OnCanExecuteEditCommand()
         {
-            if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         #endregion
@@ -196,45 +217,47 @@ namespace SuperSoft.View.ViewModel
 
         private void OnExecuteDeleteCommand()
         {
-            try
-            {
-                if (MessageBox.Show(ResourceHelper.LoadString(@"DeleteConfirm"), ResourceHelper.LoadString(@"CaseLibrary"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
-                    {
-                        if (!Equals(StaticDatas.CurrentOpenedPatient, null) && Equals(StaticDatas.CurrentOpenedPatient.Number, Patient.Number))
-                        {
-                            MessageBox.Show(ResourceHelper.LoadString(@"PatientFilesUsing"), ResourceHelper.LoadString(@"CaseLibrary"));
-                            return;
-                        }
-                        else
-                        {
-                            File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionPatient);
-                            File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionData);
-                            File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionDataSeializer);
-                            initPatientList();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    if (MessageBox.Show(ResourceHelper.LoadString(@"DeleteConfirm"), ResourceHelper.LoadString(@"CaseLibrary"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            //    {
+            //        if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
+            //        {
+            //            if (!Equals(StaticDatas.CurrentOpenedPatient, null) && Equals(StaticDatas.CurrentOpenedPatient.Number, Patient.Number))
+            //            {
+            //                MessageBox.Show(ResourceHelper.LoadString(@"PatientFilesUsing"), ResourceHelper.LoadString(@"CaseLibrary"));
+            //                return;
+            //            }
+            //            else
+            //            {
+            //                File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionPatient);
+            //                File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionData);
+            //                File.Delete(Const.AppDatabasePath + Patient.FileName + Const.RMSFileExtensionDataSeializer);
+            //                initPatientList();
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                LogHelper.Error(ToString(), ex);
-                Messenger.Default.Send<object>(null, Model.MessengerToken.ClosePopup);
-            }
+            //    LogHelper.Error(ToString(), ex);
+            //    Messenger.Default.Send<object>(null, Model.MessengerToken.ClosePopup);
+            //}
         }
 
         private bool OnCanExecuteDeleteCommand()
         {
-            if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            //if (!Equals(Patient, null) && !string.IsNullOrWhiteSpace(Patient.Number) && !string.IsNullOrWhiteSpace(Patient.Name))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return true;
+
         }
 
         #endregion

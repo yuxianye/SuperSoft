@@ -1,7 +1,10 @@
-﻿using System;
+﻿using SuperSoft.Utility.Windows;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SuperSoft.Model
@@ -9,50 +12,55 @@ namespace SuperSoft.Model
     /// <summary>
     /// 患者实体
     /// </summary>
-    public class Patient : EntityBase<Guid>, ICloneable
+    public class Patient : EntityBase<Guid>
     {
         /// <summary>
-        /// 编号
+        /// 姓
         /// </summary>
-        public string Number { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
-        /// 姓名
+        /// 名
         /// </summary>
-        public string Name { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>
-        /// 年龄
+        /// 出生日期
         /// </summary>
-        public int Age { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
+
+        /// <summary>
+        /// 体重(kg)
+        /// </summary>
+        public Nullable<int> Weight { get; set; }
+
+        /// <summary>
+        /// 身高(cm)
+        /// </summary>
+        public Nullable<int> Height { get; set; }
 
         /// <summary>
         /// 性别
         /// </summary>
-        public bool Gender { get; set; }
+        public Nullable<bool> Gender { get; set; }
 
         /// <summary>
-        /// 身高
+        /// 照片
         /// </summary>
-        public int Height { get; set; }
+        public byte[] Photo { get; set; }
 
         /// <summary>
-        /// 体重
+        /// 邮箱
         /// </summary>
-        public int Weight { get; set; }
+        public string EMail { get; set; }
 
         /// <summary>
-        /// 收缩压
+        /// 电话
         /// </summary>
-        public int SBP { get; set; }
+        public string TelephoneNumbers { get; set; }
 
         /// <summary>
-        /// 舒张压
-        /// </summary>
-        public int DBP { get; set; }
-
-        /// <summary>
-        /// 邮政编码
+        /// 邮编
         /// </summary>
         public string PostalCode { get; set; }
 
@@ -62,40 +70,19 @@ namespace SuperSoft.Model
         public string Address { get; set; }
 
         /// <summary>
-        /// 电话号码
+        /// 病症
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string Diagnosis { get; set; }
 
         /// <summary>
-        /// 值班人员
+        /// 医生Id
         /// </summary>
-        public string WatchKeeper { get; set; }
+        public Nullable<System.Guid> DoctorId { get; set; }
 
         /// <summary>
-        /// 备注
+        /// 克隆
         /// </summary>
-        public string Memo { get; set; }
-
-        /// <summary>
-        /// 记录开始时间
-        /// </summary>
-        public DateTime RecordStartTime { get; set; }
-
-        /// <summary>
-        /// 记录结束时间
-        /// </summary>
-        public DateTime RecordEndTime { get; set; }
-
-        /// <summary>
-        /// 当前时间
-        /// </summary>
-        public DateTime CurrentTime { get; set; }
-
-        /// <summary>
-        /// 文件名
-        /// </summary>
-        public string FileName { get; set; }
-
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();
@@ -104,14 +91,18 @@ namespace SuperSoft.Model
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            Number = null;
-            Name = null;
+            FirstName = null;
+            LastName = null;
+            DateOfBirth = null;
+            Weight = null;
+            Height = null;
+            Gender = null;
+            Photo = null;
+            EMail = null;
+            TelephoneNumbers = null;
             PostalCode = null;
             Address = null;
-            PhoneNumber = null;
-            WatchKeeper = null;
-            Memo = null;
-            FileName = null;
+            Diagnosis = null;
         }
     }
 }
