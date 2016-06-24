@@ -15,6 +15,8 @@ using SuperSoft.Model;
 using SuperSoft.View.View;
 using SuperSoft.View;
 using System.Windows.Media.Imaging;
+using SuperSoft.Utility.Windows;
+using SuperSoft.BLL.DownloadData;
 
 namespace SuperSoft.View.ViewModel
 {
@@ -140,6 +142,7 @@ namespace SuperSoft.View.ViewModel
                     popupWindows.ResizeMode = ResizeMode.NoResize;
                     popupWindows.IsCloseButtonEnabled = false;
                     popupWindows.ShowCloseButton = false;
+                    //popupWindows.Icon = new BitmapImage(new Uri("pack://application:,,,/SuperSoft.Resource.Default;component/Images/Logo_White.png", UriKind.Absolute));
                     popupWindows.ShowInTaskbar = false;
                     popupWindows.Focus();
                     view.Margin = new Thickness(2);
@@ -205,7 +208,6 @@ namespace SuperSoft.View.ViewModel
                 popupWindow.Close();
                 popupWindow = null;
                 GC.Collect();
-
             }
         }
 
@@ -243,7 +245,7 @@ namespace SuperSoft.View.ViewModel
         #region 主区域内容，默认为PatientListView（除了上部菜单之外的其他主要内容）
 
         //默认页面为患者列表
-        private UserControlBase mainContent= new PatientListView();
+        private UserControlBase mainContent = new PatientListView();
 
         /// <summary>
         /// 主区域内容
@@ -880,6 +882,136 @@ namespace SuperSoft.View.ViewModel
         }
 
         #endregion
+
+
+
+        #region DownloadDataProgressVisibility
+
+        private Visibility downloadDataProgressVisibility = Visibility.Collapsed;
+
+        public Visibility DownloadDataProgressVisibility
+        {
+            get { return downloadDataProgressVisibility; }
+            set { Set(ref downloadDataProgressVisibility, value); }
+        }
+
+        #endregion DownloadDataProgress
+
+        #region DownloadDataProgress
+
+        private int downloadDataProgress;
+
+        public int DownloadDataProgress
+        {
+            get { return downloadDataProgress; }
+            set { Set(ref downloadDataProgress, value); }
+        }
+
+        #endregion DownloadDataProgress
+
+        #region   BLL.DownloadData.DownloadData 定义 事件
+
+        private DownloadData bllDownloadData;
+#if DEBUG
+        System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
+
+#endif 
+
+
+        private void downloadData(Guid patientId, string indexFileName)
+        {
+            if (bllDownloadData == null)
+            {
+#if DEBUG
+                st.Start();
+#endif 
+
+                bllDownloadData = new DownloadData();
+
+                bllDownloadData.ProgressChanged -= DownloadData_ProgressChanged;
+                bllDownloadData.RunWorkerCompleted -= DownloadData_RunWorkerCompleted;
+
+                bllDownloadData.ProgressChanged += DownloadData_ProgressChanged;
+                bllDownloadData.RunWorkerCompleted += DownloadData_RunWorkerCompleted;
+            }
+            bllDownloadData.Start(patientId, indexFileName);
+
+            DownloadDataProgressVisibility = Visibility.Visible;
+        }
+
+        private void DownloadData_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            DownloadDataProgress = e.ProgressPercentage;
+        }
+
+        private void DownloadData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                DownloadDataProgressVisibility = Visibility.Collapsed;
+                DownloadDataProgress = 0;
+                // First, handle the case where an exception was thrown.
+                if (e.Error != null)
+                {
+
+                    //LogHelper.Error(ToString(), e.Error);
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("DownloadError") + e.Error.Message +
+                        (e.Error.InnerException == null ? string.Empty : e.Error.InnerException.Message)
+                        , ResourceHelper.LoadString("DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Warning);
+                }
+                else if (e.Cancelled)
+                {
+                    // Next, handle the case where the user canceled 
+                    // the operation.
+                    // Note that due to a race condition in 
+                    // the DoWork event handler, the Cancelled
+                    // flag may not have been set, even though
+                    // CancelAsync was called.
+                    //LogHelper.Info(ResourceHelper.LoadString("DownloadCanceled"));
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("DownloadCanceled") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Warning);
+                }
+                else
+                {
+#if DEBUG
+                    st.Stop();
+                    Console.WriteLine("数据下载用时：{0}", st.ElapsedMilliseconds.ToString());
+#endif 
+                    // Finally, handle the case where the operation 
+                    // succeeded.
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("DownloadCompleted") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Information);
+                }
+            }
+            finally
+            {
+                if (!Equals(bllDownloadData, null))
+                {
+                    bllDownloadData.Dispose();
+                    bllDownloadData = null;
+                }
+            }
+        }
+
+        #endregion DownloadData 事件
+
+
+
+
+
+
+
+
+
 
         #region SwitchLanguageCommand
 

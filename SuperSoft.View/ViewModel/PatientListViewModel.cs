@@ -22,22 +22,22 @@ namespace SuperSoft.View.ViewModel
     {
         public PatientListViewModel()
         {
-            OpenCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteOpenCommand, OnCanExecuteOpenCommand);
-            EditCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteEditCommand, OnCanExecuteEditCommand);
-            DeleteCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteDeleteCommand, OnCanExecuteDeleteCommand);
-            CancelCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteCancelCommand);
+            //OpenCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteOpenCommand, OnCanExecuteOpenCommand);
+            //EditCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteEditCommand, OnCanExecuteEditCommand);
+            //DeleteCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteDeleteCommand, OnCanExecuteDeleteCommand);
+            //CancelCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteCancelCommand);
 
-            BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            Model.Patient patient = new Model.Patient();
-            patient.Id = System.Guid.NewGuid();
-            // patient.Name = "FirstName";
-            patient.FirstName = "FirstName";
-            patient.LastName = "LastName";
-            patientBLL.Insert(patient);
-            // patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
+            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
+            //Model.Patient patient = new Model.Patient();
+            //patient.Id = System.Guid.NewGuid();
+            //// patient.Name = "FirstName";
+            //patient.FirstName = "FirstName";
+            //patient.LastName = "LastName";
+            //patientBLL.Insert(patient);
+            //// patientBLL.SaveChanges();
+            ////patientBLL.ExecuteSqlCommand("delete from Patients");
 
-            string a = patientBLL.Count() + "ChangeTitleHello MvvmLight";
+            //string a = patientBLL.Count() + "ChangeTitleHello MvvmLight";
 
 
 
@@ -119,27 +119,10 @@ namespace SuperSoft.View.ViewModel
 
         #region PatientList
 
-        private ObservableCollection<Model.Patient> patientList;
-
-        public ObservableCollection<Model.Patient> PatientList
-        {
-            get { return patientList; }
-            set { Set(ref patientList, value); }
-        }
+        public ObservableCollection<Model.Patient> PatientList { get; set; }
 
         #endregion
 
-        #region Patient
-
-        private Model.Patient patient = new Model.Patient();
-
-        public Model.Patient Patient
-        {
-            get { return patient; }
-            set { Set(ref patient, value); }
-        }
-
-        #endregion
 
         #region OpenCommand
 
@@ -149,9 +132,9 @@ namespace SuperSoft.View.ViewModel
         {
             try
             {
-                StaticDatas.CurrentOpenedPatient = Patient;
+               // StaticDatas.CurrentOpenedPatient = Patient;
                 Messenger.Default.Send<object>(null, Model.MessengerToken.ClosePopup);
-                Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientHomeView, ViewType.View, Patient), Model.MessengerToken.Navigate);
+              //  Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientHomeView, ViewType.View, Patient), Model.MessengerToken.Navigate);
             }
             catch (Exception ex)
             {
@@ -184,7 +167,7 @@ namespace SuperSoft.View.ViewModel
         {
             try
             {
-                Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientEditView, ViewType.Popup, Patient), Model.MessengerToken.Navigate);
+                //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientEditView, ViewType.Popup, Patient), Model.MessengerToken.Navigate);
                 //编辑之后重新加载
                 initPatientList();
             }

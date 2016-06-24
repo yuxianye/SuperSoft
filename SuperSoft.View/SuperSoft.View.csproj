@@ -104,6 +104,9 @@
     <Compile Include="View\PatientListView.xaml.cs">
       <DependentUpon>PatientListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SystemParameterSettingView.xaml.cs">
+      <DependentUpon>SystemParameterSettingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SwitchLanguageView.xaml.cs">
       <DependentUpon>SwitchLanguageView.xaml</DependentUpon>
     </Compile>
@@ -124,6 +127,10 @@
     <Page Include="View\PatientListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SystemParameterSettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SwitchLanguageView.xaml">
       <Generator>MSBuild:Compile</Generator>

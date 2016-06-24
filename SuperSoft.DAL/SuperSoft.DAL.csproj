@@ -65,8 +65,18 @@
   <ItemGroup>
     <Compile Include="DALBase.cs" />
     <Compile Include="DbEntities.cs" />
+    <Compile Include="DoctorDAL.cs" />
     <Compile Include="PatientDAL.cs" />
+    <Compile Include="PatientsProductDAL.cs" />
+    <Compile Include="ProductDAL.cs" />
+    <Compile Include="ProductWorkingDetailedDataDAL.cs" />
+    <Compile Include="ProductWorkingStatisticsDataDAL.cs" />
+    <Compile Include="ProductWorkingSummaryDataDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewPatientsProductDAL.cs" />
+    <Compile Include="ViewProductWorkingStatisticsDataDAL.cs" />
+    <Compile Include="ViewProductWorkingSummaryDataDAL.cs" />
+    <Compile Include="ViewProductWorkingSummaryDetailedDataDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

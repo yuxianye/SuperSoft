@@ -45,6 +45,14 @@
 
     <sys:String x:Key="MainView_HelpToolTip">打开帮助文档</sys:String>
 
+    <!--SystemParameterSettingView-->
+    <sys:String x:Key="SystemParameterSettingView_Title">系统参数设置</sys:String>
+
+    <!--SwitchLanguageView-->
+    <sys:String x:Key="SwitchLanguageView_Title">切换界面语言</sys:String>
+    <sys:String x:Key="SwitchLanguageView_LanguageMessage">请选择显示语言，然后点击[确定]按钮.</sys:String>
+    <sys:String x:Key="SwitchLanguageView_LanguageMessage1">点击[确定]按钮立即生效.</sys:String>
+
     <!--HelpView-->
     <sys:String x:Key="HelpView_HelpTitle">迈思患者管理系统-帮助</sys:String>
 

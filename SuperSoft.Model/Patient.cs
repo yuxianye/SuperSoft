@@ -12,7 +12,7 @@ namespace SuperSoft.Model
     /// <summary>
     /// 患者实体
     /// </summary>
-    public class Patient : EntityBase<Guid>
+    public class Patient : EntityBase<Guid>, ICloneable
     {
         /// <summary>
         /// 姓

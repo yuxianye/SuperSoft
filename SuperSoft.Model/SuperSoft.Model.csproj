@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="protobuf-net, Version=2.0.0.666, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.0.0.666\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -41,25 +45,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChartType.cs" />
+    <Compile Include="DetailedField.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="IndexFileField.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductWorkingSummaryData.cs" />
+    <Compile Include="ProductWorkingStatisticsData.cs" />
+    <Compile Include="ProductWorkingDetailedData.cs" />
+    <Compile Include="PatientsProduct.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="MessengerToken.cs" />
     <Compile Include="OxygenReductionEvent.cs" />
+    <Compile Include="Doctor.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDatasource.cs" />
     <Compile Include="RespiratoryEvent.cs" />
     <Compile Include="SleepParameter.cs" />
+    <Compile Include="ViewPatientsProduct.cs" />
+    <Compile Include="ViewProductWorkingStatisticsData.cs" />
+    <Compile Include="ViewProductWorkingSummaryData.cs" />
+    <Compile Include="ViewProductWorkingSummaryDetailedData.cs" />
     <Compile Include="WaveLineDataItem.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuperSoft.Utility\SuperSoft.Utility.csproj">
       <Project>{ac6691fb-7ef2-4ab0-bd03-5b2c186ae823}</Project>
       <Name>SuperSoft.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

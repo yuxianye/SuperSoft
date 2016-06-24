@@ -1,6 +1,9 @@
-﻿using System;
+﻿using SuperSoft.Model;
+using SuperSoft.View.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +26,32 @@ namespace SuperSoft.View.View
         public PatientListView()
         {
             InitializeComponent();
+            DataContext = new PatientListViewModel();
+        }
+
+        /// <summary>
+        /// 搜索条件的构造
+        /// </summary>
+        /// <param name="condition"></param>
+        public PatientListView(Expression<Func<Patient, bool>> condition)
+        {
+            InitializeComponent();
+            //DataContext = new PatientListViewModel(condition);
+        }
+
+        private void DataGridAllPatientList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //var dataContext = this.DataContext as PatientListViewModel;
+            //if (!Equals(dataContext, null) && StaticDatas.IsCurrentSelectedPatientHaveProduct)
+            //{
+            //    dataContext.ViewManagement.Navigate(ViewNames.PatientHomeView);
+            //}
+            //else
+            //{
+            //    MessageBox.Show(Application.Current.MainWindow, ResourceHelper.LoadString("NoProductData"),
+            //        dataContext.SelectedPatient.FirstName + " " + dataContext.SelectedPatient.LastName,
+            //        MessageBoxButton.OK, MessageBoxImage.Information);
+            //}
         }
     }
 }

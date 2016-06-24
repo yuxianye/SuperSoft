@@ -13,7 +13,85 @@
                  Source="{StaticResource ResourceKey=Locator}"></Binding>
     </UserControl.DataContext>
     <Grid>
-        <TextBlock Text="{Binding Count}"></TextBlock>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{DynamicResource LeftPanelWidth}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource TextBlockDefaultStyle}"
+                   Text="{StaticResource  WithoutData }" />
+        <DataGrid Name="DataGridAllPatientList"
+                  Grid.Column="0"
+                  IsReadOnly="True"
+                  RenderOptions.ClearTypeHint="Enabled"
+                  TextOptions.TextFormattingMode="Display"
+                  HeadersVisibility="None"
+                  ToolTip="{Binding PatientCount}"
+                  SelectedItem="{Binding SelectedPatient}"
+                  Visibility="{Binding  AllPatientListVisibility}"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding AllPatientList}"
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False"
+                  MouseDoubleClick="DataGridAllPatientList_MouseDoubleClick">
+            <DataGrid.Columns>
+                <!--<DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="{DynamicResource Selected}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Header="{DynamicResource FirstName}"
+                                    Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="{DynamicResource LastName}"
+                                    Binding="{Binding LastName}" />-->
+                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Binding="{Binding FirstName}" />
+                <DataGridTextColumn Binding="{Binding LastName}" />
+            </DataGrid.Columns>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />
+                </Style>
+            </DataGrid.Style>
+        </DataGrid>
+        <GridSplitter Background="{StaticResource ControlBorderBrush}"
+                      Width="1"
+                      Visibility="{Binding  AllPatientListVisibility}" />
+        <Grid Grid.Column=" 1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <!--<local:PatientInfo DataContext="{Binding PatientInfoViewModel}" />
+                <local:ProductInfo DataContext="{Binding  ProductInfoViewModel}" />-->
+                <StackPanel Orientation="Horizontal"
+                            Margin="{StaticResource ControlMargin2}"
+                            Visibility="{Binding TherapyModelInfoVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{DynamicResource TextBlockTitleDefaultStyle}"
+                                   Text="{DynamicResource StatistisCondition}" />
+                        <TextBlock Style="{DynamicResource TextBlockContentTitle6Style}"
+                                   Text="{DynamicResource TherapyModel}" />
+                        <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                   Text=":" />
+                        <ComboBox Style="{DynamicResource ComboBoxDefaultStyle}"
+                                  ItemsSource="{Binding TherapyModeList}"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedItem="{Binding TherapyMode}" />
+                    </StackPanel>
+                </StackPanel>
+                <Separator Margin="{DynamicResource ControlMargin3}"
+                           Visibility="{Binding TherapyModelInfoVisibility}" />
+            </StackPanel>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel>
+                    <!--<local:StatisticsInfo DataContext="{Binding  StatisticsInfoViewModel}" />-->
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </ss:UserControlBase>

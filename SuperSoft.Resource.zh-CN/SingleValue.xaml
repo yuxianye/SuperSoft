@@ -6,6 +6,9 @@
     <sys:Double x:Key="PatientSearchControlWidth">140</sys:Double>
     <sys:Double x:Key="DoctorSearchControlWidth">140</sys:Double>
 
+    <!--PatientListView-->
+    <sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>
+    
     <!--主窗体最小尺寸-->
     <!--<sys:Double x:Key="MainWindowsMinWidth">1366</sys:Double>
     <sys:Double x:Key="MainWindowsMinHeight">739</sys:Double>

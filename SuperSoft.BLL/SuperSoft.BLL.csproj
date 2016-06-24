@@ -38,9 +38,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,8 +54,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoctorBLL.cs" />
+    <Compile Include="DownloadData\DetailedFileUnpack.cs" />
+    <Compile Include="DownloadData\DownloadData.cs" />
+    <Compile Include="DownloadData\InternalClass.cs" />
     <Compile Include="PatientBLL.cs" />
+    <Compile Include="PatientsProductBLL.cs" />
+    <Compile Include="ProductBLL.cs" />
+    <Compile Include="ProductWorkingDetailedDataBLL.cs" />
+    <Compile Include="ProductWorkingStatisticsDataBLL.cs" />
+    <Compile Include="ProductWorkingSummaryDataBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewPatientProductsBLL.cs" />
+    <Compile Include="ViewProductWorkingStatisticsDataBLL.cs" />
+    <Compile Include="ViewProductWorkingSummaryDataBLL.cs" />
+    <Compile Include="ViewProductWorkingSummaryDetailedDataBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
