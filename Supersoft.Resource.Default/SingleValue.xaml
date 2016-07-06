@@ -33,8 +33,11 @@
 
     <!--控件的边距-->
     <Thickness x:Key="ControlDefaultMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="ControlMargin">0,3,0,3</Thickness>
     <Thickness x:Key="ControlMargin1">5,5,5,5</Thickness>
     <Thickness x:Key="ControlMargin2">2,1,2,1</Thickness>
+    <!--<Thickness x:Key="ControlMarginLeft">5 0 0 0</Thickness>-->
+    <!--<Thickness x:Key="ControlMarginRight">0 0 5 0</Thickness>-->
 
     <!--按钮默认的宽度，高度根据按钮内容自适应-->
     <sys:Double x:Key="DefaultButtonWidth">100</sys:Double>
@@ -54,12 +57,11 @@
     <sys:Double x:Key="AxisXHeight">26</sys:Double>
 
     <!--控件Margin-->
-    <!--<Thickness x:Key="ControlMarginLeft">5 0 0 0</Thickness>-->
-    <Thickness x:Key="ControlMarginRight">0 0 5 0</Thickness>
 
+    <sys:Double x:Key="ProgressBarWidth">200</sys:Double>
     <!--<sys:Double x:Key="PopupWinodwsHeight3">170</sys:Double>-->
 
-    <!--<sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>-->
+    <sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>
 
     <!--<Thickness x:Key="ControlMargin">5 0 0 0</Thickness>
 

@@ -63,6 +63,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -83,14 +84,10 @@
     <Compile Include="StaticDatas.cs" />
     <Compile Include="UserControlBase.cs" />
     <Compile Include="ViewModel\AddAdviseViewModel.cs" />
-    <Compile Include="ViewModel\AutoAnalysisSettingsViewModel.cs" />
-    <Compile Include="ViewModel\ChannelSettingsViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MyViewModelBase.cs" />
     <Compile Include="ViewModel\PatientAddViewModel.cs" />
-    <Compile Include="ViewModel\PatientEditViewModel.cs" />
-    <Compile Include="ViewModel\PatientHomeViewModel.cs" />
     <Compile Include="ViewModel\PatientListViewModel.cs" />
     <Compile Include="ViewModel\SwitchLanguageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -103,6 +100,9 @@
     <Compile Include="View\MenuInfo.cs" />
     <Compile Include="View\PatientListView.xaml.cs">
       <DependentUpon>PatientListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PatientAddView.xaml.cs">
+      <DependentUpon>PatientAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SystemParameterSettingView.xaml.cs">
       <DependentUpon>SystemParameterSettingView.xaml</DependentUpon>
@@ -127,6 +127,10 @@
     <Page Include="View\PatientListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PatientAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SystemParameterSettingView.xaml">
       <Generator>MSBuild:Compile</Generator>

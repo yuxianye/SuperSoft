@@ -135,12 +135,11 @@
     <Style x:Key="TextBlockContentTitleDefaultStyle"
            TargetType="{x:Type TextBlock}"
            BasedOn="{StaticResource TextBlockDefaultStyle}">
-        <!--<Setter Property="Foreground"
-                Value="{StaticResource RespircareColorBrush2}" />-->
-        <Setter Property="TextAlignment"
+
+        <!--<Setter Property="TextAlignment"
                 Value="Right" />
         <Setter Property="HorizontalAlignment"
-                Value="Right" />
+                Value="Right" />-->
     </Style>
 
     <Style x:Key="TextBlockContentTitleDefaultWrappingStyle"

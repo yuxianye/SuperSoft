@@ -1005,27 +1005,27 @@ namespace SuperSoft.BLL.DownloadData
         private void SaveToBD(ProductWorkingSummaryData productWorkingSummaryData,
             IEnumerable<DetailedField> detailedList)
         {
-            using (var transactionScope = new TransactionScope())
+            //using (var transactionScope = new TransactionScope())
+            //{
+            using (var productWorkingSummaryDataBLL = new ProductWorkingSummaryDataBLL())
             {
-                using (var productWorkingSummaryDataBLL = new ProductWorkingSummaryDataBLL())
+                productWorkingSummaryDataBLL.Insert(productWorkingSummaryData);
+                using (var memoryStream = new MemoryStream())
                 {
-                    productWorkingSummaryDataBLL.Insert(productWorkingSummaryData);
-                    using (var memoryStream = new MemoryStream())
+                    Serializer.Serialize(memoryStream, detailedList);
+                    using (var productWorkingDetailedDataBLL = new ProductWorkingDetailedDataBLL())
                     {
-                        Serializer.Serialize(memoryStream, detailedList);
-                        using (var productWorkingDetailedDataBLL = new ProductWorkingDetailedDataBLL())
-                        {
-                            var productWorkingDetailedData = new ProductWorkingDetailedData();
-                            productWorkingDetailedData.Id = DateTime.Now.ToGuid();
-                            productWorkingDetailedData.ProductWorkingSummaryDataId = productWorkingSummaryData.Id;
-                            productWorkingDetailedData.Content = memoryStream.ToArray();
-                            productWorkingDetailedDataBLL.Insert(productWorkingDetailedData);
-                        }
-                        memoryStream.Close();
+                        var productWorkingDetailedData = new ProductWorkingDetailedData();
+                        productWorkingDetailedData.Id = DateTime.Now.ToGuid();
+                        productWorkingDetailedData.ProductWorkingSummaryDataId = productWorkingSummaryData.Id;
+                        productWorkingDetailedData.Content = memoryStream.ToArray();
+                        productWorkingDetailedDataBLL.Insert(productWorkingDetailedData);
                     }
+                    memoryStream.Close();
                 }
-                transactionScope.Complete();
             }
+            //transactionScope.Complete();
+            //}
         }
 
         protected override void DisposeManagedResources()

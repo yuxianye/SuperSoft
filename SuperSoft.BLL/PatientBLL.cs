@@ -1,16 +1,15 @@
 ﻿using SuperSoft.Model;
-using SuperSoft.Utility;
 using SuperSoft.Utility.Windows;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Data.SQLite;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SuperSoft.BLL
 {
+    /// <summary>
+    /// Patient业务逻辑层，可使用显示事物
+    /// </summary>
     public class PatientBLL : Utility.MyClassBase
     {
         DAL.PatientDAL dal = new DAL.PatientDAL();
@@ -42,9 +41,9 @@ namespace SuperSoft.BLL
         #region Insert
 
         /// <summary>
-        /// 创建
+        /// 创建对象
         /// </summary>
-        /// <param Name="entity">一个实体对象</param>
+        /// <param name="entity">一个实体对象</param>
         /// <returns></returns>
         public void Insert(Patient entity)
         {
@@ -57,7 +56,6 @@ namespace SuperSoft.BLL
                 if (entity != null)
                 {
                     dal.Insert(entity);
-                    dal.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -67,9 +65,33 @@ namespace SuperSoft.BLL
         }
 
         /// <summary>
-        /// 创建实体对象集合
+        /// 创建对象，使用显示事物
         /// </summary>
-        /// <param Name="entitys">实体对象集合</param>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entity">一个实体对象</param>
+        public void Insert(SQLiteTransaction transaction, Patient entity)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (entity != null)
+                {
+                    dal.Insert(transaction, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 创建实体对象集合，内部采用事物整体提交
+        /// </summary>
+        /// <param name="entitys">实体对象集合</param>
         public void Insert(IEnumerable<Patient> entitys)
         {
             if (Disposed)
@@ -81,7 +103,30 @@ namespace SuperSoft.BLL
                 if (entitys != null && entitys.Count() > 0)
                 {
                     dal.Insert(entitys);
-                    dal.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 创建实体对象集合，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entitys">实体对象集合</param>
+        public void Insert(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (entitys != null && entitys.Count() > 0)
+                {
+                    dal.Insert(transaction, entitys);
                 }
             }
             catch (Exception ex)
@@ -95,7 +140,7 @@ namespace SuperSoft.BLL
         #region Delete
 
         /// <summary>
-        /// 删除
+        /// 删除对象
         /// </summary>
         /// <param name="id">一个实体对象的Id</param>
         public void Delete(Guid id)
@@ -109,7 +154,6 @@ namespace SuperSoft.BLL
                 if (id != Guid.Empty)
                 {
                     dal.Delete(id);
-                    dal.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -119,7 +163,31 @@ namespace SuperSoft.BLL
         }
 
         /// <summary>
-        /// 删除
+        /// 删除对象，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="id">一个实体对象的Id</param>
+        public virtual void Delete(SQLiteTransaction transaction, Guid id)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (id != Guid.Empty)
+                {
+                    dal.Delete(transaction, id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 删除对象
         /// </summary>
         /// <param name="entity">一个实体对象</param>
         public void Delete(Patient entity)
@@ -133,7 +201,30 @@ namespace SuperSoft.BLL
                 if (entity != null)
                 {
                     dal.Delete(entity.Id);
-                    dal.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 删除对象，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entity">一个实体对象</param>
+        public virtual void Delete(SQLiteTransaction transaction, Patient entity)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (entity != null)
+                {
+                    dal.Delete(transaction, entity.Id);
                 }
             }
             catch (Exception ex)
@@ -157,7 +248,6 @@ namespace SuperSoft.BLL
                 if (entitys != null && entitys.Count() > 0)
                 {
                     dal.Delete(entitys);
-                    dal.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -167,15 +257,11 @@ namespace SuperSoft.BLL
         }
 
         /// <summary>
-        /// 根据条件删除
-        /// 示例（大括号换成尖括号）
-        /// System.Linq.Expressions.Expression(Func(Patient, bool)) predicate = v =) v.Id ==0 && v.Height == 100;
+        /// 删除实体对象集合，使用显示事物
         /// </summary>
-        /// <param name="condition">
-        /// 删除条件 System.Linq.Expressions.Expression(Func(Patient, bool)) predicate = v =) v.Id ==0 &&
-        /// v.Height == 100;
-        /// </param>
-        public void Delete(Expression<Func<Patient, bool>> condition)
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entitys">实体对象集合</param>
+        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
         {
             if (Disposed)
             {
@@ -183,10 +269,9 @@ namespace SuperSoft.BLL
             }
             try
             {
-                if (condition != null)
+                if (entitys != null && entitys.Count() > 0)
                 {
-                    dal.Delete(condition);
-                    dal.SaveChanges();
+                    dal.Delete(transaction, entitys);
                 }
             }
             catch (Exception ex)
@@ -213,8 +298,7 @@ namespace SuperSoft.BLL
             {
                 if (entity != null)
                 {
-                    dal.Delete(entity);
-                    dal.SaveChanges();
+                    dal.Update(entity);
                 }
             }
             catch (Exception ex)
@@ -224,7 +308,31 @@ namespace SuperSoft.BLL
         }
 
         /// <summary>
-        /// 编辑实体对象集合
+        /// 更新对象，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entity">一个实体对象</param>
+        public virtual void Update(SQLiteTransaction transaction, Patient entity)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (entity != null)
+                {
+                    dal.Update(transaction, entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
         public void Update(IEnumerable<Patient> entitys)
@@ -237,8 +345,31 @@ namespace SuperSoft.BLL
             {
                 if (entitys != null && entitys.Count() > 0)
                 {
-                    dal.Delete(entitys);
-                    dal.SaveChanges();
+                    dal.Update(entitys);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 更新实体对象集合，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="entitys">实体对象集合</param>
+        public virtual void Update(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (entitys != null && entitys.Count() > 0)
+                {
+                    dal.Update(transaction, entitys);
                 }
             }
             catch (Exception ex)
@@ -268,202 +399,72 @@ namespace SuperSoft.BLL
                 {
                     return dal.GetById(id);
                 }
-                return default(Patient);
             }
             catch (Exception ex)
             {
                 throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
             }
+            return default(Patient);
         }
 
         /// <summary>
-        /// 根据条件查询
-        /// 示例（大括号换成尖括号）：
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) predicate = v =) v.Id ==0 && v.Height == 100;
-        /// GetByCondition( predicate);
+        /// 分页查询,使用Id desc排序
         /// </summary>
-        /// <param name="predicate">
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) Foo = v =) v.Id ==0 && v.Height == 100;
-        /// </param>
-        /// <returns>实体对象集合</returns>
-        public IEnumerable<Patient> GetByCondition(Expression<Func<Patient, bool>> predicate)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            var sortCondition = new PropertySortCondition(@"Id", ListSortDirection.Ascending);
-            return GetByCondition(sortCondition, predicate);
-        }
-
-        /// <summary>
-        /// 根据条件查询
-        /// 示例（大括号换成尖括号）：
-        /// 排序条件 Common.PropertySortCondition sortCondition = new Common.PropertySortCondition("Id",
-        /// ListSortDirection.Descending);
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) predicate = v =) v.Id ==0 && v.Height == 100;
-        /// GetByCondition(sortCondition, predicate);
-        /// </summary>
-        /// <param name="sortCondition">
-        ///  排序条件 Common.PropertySortCondition SortCondition = new Common.PropertySortCondition("Id",
-        ///  ListSortDirection.Descending);
-        /// </param>
-        /// <param name="predicate">
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) Foo = v =) v.Id ==0 && v.Height ==
-        /// 100;
-        /// </param>
-        /// <returns>实体对象集合</returns>
-        public IEnumerable<Patient> GetByCondition(PropertySortCondition sortCondition,
-            Expression<Func<Patient, bool>> predicate)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            return GetByCondition(sortCondition, predicate, 1, int.MaxValue);
-        }
-
-        /// <summary>
-        /// 根据条件查询
-        /// 示例（大括号换成尖括号）：
-        /// 排序条件 Common.PropertySortCondition sortCondition = new Common.PropertySortCondition("Id",
-        /// ListSortDirection.Descending);
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) predicate = v =) v.Id ==0 && v.Height == 100;
-        /// GetByCondition(sortCondition, predicate, 10, 10);
-        /// </summary>
-        /// <param name="sortCondition">
-        /// 排序条件 Common.PropertySortCondition SortCondition = new Common.PropertySortCondition("Id",
-        /// ListSortDirection.Descending);
-        /// </param>
-        /// <param name="predicate">
-        /// 筛选条件 System.Linq.Expressions.Expression(Func(Patient, bool)) Foo = v =) v.Id ==0 && v.Height ==
-        /// 100;
-        /// </param>
-        /// <param name="pageIndex">页码</param>
-        /// <param name="pageSize">每页条数</param>
-        /// <returns>实体对象集合</returns>
-        public IEnumerable<Patient> GetByCondition(PropertySortCondition sortCondition,
-            Expression<Func<Patient, bool>> predicate,
-            int pageIndex,
-            int pageSize)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (sortCondition != null && predicate != null)
-                {
-                    return dal.GetByCondition(sortCondition, predicate, pageIndex, pageSize);
-                }
-                return default(IEnumerable<Patient>);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
-
-        #endregion
-
-        #region 直接执行SQL语句命令
-
-        /// <summary>
-        /// 执行SQL语句命令
-        /// </summary>
+        /// <param name="pageIndex">页号</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public int ExecuteSqlCommand(string sqlString)
+        public virtual IEnumerable<Patient> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
+            recordCount = 0;
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
             try
             {
-                if (!string.IsNullOrWhiteSpace(sqlString))
+                if (pageIndex > 0 && pageSize > 0)
                 {
-                    return dal.ExecuteSqlCommand(sqlString);
+                    return dal.SelectPaging(pageIndex, pageSize, out recordCount);
                 }
-                return 0;
             }
             catch (Exception ex)
             {
                 throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
             }
+            return null;
         }
 
         /// <summary>
-        /// 执行SQL语句命令
+        /// 分页查询,使用Id desc排序
         /// </summary>
-        /// <param name="sqlString">SQL 命令字符串</param>
+        /// <param name="firstName">firstName</param>
+        /// <param name="pageIndex">页号</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public int ExecuteSqlCommand(string sqlString, object[] parameters)
+        public virtual IEnumerable<Patient> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
         {
+            recordCount = 0;
             if (Disposed)
             {
+                return null;
                 throw new ObjectDisposedException(ToString());
             }
             try
             {
-                if (!string.IsNullOrWhiteSpace(sqlString))
+                if (pageIndex > 0 && pageSize > 0)
                 {
-                    return dal.ExecuteSqlCommand(sqlString, parameters);
+                    return dal.SelectByFirstName(firstName, pageIndex, pageSize, out recordCount);
                 }
-                return 0;
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
-
-        /// <summary>
-        /// 异步执行SQL语句命令
-        /// </summary>
-        /// <param name="sqlString">SQL 命令字符串</param>
-        /// <returns></returns>
-        public Task<int> ExecuteSqlCommandAsync(string sqlString)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(sqlString))
-                {
-                    return dal.ExecuteSqlCommandAsync(sqlString);
-                }
-                return default(Task<int>);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
-
-        /// <summary>
-        /// 异步执行SQL语句命令
-        /// </summary>
-        /// <param name="sqlString">SQL 命令字符串</param>
-        /// <returns></returns>
-        public Task<int> ExecuteSqlCommandAsync(string sqlString, object[] parameters)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(sqlString))
-                {
-                    return dal.ExecuteSqlCommandAsync(sqlString, parameters);
-                }
-                return default(Task<int>);
-            }
-            catch (Exception ex)
-            {
+                return null;
                 throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
             }
         }

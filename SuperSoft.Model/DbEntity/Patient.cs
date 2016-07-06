@@ -1,11 +1,4 @@
-﻿using SuperSoft.Utility.Windows;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SuperSoft.Model
 {
@@ -27,22 +20,22 @@ namespace SuperSoft.Model
         /// <summary>
         /// 出生日期
         /// </summary>
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
 
         /// <summary>
         /// 体重(kg)
         /// </summary>
-        public Nullable<int> Weight { get; set; }
+        public int Weight { get; set; }
 
         /// <summary>
         /// 身高(cm)
         /// </summary>
-        public Nullable<int> Height { get; set; }
+        public int Height { get; set; }
 
         /// <summary>
         /// 性别
         /// </summary>
-        public Nullable<bool> Gender { get; set; }
+        public bool Gender { get; set; }
 
         /// <summary>
         /// 照片
@@ -77,7 +70,7 @@ namespace SuperSoft.Model
         /// <summary>
         /// 医生Id
         /// </summary>
-        public Nullable<System.Guid> DoctorId { get; set; }
+        public System.Guid DoctorId { get; set; }
 
         /// <summary>
         /// 克隆
@@ -93,10 +86,6 @@ namespace SuperSoft.Model
             base.DisposeManagedResources();
             FirstName = null;
             LastName = null;
-            DateOfBirth = null;
-            Weight = null;
-            Height = null;
-            Gender = null;
             Photo = null;
             EMail = null;
             TelephoneNumbers = null;

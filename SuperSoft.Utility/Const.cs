@@ -12,6 +12,12 @@ namespace SuperSoft.Utility
     /// </summary>
     public static class Const
     {
+        #region
+
+        public const string SQLiteConnectionString = @"Data Source=Database\SuperSoft.db";
+
+        #endregion
+
         #region 常用路径字符串
 
         /// <summary>
@@ -146,26 +152,38 @@ namespace SuperSoft.Utility
 
         #region 文件扩展名字符串
 
-        //public const string RMSFileName = "SY_RMS.TXT";
-        public const string RMSFileExtensionPatientSearch = @"*.pat";
+        /// <summary>
+        /// SD卡内开机文件的名称 SY_RMS.TXT
+        /// </summary>
+        public const string RMSFileName = "SY_RMS.TXT";
 
         /// <summary>
-        /// 患者文件扩展名
+        /// 数据文件过滤 ??????.DAT
         /// </summary>
-        public const string RMSFileExtensionPatient = @".pat";
+        public const string DatFileFilter = "??????.DAT";
+
+        ///// <summary>
+        ///// *.pat
+        ///// </summary>
+        //public const string RMSFileExtensionPatientSearch = @"*.pat";
+
+        ///// <summary>
+        ///// 患者文件扩展名
+        ///// </summary>
+        //public const string RMSFileExtensionPatient = @".pat";
 
         /// <summary>
-        /// 数据文件扩展名
+        /// 数据文件扩展名 .DAT
         /// </summary>
-        public const string RMSFileExtensionData = @".dat";
+        public const string RMSFileExtensionData = @".DAT";
 
-        /// <summary>
-        /// 数据文件序列化之后的文件扩展名
-        /// </summary>
-        public const string RMSFileExtensionDataSeializer = @".dat.ser";
+        ///// <summary>
+        ///// 数据文件序列化之后的文件扩展名
+        ///// </summary>
+        //public const string RMSFileExtensionDataSeializer = @".dat.ser";
 
 
-        public const string RMSFileExtensionDataSeializer2 = @".ser";
+        //public const string RMSFileExtensionDataSeializer2 = @".ser";
 
         #endregion
 
@@ -182,5 +200,7 @@ namespace SuperSoft.Utility
         public const string DeteHHmm = @"HH:mm";
 
         #endregion
+
+
     }
 }

@@ -133,8 +133,8 @@
             </Fluent:RibbonTabItem>
 
             <!--设置菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource SystemSettings}">
-                <Fluent:RibbonGroupBox Header="{DynamicResource SystemSettings}">
+            <Fluent:RibbonTabItem Header="{DynamicResource MainView_SystemSettings}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_SystemSettings}">
                     <Fluent:Button  Command="{Binding SettingsCommand}"
                                     Header="{DynamicResource MainView_SystemParameter}"
                                     ToolTip="{DynamicResource MainView_SystemParameter}"
@@ -149,6 +149,19 @@
 
             <!--工具栏 患者搜索、帮助按钮-->
             <Fluent:Ribbon.ToolBarItems>
+                <StackPanel Visibility="{Binding DownloadDataProgressVisibility}"
+                            Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource DownloadProgress}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text=":"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding DownloadDataProgress,StringFormat={}{0:N0}%}"
+                               VerticalAlignment="Center" />
+                    <ProgressBar Width="{DynamicResource  ProgressBarWidth}"
+                                 Maximum="100"
+                                 Value="{Binding DownloadDataProgress}"
+                                 ToolTip="{Binding DownloadDataProgress}" />
+                </StackPanel>
                 <Fluent:Button Size="Small"
                                Icon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Help_32x32.png"
                                Command="{Binding HelpCommand}"

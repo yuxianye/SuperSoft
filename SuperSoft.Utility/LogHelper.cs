@@ -1,66 +1,50 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SuperSoft.Utility
 {
     /// <summary>
-    /// 日志
+    /// 日志,封装了System.Diagnostics.Trace;
+    /// 具体见配置文件
     /// </summary>
     public class LogHelper
     {
-        private static readonly string logFileName = @"log\log.log";
+        private static TraceSwitch traceSwitch = new TraceSwitch("MySwitch", string.Empty, "off");//开关
 
         /// <summary>
-        /// log类型、记录时间、信息、
-        /// </summary>
-        private static readonly string logFormat = "{0}\t{1}\t{2}\r\n";
-
-        /// <summary>
-        /// log类型、记录时间、信息、异常
-        /// </summary>
-        private static readonly string logFormat2 = "{0}\t{1}\t{2}\r\n{3}\r\n";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static void Debug(string message)
-        {
-#if DEBUG
-            System.Diagnostics.Debug.Print(message);
-            AppendAllText(string.Format(logFormat, @"Debug", DateTime.Now.ToString(), message));
-#else
-
-            var debug = Utility.ConfigHelper.GetAppSetting(@"DebugLog");
-            if (debug.GetBool(false))
-            {
-                AppendAllText(string.Format(logFormat, @"Debug", DateTime.Now.ToString(), message));
-            }
-#endif
-        }
-
-        /// <summary>
-        /// 
+        /// 信息
         /// </summary>
         public static void Info(string message)
         {
-            AppendAllText(string.Format(logFormat, @"Info", DateTime.Now.ToString(), message));
+            if (traceSwitch.TraceInfo)
+                Trace.TraceInformation(message);
         }
 
         /// <summary>
-        /// 
+        /// 警告
+        /// </summary>
+        public static void Warn(string message)
+        {
+            if (traceSwitch.TraceWarning)
+                Trace.TraceWarning(message);
+        }
+
+        /// <summary>
+        /// 错误
+        /// </summary>
+        public static void Error(Exception ex)
+        {
+            if (traceSwitch.TraceError)
+                Trace.TraceError("{0} {1}", ex.Message, ex.StackTrace);
+        }
+
+        /// <summary>
+        /// 错误
         /// </summary>
         public static void Error(string message, Exception ex)
         {
-            AppendAllText(string.Format(logFormat2, @"Error", DateTime.Now.ToString(), message, ex == null ? null : ex.Message + ex.StackTrace));
-        }
-
-        private static object lockObj = new object();
-        private static void AppendAllText(string message)
-        {
-            //TODO:会带来性能问题
-            lock (lockObj)
-            {
-                System.IO.File.AppendAllText(logFileName, message);
-            }
+            if (traceSwitch.TraceError)
+                Trace.TraceError("{0} {1} {2}", message, ex.Message, ex.StackTrace);
         }
     }
 }

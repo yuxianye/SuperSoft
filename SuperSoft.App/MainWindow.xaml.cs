@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace SuperSoft.App
 {
@@ -24,17 +25,28 @@ namespace SuperSoft.App
     {
         public MainWindow()
         {
-            InitializeComponent();
-            //Title = Utility.ResourceHelper.LoadString("AppName")
+            SetTitle();
+        }
+
+        public void SetTitle()
+        {
+            Title = Utility.Windows.ResourceHelper.LoadString(@"AppName")
+                     + @" "
+                     + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+            //Application.Current.MainWindow.Title = Utility.Windows.ResourceHelper.LoadString(@"AppName")
+            //    + " "
+            //    + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major
+            //    + "."
+            //    + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor;
+
+            //Application.Current.MainWindow.Title = Utility.Windows.ResourceHelper.LoadString("AppName")
             //+ " "
             //+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major
             //+ "."
             //+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor;
-
-            Title = Utility.Windows.ResourceHelper.LoadString(@"AppName")
-            + @" "
-            + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
         }
+
 
         protected override void OnClosing(CancelEventArgs e)
         {

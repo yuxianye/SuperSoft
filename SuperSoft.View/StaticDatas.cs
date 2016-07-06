@@ -16,42 +16,66 @@ namespace SuperSoft.View
         /// </summary>
         public static Patient CurrentOpenedPatient;
 
-        #region combobox数据源
-
-        private static Dictionary<int, string> dictionaryList = new Dictionary<int, string>();
+        public static Patient CurrentSelectedPatient;
 
         private static object lockObj = new object();
+
+        #region 时间选择数据源
+
+        private static Dictionary<int, string> dictionaryListTime = new Dictionary<int, string>();
+
         /// <summary>
         /// 取得时间列表
         /// </summary>
         /// <returns></returns>
         public static Dictionary<int, string> GetTimeList()
         {
-            if (dictionaryList.Count < 1)
+            if (dictionaryListTime.Count < 1)
             {
                 lock (lockObj)
                 {
-                    dictionaryList.Add(Const.MilliSecFor24Hour, ResourceHelper.LoadString(@"MilliSecFor24Hour"));
-                    dictionaryList.Add(Const.MilliSecFor12Hour, ResourceHelper.LoadString(@"MilliSecFor12Hour"));
-                    dictionaryList.Add(Const.MilliSecFor10Hour, ResourceHelper.LoadString(@"MilliSecFor10Hour"));
-                    dictionaryList.Add(Const.MilliSecFor8Hour, ResourceHelper.LoadString(@"MilliSecFor8Hour"));
-                    dictionaryList.Add(Const.MilliSecFor5Hour, ResourceHelper.LoadString(@"MilliSecFor5Hour"));
-                    dictionaryList.Add(Const.MilliSecFor2Hour, ResourceHelper.LoadString(@"MilliSecFor2Hour"));
-                    dictionaryList.Add(Const.MilliSecForOneHour, ResourceHelper.LoadString(@"MilliSecForOneHour"));
-                    dictionaryList.Add(Const.MilliSecForHalfHour, ResourceHelper.LoadString(@"MilliSecForHalfHour"));
-                    dictionaryList.Add(Const.MilliSecFor10Minutes, ResourceHelper.LoadString(@"MilliSecFor10Minutes"));
-                    dictionaryList.Add(Const.MilliSecFor5Minutes, ResourceHelper.LoadString(@"MilliSecFor5Minutes"));
-                    dictionaryList.Add(Const.MilliSecForOneMinutes, ResourceHelper.LoadString(@"MilliSecForOneMinutes"));
-                    dictionaryList.Add(Const.MilliSecForHalfMinutes, ResourceHelper.LoadString(@"MilliSecForHalfMinutes"));
-                    dictionaryList.Add(Const.MilliSecFor10Sec, ResourceHelper.LoadString(@"MilliSecFor10Sec"));
+                    dictionaryListTime.Add(Const.MilliSecFor24Hour, ResourceHelper.LoadString(@"MilliSecFor24Hour"));
+                    dictionaryListTime.Add(Const.MilliSecFor12Hour, ResourceHelper.LoadString(@"MilliSecFor12Hour"));
+                    dictionaryListTime.Add(Const.MilliSecFor10Hour, ResourceHelper.LoadString(@"MilliSecFor10Hour"));
+                    dictionaryListTime.Add(Const.MilliSecFor8Hour, ResourceHelper.LoadString(@"MilliSecFor8Hour"));
+                    dictionaryListTime.Add(Const.MilliSecFor5Hour, ResourceHelper.LoadString(@"MilliSecFor5Hour"));
+                    dictionaryListTime.Add(Const.MilliSecFor2Hour, ResourceHelper.LoadString(@"MilliSecFor2Hour"));
+                    dictionaryListTime.Add(Const.MilliSecForOneHour, ResourceHelper.LoadString(@"MilliSecForOneHour"));
+                    dictionaryListTime.Add(Const.MilliSecForHalfHour, ResourceHelper.LoadString(@"MilliSecForHalfHour"));
+                    dictionaryListTime.Add(Const.MilliSecFor10Minutes, ResourceHelper.LoadString(@"MilliSecFor10Minutes"));
+                    dictionaryListTime.Add(Const.MilliSecFor5Minutes, ResourceHelper.LoadString(@"MilliSecFor5Minutes"));
+                    dictionaryListTime.Add(Const.MilliSecForOneMinutes, ResourceHelper.LoadString(@"MilliSecForOneMinutes"));
+                    dictionaryListTime.Add(Const.MilliSecForHalfMinutes, ResourceHelper.LoadString(@"MilliSecForHalfMinutes"));
+                    dictionaryListTime.Add(Const.MilliSecFor10Sec, ResourceHelper.LoadString(@"MilliSecFor10Sec"));
                 }
             }
-
-            return dictionaryList;
+            return dictionaryListTime;
         }
 
         #endregion
 
+        #region 语言列表数据源
+
+        private static Dictionary<string, string> dictionaryListLanguage = new Dictionary<string, string>();
+
+        /// <summary>
+        /// 取得时间列表
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetLanguageList()
+        {
+            if (dictionaryListLanguage.Count < 1)
+            {
+                lock (lockObj)
+                {
+                    dictionaryListLanguage.Add(@"zh-CN", @"中文");
+                    dictionaryListLanguage.Add(@"en-US", "English");
+                }
+            }
+            return dictionaryListLanguage;
+        }
+
+        #endregion
 
         //public static Model.DataStruct DataStruct;
     }

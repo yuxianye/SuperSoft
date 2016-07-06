@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DE2D4F74
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSoft.Utility.Tests", "SuperSoft.Utility.Tests\SuperSoft.Utility.Tests.csproj", "{2700AB1B-A6D8-4B38-A65F-1C2372E92E92}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperSoft.BLL.Tests", "SuperSoft.BLL.Tests\SuperSoft.BLL.Tests.csproj", "{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{2700AB1B-A6D8-4B38-A65F-1C2372E92E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2700AB1B-A6D8-4B38-A65F-1C2372E92E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2700AB1B-A6D8-4B38-A65F-1C2372E92E92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,5 +93,6 @@ Global
 		{75CA7EE6-BD08-48AA-96D3-85F61A484CD5} = {ABCFD66C-C8E4-4438-AFE6-17186316C787}
 		{188F5A0E-7152-43B4-B4C9-A06890D4DECD} = {ABCFD66C-C8E4-4438-AFE6-17186316C787}
 		{2700AB1B-A6D8-4B38-A65F-1C2372E92E92} = {DE2D4F74-DBB2-4616-8CC6-BAAE3013E355}
+		{647FF672-DDDE-4EC5-A37D-9604B2A9BC27} = {DE2D4F74-DBB2-4616-8CC6-BAAE3013E355}
 	EndGlobalSection
 EndGlobal

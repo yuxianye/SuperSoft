@@ -13,47 +13,21 @@ using System.Threading.Tasks;
 namespace SuperSoft.BLL
 {
     /// <summary>
-    /// ViewProductWorkingSummaryDetailedData业务逻辑层
+    /// ViewPatientsProduct业务逻辑层
     /// 只能查询数据
     /// </summary>
-    public class ViewProductWorkingSummaryDetailedDataBLL : MyClassBase
+    public class ViewPatientsProductBLL : MyClassBase
     {
-        DAL.ViewProductWorkingSummaryDetailedDataDAL dal = new DAL.ViewProductWorkingSummaryDetailedDataDAL();
+        DAL.ViewPatientsProductDAL dal = new DAL.ViewPatientsProductDAL();
 
         #region GetByCondition
 
         /// <summary>
-        /// 查询,使用Id DESC排序
-        /// </summary>
-        /// <param name="therapyMode">therapyMode</param>
-        /// <param name="startTime">startTime</param>
-        /// <param name="endTime">endTime</param>
-        /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryDetailedData> SelectByTherapyModeDataTime(int therapyMode, DateTime startTime, DateTime endTime)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                return dal.SelectByTherapyModeDataTime(therapyMode, startTime, endTime);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
-
-        /// <summary>
-        /// 查询,使用Id DESC排序
+        /// 查询,使用Id desc排序
         /// </summary>
         /// <param name="patientId">patientId</param>
-        /// <param name="therapyMode">therapyMode</param>
-        /// <param name="startTime">startTime</param>
-        /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryDetailedData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual IEnumerable<ViewPatientsProduct> SelectByPatientId(Guid patientId)
         {
             if (Disposed)
             {
@@ -63,7 +37,32 @@ namespace SuperSoft.BLL
             {
                 if (patientId != Guid.Empty)
                 {
-                    return dal.SelectByPatientIdTherapyModeDataTime(patientId, therapyMode, startTime, endTime);
+                    return dal.SelectByPatientId(patientId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="serialNumber">serialNumber</param>
+        /// <returns></returns>
+        public virtual IEnumerable<ViewPatientsProduct> SelectBySerialNumber(string serialNumber)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(serialNumber))
+                {
+                    return dal.SelectBySerialNumber(serialNumber);
                 }
             }
             catch (Exception ex)

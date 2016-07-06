@@ -1,11 +1,4 @@
-using SuperSoft.Utility.Windows;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace SuperSoft.Model
 {
@@ -14,11 +7,6 @@ namespace SuperSoft.Model
     /// </summary>
     public partial class ViewPatientsProduct : EntityBase<Guid>
     {
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public System.Guid Id { get; set; }
 
         /// <summary>
         /// 
@@ -48,11 +36,20 @@ namespace SuperSoft.Model
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<int> ProductModel { get; set; }
+        public int ProductModel { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Nullable<int> TotalWorkingTime { get; set; }
+        public int TotalWorkingTime { get; set; }
+
+        protected override void DisposeManagedResources()
+        {
+            base.DisposeManagedResources();
+            FirstName = null;
+            LastName = null;
+            SerialNumber = null;
+            ProductVersion = null;
+        }
     }
 }

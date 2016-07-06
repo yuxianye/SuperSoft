@@ -1,11 +1,4 @@
-﻿using SuperSoft.Utility.Windows;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SuperSoft.Model
 {
@@ -62,192 +55,192 @@ namespace SuperSoft.Model
         /// <summary>
         /// IPAP
         /// </summary>
-        public Nullable<float> IPAP { get; set; }
+        public float IPAP { get; set; }
 
         /// <summary>
         /// EPAP
         /// </summary>
-        public Nullable<float> EPAP { get; set; }
+        public float EPAP { get; set; }
 
         /// <summary>
         /// 上升时间
         /// </summary>
-        public Nullable<int> RiseTime { get; set; }
+        public int RiseTime { get; set; }
 
         /// <summary>
         /// 呼吸频率
         /// </summary>
-        public Nullable<int> RespiratoryRate { get; set; }
+        public int RespiratoryRate { get; set; }
 
         /// <summary>
         /// 吸气时间
         /// </summary>
-        public Nullable<int> InspireTime { get; set; }
+        public int InspireTime { get; set; }
 
         /// <summary>
         /// 吸气灵敏度
         /// </summary>
-        public Nullable<int> ITrigger { get; set; }
+        public int ITrigger { get; set; }
 
         /// <summary>
         /// 呼气灵敏度
         /// </summary>
-        public Nullable<int> ETrigger { get; set; }
+        public int ETrigger { get; set; }
 
         /// <summary>
         /// 延时升压
         /// </summary>
-        public Nullable<int> Ramp { get; set; }
+        public int Ramp { get; set; }
 
         /// <summary>
         /// 呼气时间
         /// </summary>
-        public Nullable<int> ExhaleTime { get; set; }
+        public int ExhaleTime { get; set; }
 
         /// <summary>
         /// IPAPMax
         /// </summary>
-        public Nullable<float> IPAPMax { get; set; }
+        public float IPAPMax { get; set; }
 
         /// <summary>
         /// EPAPMin
         /// </summary>
-        public Nullable<float> EPAPMin { get; set; }
+        public float EPAPMin { get; set; }
 
         /// <summary>
         /// PSMax
         /// </summary>
-        public Nullable<float> PSMax { get; set; }
+        public float PSMax { get; set; }
 
         /// <summary>
         /// PSMin
         /// </summary>
-        public Nullable<float> PSMin { get; set; }
+        public float PSMin { get; set; }
 
         /// <summary>
         /// CPAP
         /// </summary>
-        public Nullable<float> CPAP { get; set; }
+        public float CPAP { get; set; }
 
         /// <summary>
         /// 舒适程度
         /// </summary>
-        public Nullable<int> CFlex { get; set; }
+        public int CFlex { get; set; }
 
         /// <summary>
         /// CPAPStart
         /// </summary>
-        public Nullable<float> CPAPStart { get; set; }
+        public float CPAPStart { get; set; }
 
         /// <summary>
         /// CPAPMax
         /// </summary>
-        public Nullable<float> CPAPMax { get; set; }
+        public float CPAPMax { get; set; }
 
         /// <summary>
         /// CPAPMin
         /// </summary>
-        public Nullable<float> CPAPMin { get; set; }
+        public float CPAPMin { get; set; }
 
         /// <summary>
         /// 报警
         /// </summary>
-        public Nullable<int> Alert { get; set; }
+        public int Alert { get; set; }
 
         /// <summary>
         /// 报警-管路
         /// </summary>
-        public Nullable<int> Alert_Tube { get; set; }
+        public int Alert_Tube { get; set; }
 
         /// <summary>
         /// 报警-窒息
         /// </summary>
-        public Nullable<int> Alert_Apnea { get; set; }
+        public int Alert_Apnea { get; set; }
 
         /// <summary>
         /// 报警-分钟通气量
         /// </summary>
-        public Nullable<int> Alert_MinuteVentilation { get; set; }
+        public int Alert_MinuteVentilation { get; set; }
 
         /// <summary>
         /// 报警-高呼吸频率
         /// </summary>
-        public Nullable<int> Alert_HRate { get; set; }
+        public int Alert_HRate { get; set; }
 
         /// <summary>
         /// 报警-低呼吸频率
         /// </summary>
-        public Nullable<int> Alert_LRate { get; set; }
+        public int Alert_LRate { get; set; }
 
         /// <summary>
         /// 报警-预留1
         /// </summary>
-        public Nullable<int> Alert_Reserve1 { get; set; }
+        public int Alert_Reserve1 { get; set; }
 
         /// <summary>
         /// 报警-预留2
         /// </summary>
-        public Nullable<int> Alert_Reserve2 { get; set; }
+        public int Alert_Reserve2 { get; set; }
 
         /// <summary>
         /// 报警-预留3
         /// </summary>
-        public Nullable<int> Alert_Reserve3 { get; set; }
+        public int Alert_Reserve3 { get; set; }
 
         /// <summary>
         /// 报警-预留4
         /// </summary>
-        public Nullable<int> Alert_Reserve4 { get; set; }
+        public int Alert_Reserve4 { get; set; }
 
         /// <summary>
         /// 配置-湿化档位
         /// </summary>
-        public Nullable<int> Config_HumidifierLevel { get; set; }
+        public int Config_HumidifierLevel { get; set; }
 
         /// <summary>
         /// 配置-数据存储
         /// </summary>
-        public Nullable<int> Config_DataStore { get; set; }
+        public int Config_DataStore { get; set; }
 
         /// <summary>
         /// 配置-智能启动
         /// </summary>
-        public Nullable<int> Config_SmartStart { get; set; }
+        public int Config_SmartStart { get; set; }
 
         /// <summary>
         /// 配置-压力单位
         /// </summary>
-        public Nullable<int> Config_PressureUnit { get; set; }
+        public int Config_PressureUnit { get; set; }
 
         /// <summary>
         /// 配置-语言
         /// </summary>
-        public Nullable<int> Config_Language { get; set; }
+        public int Config_Language { get; set; }
 
         /// <summary>
         /// 配置-背光
         /// </summary>
-        public Nullable<int> Config_Backlight { get; set; }
+        public int Config_Backlight { get; set; }
 
         /// <summary>
         /// 配置-面罩压力
         /// </summary>
-        public Nullable<int> Config_MaskPressure { get; set; }
+        public int Config_MaskPressure { get; set; }
 
         /// <summary>
         /// 配置-临床设置
         /// </summary>
-        public Nullable<int> Config_ClinicalSet { get; set; }
+        public int Config_ClinicalSet { get; set; }
 
         /// <summary>
         /// 配置-预留1
         /// </summary>
-        public Nullable<int> Config_Reserve1 { get; set; }
+        public int Config_Reserve1 { get; set; }
 
         /// <summary>
         /// 配置-预留2
         /// </summary>
-        public Nullable<int> Config_Reserve2 { get; set; }
+        public int Config_Reserve2 { get; set; }
 
         /// <summary>
         /// 克隆
@@ -261,7 +254,8 @@ namespace SuperSoft.Model
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            //Content = null;
+            FileName = null;
+            ProductVersion = null;
         }
     }
 }

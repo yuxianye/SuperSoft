@@ -118,25 +118,31 @@ namespace SuperSoft.App
                     UriKind.Relative);
                 //LogHelper.Info("app started, Language:" + languageString);
 
-                //设置标题
+                //设置标题,第一次启动时不执行，在界面改变语言之后执行。
                 if (!Equals(Application.Current.MainWindow, null))
                 {
                     Application.Current.MainWindow.Title = Utility.Windows.ResourceHelper.LoadString(@"AppName")
-                        + " "
-                        + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major
-                        + "."
-                        + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor;
+                        + @" " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+                    //Application.Current.MainWindow.Title = Utility.Windows.ResourceHelper.LoadString(@"AppName")
+                    //    + " "
+                    //    + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major
+                    //    + "."
+                    //    + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor;
+
+                    //Application.Current.MainWindow.Title = Utility.Windows.ResourceHelper.LoadString("AppName")
+                    //+ " "
+                    //+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major
+                    //+ "."
+                    //+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor;
                 }
             }
             //初始化错误提示
             catch (Exception e)
             {
-                LogHelper.Error(ToString(), e);
-                LogHelper.Debug(ToString());
-                LogHelper.Info(ToString());
-
+                LogHelper.Error(e);
                 MessageBox.Show(e.Message, @"Application Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //Shutdown();
+                Application.Current.Shutdown();
             }
             finally
             {

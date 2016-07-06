@@ -17,8 +17,8 @@
             <ColumnDefinition Width="{DynamicResource LeftPanelWidth}" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Style="{StaticResource TextBlockDefaultStyle}"
-                   Text="{StaticResource  WithoutData }" />
+        <TextBlock Style="{DynamicResource TextBlockDefaultStyle}"
+                   Text="{DynamicResource  WithoutData }" />
         <DataGrid Name="DataGridAllPatientList"
                   Grid.Column="0"
                   IsReadOnly="True"

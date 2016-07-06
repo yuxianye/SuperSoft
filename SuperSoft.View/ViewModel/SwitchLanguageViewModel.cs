@@ -16,10 +16,7 @@ namespace SuperSoft.View.ViewModel
     {
         public SwitchLanguageViewModel()
         {
-            LangList = new ObservableCollection<KeyValuePair<string, string>>();
-            LangList.Add(new KeyValuePair<string, string>(@"zh-CN", @"中文"));
-            LangList.Add(new KeyValuePair<string, string>("en-US", "English"));
-
+            LangList = StaticDatas.GetLanguageList();
             loadConfigValue();
             ConfirmCommand = new RelayCommand(OnExecuteConfirmCommand, OnCanExecuteConfirmCommand);
             CancelCommand = new RelayCommand(OnExecuteCancelCommand);
@@ -36,13 +33,7 @@ namespace SuperSoft.View.ViewModel
 
         #region LangList
 
-        private ObservableCollection<KeyValuePair<string, string>> langList;
-
-        public ObservableCollection<KeyValuePair<string, string>> LangList
-        {
-            get { return langList; }
-            set { Set(ref langList, value); }
-        }
+        public Dictionary<string, string> LangList { get; set; }
 
         #endregion
 

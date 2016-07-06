@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36FCE89A-58CF-4611-8190-5FF0766DDC30}</ProjectGuid>
+    <ProjectGuid>{647FF672-DDDE-4EC5-A37D-9604B2A9BC27}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperSoft.UtilityTests</RootNamespace>
-    <AssemblyName>SuperSoft.UtilityTests</AssemblyName>
+    <RootNamespace>SuperSoft.BLL.Tests</RootNamespace>
+    <AssemblyName>SuperSoft.BLL.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,14 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="EncryptAndDecrypteTests.cs" />
+    <Compile Include="PatientBLLTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SuperSoft.Utility\SuperSoft.Utility.csproj">
-      <Project>{AC6691FB-7EF2-4AB0-BD03-5B2C186AE823}</Project>
-      <Name>SuperSoft.Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

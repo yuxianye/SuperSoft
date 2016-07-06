@@ -1,11 +1,4 @@
-﻿using SuperSoft.Utility.Windows;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SuperSoft.Model
 {

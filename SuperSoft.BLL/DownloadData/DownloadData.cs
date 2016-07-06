@@ -23,7 +23,6 @@ namespace SuperSoft.BLL.DownloadData
     {
         public DownloadData()
         {
-            oneHourTotalMilliseconds = (int)ResourceHelper.FindResource("OneHourTotalMilliseconds");
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.WorkerReportsProgress = true;
             backgroundWorker.WorkerSupportsCancellation = true;
@@ -144,7 +143,7 @@ namespace SuperSoft.BLL.DownloadData
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private Guid patientId;
         private Guid productId;
-        private readonly float oneHourTotalMilliseconds = 3600000;
+
 
         #endregion
 
@@ -258,8 +257,7 @@ namespace SuperSoft.BLL.DownloadData
             var directoryInfo = new DirectoryInfo(rootName);
 
             //得到所有详细数据文件的列表,搜索所有 xxxxxx.dat 的文件和文件件
-            var searchedFileInfos = directoryInfo.GetFileSystemInfos(ResourceHelper.LoadString("DataFileFilter"),
-                SearchOption.AllDirectories);
+            var searchedFileInfos = directoryInfo.GetFileSystemInfos(Const.DatFileFilter, SearchOption.AllDirectories);
             directoryInfo = null;
             // Use ParallelOptions instance to store the CancellationToken
             var parallelOptions = new ParallelOptions();
@@ -282,7 +280,7 @@ namespace SuperSoft.BLL.DownloadData
                         var strPath =
                             datFile.FullName.Replace(rootName, "")
                                 .Replace("\\", "")
-                                .Replace(ResourceHelper.LoadString("DataFileFilter2"), "");
+                                .Replace(Const.RMSFileExtensionData, "");
                         var dateTime = DateTime.ParseExact(strPath,
                             "yyMMddHHmmss",
                             CultureInfo.InvariantCulture);
@@ -318,8 +316,33 @@ namespace SuperSoft.BLL.DownloadData
             var needUpdata = new List<NeedUpDateTherapyMode>();
             var progress = 0;
             var datFileCount = datFileInfos.Count();
-            //循环需要处理的每个文件，采用并行迭代
-            Parallel.ForEach(datFileInfos, parallelOptions, datFile =>
+            ////循环需要处理的每个文件，采用并行迭代
+            //Parallel.ForEach(datFileInfos, parallelOptions, datFile =>
+            //{
+            //    parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+            //    IEnumerable<NeedUpDateTherapyMode> needUpdataTmp = new Collection<NeedUpDateTherapyMode>();
+            //    //如果文件存在则继续执行
+            //    if (datFile.Exists)
+            //    {
+            //        var DetailedFileUnpack = new DetailedFileUnpack(indexFileField, datFile.FullName);
+            //        needUpdataTmp = DetailedFileUnpack.StartUnpackAndSaveToDataBase();
+            //    }
+
+            //    //更新进度
+            //    lock (objLock)
+            //    {
+            //        if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
+            //        {
+            //            needUpdata.AddRange(needUpdataTmp);
+            //        }
+
+            //        progress++;
+            //        // 前面有2% 
+            //        var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
+            //        CallProgressChanged(new ProgressChangedEventArgs(a, null));
+            //    }
+            //});
+            foreach (var datFile in datFileInfos)
             {
                 parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                 IEnumerable<NeedUpDateTherapyMode> needUpdataTmp = new Collection<NeedUpDateTherapyMode>();
@@ -331,19 +354,20 @@ namespace SuperSoft.BLL.DownloadData
                 }
 
                 //更新进度
-                lock (objLock)
+                //lock (objLock)
+                //{
+                if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
                 {
-                    if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
-                    {
-                        needUpdata.AddRange(needUpdataTmp);
-                    }
-
-                    progress++;
-                    // 前面有2% 
-                    var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
-                    CallProgressChanged(new ProgressChangedEventArgs(a, null));
+                    needUpdata.AddRange(needUpdataTmp);
                 }
-            });
+
+                progress++;
+                // 前面有2% 
+                var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
+                CallProgressChanged(new ProgressChangedEventArgs(a, null));
+                //}
+            }
+
 
             //更新产品型号
             using (var productBLL = new ProductBLL())
@@ -458,19 +482,19 @@ namespace SuperSoft.BLL.DownloadData
 
                 productWorkingStatisticsData.CountAI =
                     Convert.ToInt32(listDetailedRecord.Count(a => a.Events == 2) /
-                                    (listSummaryDetailed.Sum(a => a.WorkingTime) / oneHourTotalMilliseconds));
+                                    ((double)listSummaryDetailed.Sum(a => a.WorkingTime) / Const.MilliSecForOneHour));
                 productWorkingStatisticsData.CountHI =
                     Convert.ToInt32(listDetailedRecord.Count(a => a.Events == 1) /
-                                    (listSummaryDetailed.Sum(a => a.WorkingTime) / oneHourTotalMilliseconds));
+                                    ((double)listSummaryDetailed.Sum(a => a.WorkingTime) / Const.MilliSecForOneHour));
                 productWorkingStatisticsData.CountAHI = productWorkingStatisticsData.CountAI +
                                                         productWorkingStatisticsData.CountHI;
 
                 productWorkingStatisticsData.CountSnore =
                     Convert.ToInt32(listDetailedRecord.Count(a => a.Events == 4) /
-                                    listSummaryDetailed.Sum(a => a.WorkingTime) / oneHourTotalMilliseconds);
+                                    (double)listSummaryDetailed.Sum(a => a.WorkingTime) / Const.MilliSecForOneHour);
                 productWorkingStatisticsData.CountPassive =
                     Convert.ToInt32(listDetailedRecord.Count(a => a.TriggerMode == 127) /
-                                    listSummaryDetailed.Sum(a => a.WorkingTime) / oneHourTotalMilliseconds);
+                                    (double)listSummaryDetailed.Sum(a => a.WorkingTime) / Const.MilliSecForOneHour);
 
                 productWorkingStatisticsData.PressureMax = listDetailedRecord.Max(a => a.TargetPressure);
                 productWorkingStatisticsData.PressureP95 =
@@ -632,7 +656,7 @@ namespace SuperSoft.BLL.DownloadData
 
         #endregion
 
-        #region 下载文件 无有索引文件
+        #region 下载文件 无索引文件
 
         private void processRespircareDatFile(DoWorkEventArgs e, string respircareFilePath)
         {

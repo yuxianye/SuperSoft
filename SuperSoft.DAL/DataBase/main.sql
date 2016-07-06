@@ -9,7 +9,7 @@ Target Server Type    : SQLite
 Target Server Version : 30714
 File Encoding         : 65001
 
-Date: 2016-06-23 13:48:32
+Date: 2016-07-01 14:10:40
 */
 
 PRAGMA foreign_keys = OFF;
@@ -185,25 +185,25 @@ CREATE TABLE [ProductWorkingSummaryDatas] (
     [CPAPMax] real,
     [CPAPMin] real,
     [Alert] integer,
-    [Alert-Tube] integer,
-    [Alert-Apnea] integer,
-    [Alert-MinuteVentilation] integer,
-    [Alert-HRate] integer,
-    [Alert-LRate] integer,
-    [Alert-Reserve1] integer,
-    [Alert-Reserve2] integer,
-    [Alert-Reserve3] integer,
-    [Alert-Reserve4] integer,
-    [Config-HumidifierLevel] integer,
-    [Config-DataStore] integer,
-    [Config-SmartStart] integer,
-    [Config-PressureUnit] integer,
-    [Config-Language] integer,
-    [Config-Backlight] integer,
-    [Config-MaskPressure] integer,
-    [Config-ClinicalSet] integer,
-    [Config-Reserve1] integer,
-    [Config-Reserve2] integer
+    [Alert_Tube] integer,
+    [Alert_Apnea] integer,
+    [Alert_MinuteVentilation] integer,
+    [Alert_HRate] integer,
+    [Alert_LRate] integer,
+    [Alert_Reserve1] integer,
+    [Alert_Reserve2] integer,
+    [Alert_Reserve3] integer,
+    [Alert_Reserve4] integer,
+    [Config_HumidifierLevel] integer,
+    [Config_DataStore] integer,
+    [Config_SmartStart] integer,
+    [Config_PressureUnit] integer,
+    [Config_Language] integer,
+    [Config_Backlight] integer,
+    [Config_MaskPressure] integer,
+    [Config_ClinicalSet] integer,
+    [Config_Reserve1] integer,
+    [Config_Reserve2] integer
 );
 
 -- ----------------------------

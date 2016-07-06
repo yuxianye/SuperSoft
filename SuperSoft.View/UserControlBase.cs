@@ -12,7 +12,6 @@ namespace SuperSoft.View
     /// </summary>
     public class UserControlBase : UserControl, IDisposable
     {
-
         #region  释放资源
 
         /// <summary>
