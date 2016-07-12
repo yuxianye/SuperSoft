@@ -18,6 +18,10 @@ namespace SuperSoft.View
 
         public static Patient CurrentSelectedPatient;
 
+        public static IEnumerable<Doctor> AllDoctorList { get; internal set; }
+
+        public static Doctor CurrentSelectedDoctor { get; internal set; }
+
         private static object lockObj = new object();
 
         #region 时间选择数据源

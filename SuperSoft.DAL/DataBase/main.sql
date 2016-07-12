@@ -9,7 +9,7 @@ Target Server Type    : SQLite
 Target Server Version : 30714
 File Encoding         : 65001
 
-Date: 2016-07-01 14:10:40
+Date: 2016-07-12 11:24:58
 */
 
 PRAGMA foreign_keys = OFF;
@@ -23,10 +23,6 @@ CREATE TABLE [Doctors] (
     [FirstName] nvarchar(16) NOT NULL,
     [LastName] nvarchar(16) NOT NULL
 );
-
--- ----------------------------
--- Records of Doctors
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for Patients
@@ -50,10 +46,6 @@ CREATE TABLE [Patients] (
 );
 
 -- ----------------------------
--- Records of Patients
--- ----------------------------
-
--- ----------------------------
 -- Table structure for PatientsProducts
 -- ----------------------------
 DROP TABLE IF EXISTS "main"."PatientsProducts";
@@ -62,10 +54,6 @@ CREATE TABLE [PatientsProducts] (
     [PatientId] guid NOT NULL,
     [ProductId] guid NOT NULL
 );
-
--- ----------------------------
--- Records of PatientsProducts
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for Products
@@ -80,10 +68,6 @@ CREATE TABLE [Products] (
 );
 
 -- ----------------------------
--- Records of Products
--- ----------------------------
-
--- ----------------------------
 -- Table structure for ProductWorkingDetailedDatas
 -- ----------------------------
 DROP TABLE IF EXISTS "main"."ProductWorkingDetailedDatas";
@@ -92,10 +76,6 @@ CREATE TABLE [ProductWorkingDetailedDatas] (
     [ProductWorkingSummaryDataId] guid,
     [Content] blob
 );
-
--- ----------------------------
--- Records of ProductWorkingDetailedDatas
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for ProductWorkingStatisticsDatas
@@ -146,10 +126,6 @@ CREATE TABLE [ProductWorkingStatisticsDatas] (
     [EPAPP95] real,
     [EPAPMedian] real
 );
-
--- ----------------------------
--- Records of ProductWorkingStatisticsDatas
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for ProductWorkingSummaryDatas
@@ -207,10 +183,6 @@ CREATE TABLE [ProductWorkingSummaryDatas] (
 );
 
 -- ----------------------------
--- Records of ProductWorkingSummaryDatas
--- ----------------------------
-
--- ----------------------------
 -- View structure for ViewPatientsProducts
 -- ----------------------------
 DROP VIEW IF EXISTS "main"."ViewPatientsProducts";
@@ -261,3 +233,30 @@ FROM
 	ProductWorkingSummaryDatas AS ps
 LEFT JOIN ProductWorkingDetailedDatas AS pd ON ps.Id = pd.ProductWorkingSummaryDataId
 LEFT JOIN PatientsProducts AS pp ON pp.ProductId = ps.ProductId;
+
+-- ----------------------------
+-- Triggers structure for table Patients
+-- ----------------------------
+DROP TRIGGER IF EXISTS "main"."DeleteAllPatientInfoTrigger";
+DELIMITER ;;
+CREATE TRIGGER "DeleteAllPatientInfoTrigger" AFTER DELETE ON "Patients"
+BEGIN
+  /* Trigger action (UPDATE, INSERT, DELETE or SELECT statements) goes here. */
+
+delete from ProductWorkingStatisticsDatas  where  ProductId in (select ProductId from PatientsProducts where PatientId = old.Id);
+
+delete from ProductWorkingDetailedDatas  where  ProductWorkingSummaryDataId in 
+(select Id From ProductWorkingSummaryDatas where ProductId in 
+(select ProductId from PatientsProducts where PatientId = old.Id));
+
+delete from ProductWorkingSummaryDatas  where  ProductId in
+(select ProductId from PatientsProducts where PatientId = old.Id);
+
+delete from Products  where  Id in (select ProductId from PatientsProducts where PatientId = old.Id);
+
+delete from Patients  where  Id= old.Id;
+
+delete from PatientsProducts  where  PatientId=old.Id;
+END
+;;
+DELIMITER ;

@@ -19,12 +19,26 @@ namespace SuperSoft.View.ViewModel
             get { return parameter; }
             set
             {
-                if (Equals(parameter, value)) return;
-                parameter = value;
-                if (Equals(parameter, null)) return;
-                OnParameterChanged();
+                //参数相同则不触发，有时需要重复触发
+                if (IsParameterRepeatChanged)
+                {
+                    parameter = value;
+                    OnParameterChanged();
+                }
+                else
+                {
+                    if (Equals(parameter, value)) return;
+                    parameter = value;
+                    OnParameterChanged();
+                }
+
             }
         }
+
+        /// <summary>
+        /// 是否重复触发参数改变方法
+        /// </summary>
+        public bool IsParameterRepeatChanged { get; set; } = false;
 
         protected virtual void OnParameterChanged()
         {

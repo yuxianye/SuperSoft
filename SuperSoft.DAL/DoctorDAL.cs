@@ -39,11 +39,13 @@ namespace SuperSoft.DAL
 
         private const string selectById = "SELECT Id,FirstName,LastName FROM Doctors WHERE Id =@Id";
 
-        private const string selectPaging = "SELECT Id,FirstName,LastName FROM Doctors ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
-        private const string selectByFirstName = "SELECT Id,FirstName,LastName FROM Doctors WHERE FirstName LIKE %@FirstName% ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+        private const string selectPaging = "SELECT Id,FirstName,LastName FROM Doctors ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
+        private const string selectByFirstName = "SELECT Id,FirstName,LastName FROM Doctors WHERE FirstName LIKE %@FirstName% ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectByFirstNameCount = "SELECT COUNT(*) FROM Doctors WHERE FirstName LIKE %@FirstName%";
 
-        private const string selectByFirstName2 = "SELECT Id,FirstName,LastName FROM Doctors WHERE FirstName LIKE %@FirstName% ORDER BY Id DESC";
+        private const string selectByFirstName2 = @"SELECT Id,FirstName,LastName FROM Doctors WHERE FirstName LIKE @FirstName";
+
+        private const string selectByLastName = @"SELECT Id,FirstName,LastName FROM Doctors WHERE LastName LIKE @LastName";
 
         #endregion
 
@@ -111,7 +113,7 @@ namespace SuperSoft.DAL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<Doctor> entitys)
+        public virtual void Insert(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -146,7 +148,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -269,7 +271,7 @@ namespace SuperSoft.DAL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<Doctor> entitys)
+        public virtual void Delete(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -295,7 +297,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -359,7 +361,7 @@ namespace SuperSoft.DAL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<Doctor> entitys)
+        public virtual void Update(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -394,7 +396,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -439,13 +441,17 @@ namespace SuperSoft.DAL
             {
                 throw new ObjectDisposedException(ToString());
             }
+            Doctor result = null;
             if (id != Guid.Empty)
             {
-                Doctor result = new Doctor();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new Doctor();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -454,9 +460,8 @@ namespace SuperSoft.DAL
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(Doctor);
+            return result;
         }
 
         /// <summary>
@@ -466,7 +471,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Doctor> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -474,12 +479,16 @@ namespace SuperSoft.DAL
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Doctor> resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+            ICollection<Doctor> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
-                ))
+            ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+                }
                 while (reader.Read())
                 {
                     Doctor result = new Doctor();
@@ -501,7 +510,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Doctor> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -511,13 +520,17 @@ namespace SuperSoft.DAL
                 new SQLiteParameter("@FirstName", firstName)
                 ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Doctor> resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+            ICollection<Doctor> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByFirstName,
                 new SQLiteParameter("@FirstName", firstName),
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+                }
                 while (reader.Read())
                 {
                     Doctor result = new Doctor();
@@ -536,17 +549,23 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="firstName">firstName</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectByFirstName(string firstName)
+        public virtual ICollection<Doctor> SelectByFirstName(string firstName)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<Doctor> resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+            ICollection<Doctor> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByFirstName2,
-                new SQLiteParameter("@FirstName", firstName)
+             new SQLiteParameter("@FirstName", "%" + firstName + "%")
+
+
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+                }
                 while (reader.Read())
                 {
                     Doctor result = new Doctor();
@@ -560,6 +579,39 @@ namespace SuperSoft.DAL
             return resultList;
         }
 
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="lastName">lastName</param>
+        /// <returns></returns>
+        public virtual ICollection<Doctor> SelectByLastName(string lastName)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Doctor> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByLastName,
+                new SQLiteParameter("@LastName", "%" + lastName + "%")
+
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Doctor>();
+                }
+                while (reader.Read())
+                {
+                    Doctor result = new Doctor();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
 
         #endregion
 

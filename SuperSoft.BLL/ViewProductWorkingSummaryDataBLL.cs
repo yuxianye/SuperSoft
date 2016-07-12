@@ -30,7 +30,7 @@ namespace SuperSoft.BLL
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ViewProductWorkingSummaryData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {

@@ -9,7 +9,7 @@ namespace SuperSoft.Model
     /// 子类的字段名称类型和数据库中的表字段一一对应
     /// </summary>
     [Serializable]
-    public abstract class EntityBase<TKey> : MyClassBase
+    public abstract class EntityBase<TKey> : MyNotifyClassBase
     {
         #region 构造函数
 

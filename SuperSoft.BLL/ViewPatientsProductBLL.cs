@@ -27,7 +27,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="patientId">patientId</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewPatientsProduct> SelectByPatientId(Guid patientId)
+        public virtual ICollection<ViewPatientsProduct> SelectByPatientId(Guid patientId)
         {
             if (Disposed)
             {
@@ -52,7 +52,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="serialNumber">serialNumber</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewPatientsProduct> SelectBySerialNumber(string serialNumber)
+        public virtual ICollection<ViewPatientsProduct> SelectBySerialNumber(string serialNumber)
         {
             if (Disposed)
             {

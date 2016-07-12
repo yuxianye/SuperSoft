@@ -40,11 +40,11 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
 
         private const string selectById = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products WHERE Id =@Id";
 
-        private const string selectPaging = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
-        private const string selectBySerialNumber = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products WHERE SerialNumber=@SerialNumber ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+        private const string selectPaging = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
+        private const string selectBySerialNumber = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products WHERE SerialNumber=@SerialNumber ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectBySerialNumberCount = "SELECT COUNT(*) FROM Products WHERE SerialNumber=@SerialNumber";
 
-        private const string selectBySerialNumber2 = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
+        private const string selectBySerialNumber2 = "SELECT Id,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime FROM Products WHERE SerialNumber=@SerialNumber";
 
         #endregion
 
@@ -116,7 +116,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<Product> entitys)
+        public virtual void Insert(ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -151,7 +151,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<Product> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -274,7 +274,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<Product> entitys)
+        public virtual void Delete(ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -300,7 +300,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<Product> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -368,7 +368,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<Product> entitys)
+        public virtual void Update(ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -403,7 +403,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<Product> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -448,13 +448,17 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             {
                 throw new ObjectDisposedException(ToString());
             }
+            Product result = null;
             if (id != Guid.Empty)
             {
-                Product result = new Product();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new Product();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -465,9 +469,8 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(Product);
+            return result;
         }
 
         /// <summary>
@@ -477,7 +480,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Product> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Product> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -485,12 +488,16 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Product> resultList = new System.Collections.ObjectModel.Collection<Product>();
+            ICollection<Product> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Product>();
+                }
                 while (reader.Read())
                 {
                     Product result = new Product();
@@ -514,7 +521,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Product> SelectBySerialNumber(string serialNumber, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Product> SelectBySerialNumber(string serialNumber, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -524,13 +531,17 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
                  new SQLiteParameter("@SerialNumber", serialNumber)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Product> resultList = new System.Collections.ObjectModel.Collection<Product>();
+            ICollection<Product> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber,
                 new SQLiteParameter("@SerialNumber", serialNumber),
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Product>();
+                }
                 while (reader.Read())
                 {
                     Product result = new Product();
@@ -551,24 +562,28 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="serialNumber">serialNumber</param>
         /// <returns></returns>
-        public virtual IEnumerable<Product> SelectBySerialNumber(string serialNumber)
+        public virtual ICollection<Product> SelectBySerialNumber(string serialNumber)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<Product> resultList = new System.Collections.ObjectModel.Collection<Product>();
+            ICollection<Product> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber2,
                 new SQLiteParameter("@SerialNumber", serialNumber)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Product>();
+                }
                 while (reader.Read())
                 {
                     Product result = new Product();
                     result.Id = reader.GetGuid(0);
                     result.SerialNumber = reader.GetString(1);
-                    result.ProductVersion = reader.GetString(2);
+                    result.ProductVersion = reader.GetValue(2).GetString();
                     result.ProductModel = reader.GetInt32(3);
                     result.TotalWorkingTime = reader.GetInt32(4);
                     resultList.Add(result);

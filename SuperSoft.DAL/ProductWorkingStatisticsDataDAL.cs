@@ -31,6 +31,7 @@ namespace SuperSoft.DAL
         #region 数据库操作字符串SQL语句
         //43个字段
         private const string selectCount = "SELECT COUNT(*) FROM ProductWorkingStatisticsDatas";
+
         private const string insert = @"INSERT INTO ProductWorkingStatisticsDatas(
 Id,ProductId,TherapyMode,DataTime,TotalUsage,CountAHI,CountAI,CountHI,CountSnore,CountPassive,PressureMax,PressureP95,PressureMedian,FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,
 TidalVolumeMax,TidalVolumeP95,TidalVolumeMedian,MinuteVentilationMax,MinuteVentilationP95,MinuteVentilationMedian,SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,
@@ -39,7 +40,9 @@ VALUES(@Id,@ProductId,@TherapyMode,@DataTime,@TotalUsage,@CountAHI,@CountAI,@Cou
 @FlowMedian,@LeakMax,@LeakP95,@LeakMedian,@TidalVolumeMax,@TidalVolumeP95,@TidalVolumeMedian,@MinuteVentilationMax,@MinuteVentilationP95,@MinuteVentilationMedian,@SpO2Max,
 @SpO2P95,@SpO2Median,@PulseRateMax,@PulseRateP95,@PulseRateMedian,@RespiratoryRateMax,@RespiratoryRateP95,@RespiratoryRateMedian,@IERatioMax,@IERatioP95,@IERatioMedian,
 @IPAPMax,@IPAPP95,@IPAPMedian,@EPAPMax,@EPAPP95,@EPAPMedian)";
+
         private const string deleteById = "DELETE FROM ProductWorkingStatisticsDatas WHERE Id=@Id";
+
         private const string deleteByIds = "DELETE FROM ProductWorkingStatisticsDatas WHERE Id IN (@Ids)";
 
         private const string updateById = @"UPDATE ProductWorkingStatisticsDatas SET Id=@Id,ProductId=@ProductId,TherapyMode=@TherapyMode,DataTime=@DataTime,
@@ -62,16 +65,16 @@ FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolume
 SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
 IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
 FROM ProductWorkingStatisticsDatas 
-ORDER BY Id DESC 
-LIMIT @PageSize OFFSET @OffictCount";
+ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
+
         private const string selectByProductIdTherapyModeDataTime = @"SELECT Id,ProductId,TherapyMode,DataTime,TotalUsage,CountAHI,CountAI,CountHI,CountSnore,CountPassive,PressureMax,PressureP95,PressureMedian,
 FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolumeP95,TidalVolumeMedian,MinuteVentilationMax,MinuteVentilationP95,MinuteVentilationMedian,
 SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
 IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
 FROM ProductWorkingStatisticsDatas 
 WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime 
-ORDER BY Id DESC 
-LIMIT @PageSize OFFSET @OffictCount";
+ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+
         private const string selectByProductIdTherapyModeDataTimeCount = @"SELECT COUNT(*) FROM ProductWorkingStatisticsDatas 
 WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime";
 
@@ -80,8 +83,16 @@ FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolume
 SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
 IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
 FROM ProductWorkingStatisticsDatas 
-WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime 
-ORDER BY Id DESC";
+WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime ";
+
+        private const string selectByProductIdTherapyModeDataTime3 = @"SELECT Id,ProductId,TherapyMode,DataTime,TotalUsage,CountAHI,CountAI,CountHI,CountSnore,CountPassive,PressureMax,PressureP95,PressureMedian,
+FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolumeP95,TidalVolumeMedian,MinuteVentilationMax,MinuteVentilationP95,MinuteVentilationMedian,
+SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
+IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
+FROM ProductWorkingStatisticsDatas 
+WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime ";
+
+        private const string deleteByProductId = @"DELETE FROM ProductWorkingStatisticsDatas WHERE ProductId =@ProductId";
         #endregion
 
         #region Count
@@ -228,7 +239,7 @@ ORDER BY Id DESC";
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Insert(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -263,7 +274,7 @@ ORDER BY Id DESC";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -386,7 +397,7 @@ ORDER BY Id DESC";
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Delete(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -412,7 +423,7 @@ ORDER BY Id DESC";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -427,6 +438,25 @@ ORDER BY Id DESC";
             }
         }
 
+        /// <summary>
+        /// 删除对象，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="productId">productId</param>
+        public virtual void DeleteByProductId(SQLiteTransaction transaction, Guid productId)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            if (productId != Guid.Empty)
+            {
+                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductId,
+                   new SQLiteParameter("@ProductId", productId)
+                   );
+            }
+
+        }
         #endregion
 
         #region Update
@@ -556,7 +586,7 @@ ORDER BY Id DESC";
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Update(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -591,7 +621,7 @@ ORDER BY Id DESC";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -636,13 +666,17 @@ ORDER BY Id DESC";
             {
                 throw new ObjectDisposedException(ToString());
             }
+            ProductWorkingStatisticsData result = null;
             if (id != Guid.Empty)
             {
-                ProductWorkingStatisticsData result = new ProductWorkingStatisticsData();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new ProductWorkingStatisticsData();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -691,9 +725,8 @@ ORDER BY Id DESC";
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(ProductWorkingStatisticsData);
+            return null;
         }
 
         /// <summary>
@@ -703,7 +736,7 @@ ORDER BY Id DESC";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -711,12 +744,16 @@ ORDER BY Id DESC";
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<ProductWorkingStatisticsData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+            ICollection<ProductWorkingStatisticsData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingStatisticsData result = new ProductWorkingStatisticsData();
@@ -781,7 +818,7 @@ ORDER BY Id DESC";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -794,7 +831,7 @@ ORDER BY Id DESC";
                 new SQLiteParameter("@EndTime", endTime)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<ProductWorkingStatisticsData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+            ICollection<ProductWorkingStatisticsData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime,
                 new SQLiteParameter("@ProductId", productId),
                 new SQLiteParameter("@TherapyMode", therapyMode),
@@ -804,6 +841,10 @@ ORDER BY Id DESC";
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingStatisticsData result = new ProductWorkingStatisticsData();
@@ -865,14 +906,93 @@ ORDER BY Id DESC";
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime dataTime)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<ProductWorkingStatisticsData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+            ICollection<ProductWorkingStatisticsData> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime3,
+                new SQLiteParameter("@ProductId", productId),
+                new SQLiteParameter("@TherapyMode", therapyMode),
+                new SQLiteParameter("@DataTime", dataTime)
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+                }
+                while (reader.Read())
+                {
+                    ProductWorkingStatisticsData result = new ProductWorkingStatisticsData();
+                    result.Id = reader.GetGuid(0);
+                    result.ProductId = reader.GetGuid(1);
+                    result.TherapyMode = reader.GetInt32(2);
+                    result.DataTime = reader.GetDateTime(3);
+                    result.TotalUsage = reader.GetInt64(4);
+                    result.CountAHI = reader.GetInt32(5);
+                    result.CountAI = reader.GetInt32(6);
+                    result.CountHI = reader.GetInt32(7);
+                    result.CountSnore = reader.GetInt32(8);
+                    result.CountPassive = reader.GetInt32(9);
+                    result.PressureMax = reader.GetFloat(10);
+                    result.PressureP95 = reader.GetFloat(11);
+                    result.PressureMedian = reader.GetFloat(12);
+                    result.FlowMax = reader.GetFloat(13);
+                    result.FlowP95 = reader.GetFloat(14);
+                    result.FlowMedian = reader.GetFloat(15);
+                    result.LeakMax = reader.GetFloat(16);
+                    result.LeakP95 = reader.GetFloat(17);
+                    result.LeakMedian = reader.GetFloat(18);
+                    result.TidalVolumeMax = reader.GetFloat(19);
+                    result.TidalVolumeP95 = reader.GetFloat(20);
+                    result.TidalVolumeMedian = reader.GetFloat(21);
+                    result.MinuteVentilationMax = reader.GetInt32(22);
+                    result.MinuteVentilationP95 = reader.GetInt32(23);
+                    result.MinuteVentilationMedian = reader.GetInt32(24);
+                    result.SpO2Max = reader.GetInt32(25);
+                    result.SpO2P95 = reader.GetInt32(26);
+                    result.SpO2Median = reader.GetInt32(27);
+                    result.PulseRateMax = reader.GetInt32(28);
+                    result.PulseRateP95 = reader.GetInt32(29);
+                    result.PulseRateMedian = reader.GetInt32(30);
+                    result.RespiratoryRateMax = reader.GetInt32(31);
+                    result.RespiratoryRateP95 = reader.GetInt32(32);
+                    result.RespiratoryRateMedian = reader.GetInt32(33);
+                    result.IERatioMax = reader.GetFloat(34);
+                    result.IERatioP95 = reader.GetFloat(35);
+                    result.IERatioMedian = reader.GetFloat(36);
+                    result.IPAPMax = reader.GetFloat(37);
+                    result.IPAPP95 = reader.GetFloat(38);
+                    result.IPAPMedian = reader.GetFloat(39);
+                    result.EPAPMax = reader.GetFloat(40);
+                    result.EPAPP95 = reader.GetFloat(41);
+                    result.EPAPMedian = reader.GetFloat(42);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="productId">productId</param>
+        /// <param name="therapyMode">therapyMode</param>
+        /// <param name="startTime">startTime</param>
+        /// <param name="endTime">endTime</param>
+        /// <returns></returns>
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+
+            ICollection<ProductWorkingStatisticsData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime2,
                 new SQLiteParameter("@ProductId", productId),
                 new SQLiteParameter("@TherapyMode", therapyMode),
@@ -880,6 +1000,10 @@ ORDER BY Id DESC";
                 new SQLiteParameter("@EndTime", endTime)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingStatisticsData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingStatisticsData result = new ProductWorkingStatisticsData();

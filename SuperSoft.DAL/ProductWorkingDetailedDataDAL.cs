@@ -39,11 +39,14 @@ namespace SuperSoft.DAL
 
         private const string selectById = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas WHERE Id =@Id";
 
-        private const string selectPaging = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
-        private const string selectByProductWorkingSummaryDataId = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId=@ProductWorkingSummaryDataId ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+        private const string selectPaging = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
+        private const string selectByProductWorkingSummaryDataId = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId=@ProductWorkingSummaryDataId ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectByProductWorkingSummaryDataIdCount = "SELECT COUNT(*) FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId=@ProductWorkingSummaryDataId";
 
-        private const string selectByProductWorkingSummaryDataId2 = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId=@ProductWorkingSummaryDataId ORDER BY Id DESC";
+        private const string selectByProductWorkingSummaryDataId2 = "SELECT Id,ProductWorkingSummaryDataId,Content FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId=@ProductWorkingSummaryDataId";
+
+
+        private const string deleteByProductWorkingSummaryDataIds = "DELETE FROM ProductWorkingDetailedDatas WHERE ProductWorkingSummaryDataId IN (@ProductWorkingSummaryDataIds)";
 
         #endregion
 
@@ -111,7 +114,7 @@ namespace SuperSoft.DAL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param Name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Insert(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -146,7 +149,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -269,7 +272,7 @@ namespace SuperSoft.DAL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Delete(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -295,7 +298,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -310,6 +313,32 @@ namespace SuperSoft.DAL
             }
         }
 
+        /// <summary>
+        /// 删除集合，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="productWorkingSummaryDataIds">集合</param>
+        public virtual void DeleteByProductWorkingSummaryDataIds(SQLiteTransaction transaction, ICollection<Guid> productWorkingSummaryDataIds)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            if (productWorkingSummaryDataIds != null && productWorkingSummaryDataIds.Count() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var v in productWorkingSummaryDataIds)
+                {
+                    sb.Append(v);
+                    sb.Append(',');
+                }
+                sb.Remove(sb.Length - 2, 1);
+                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductWorkingSummaryDataIds,
+                    new SQLiteParameter("@ProductWorkingSummaryDataIds", sb.ToString()));
+                sb.Clear();
+                sb = null;
+            }
+        }
         #endregion
 
         #region Update
@@ -359,7 +388,7 @@ namespace SuperSoft.DAL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Update(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -394,7 +423,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -439,13 +468,17 @@ namespace SuperSoft.DAL
             {
                 throw new ObjectDisposedException(ToString());
             }
+            ProductWorkingDetailedData result = null;
             if (id != Guid.Empty)
             {
-                ProductWorkingDetailedData result = new ProductWorkingDetailedData();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new ProductWorkingDetailedData();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -463,9 +496,8 @@ namespace SuperSoft.DAL
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(ProductWorkingDetailedData);
+            return result;
         }
 
         /// <summary>
@@ -475,7 +507,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingDetailedData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -483,12 +515,16 @@ namespace SuperSoft.DAL
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<ProductWorkingDetailedData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+            ICollection<ProductWorkingDetailedData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingDetailedData result = new ProductWorkingDetailedData();
@@ -519,7 +555,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -529,13 +565,17 @@ namespace SuperSoft.DAL
                  new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<ProductWorkingDetailedData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+            ICollection<ProductWorkingDetailedData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId,
                 new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId),
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingDetailedData result = new ProductWorkingDetailedData();
@@ -563,18 +603,22 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="productWorkingSummaryDataId">productWorkingSummaryDataId</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId)
+        public virtual ICollection<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<ProductWorkingDetailedData> resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+            ICollection<ProductWorkingDetailedData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId2,
                 new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ProductWorkingDetailedData>();
+                }
                 while (reader.Read())
                 {
                     ProductWorkingDetailedData result = new ProductWorkingDetailedData();

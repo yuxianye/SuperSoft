@@ -92,7 +92,7 @@ namespace SuperSoft.BLL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Insert(ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -239,7 +239,7 @@ namespace SuperSoft.BLL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Delete(ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -340,7 +340,7 @@ namespace SuperSoft.BLL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Update(ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -364,7 +364,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<ProductWorkingSummaryData> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -419,7 +419,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingSummaryData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingSummaryData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -451,7 +451,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingSummaryData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingSummaryData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -478,7 +478,7 @@ namespace SuperSoft.BLL
         /// <param name="productId">productId</param>
         /// <param name="fileName">fileName</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingSummaryData> SelectByProductIdFileName(Guid productId, string fileName)
+        public virtual ICollection<ProductWorkingSummaryData> SelectByProductIdFileName(Guid productId, string fileName)
         {
             if (Disposed)
             {
@@ -498,6 +498,30 @@ namespace SuperSoft.BLL
             return null;
         }
 
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="productId">productId</param>
+        /// <returns></returns>
+        public virtual ICollection<ProductWorkingSummaryData> SelectByProductId(Guid productId)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (productId != Guid.Empty)
+                {
+                    return dal.SelectByProductId(productId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+            return null;
+        }
         #endregion
 
         #region Dispose 

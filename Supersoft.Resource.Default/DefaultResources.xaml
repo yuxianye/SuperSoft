@@ -6,12 +6,6 @@
     <ResourceDictionary.MergedDictionaries>
 
         <!--样式-->
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-
         <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Office2013/Generic.xaml" />
         <!--<ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Office2010/Silver.xaml" />-->
@@ -19,6 +13,12 @@
         <!--<ResourceDictionary Source="pack://application:,,,/Fluent;component/Themes/Office2010/Blue.xaml" />-->
         <!--<ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Windows8/Generic.xaml" />-->
         <!--<ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Windows8/Silver.xaml" />-->
+
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+        <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 
         <!--优先级比其他语言的低，如果其他语言资源有相同的值那么使用其他语言的设置值-->
         <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.Default;component/ColorBrush.xaml" />

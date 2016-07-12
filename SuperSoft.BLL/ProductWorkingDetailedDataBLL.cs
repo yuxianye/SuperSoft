@@ -92,7 +92,7 @@ namespace SuperSoft.BLL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Insert(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -239,7 +239,7 @@ namespace SuperSoft.BLL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Delete(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -276,6 +276,31 @@ namespace SuperSoft.BLL
 
                 {
                     dal.Delete(transaction, entitys);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
+
+        /// <summary>
+        /// 删除集合，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="productWorkingSummaryDataIds">集合</param>
+        public virtual void DeleteByProductWorkingSummaryDataIds(SQLiteTransaction transaction, ICollection<Guid> productWorkingSummaryDataIds)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (productWorkingSummaryDataIds != null && productWorkingSummaryDataIds.Count() > 0)
+
+                {
+                    dal.DeleteByProductWorkingSummaryDataIds(transaction, productWorkingSummaryDataIds);
                 }
             }
             catch (Exception ex)
@@ -340,7 +365,7 @@ namespace SuperSoft.BLL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Update(ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -364,7 +389,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<ProductWorkingDetailedData> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -419,7 +444,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingDetailedData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -448,7 +473,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId, int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -474,7 +499,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="productWorkingSummaryDataId">productWorkingSummaryDataId</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId)
+        public virtual ICollection<ProductWorkingDetailedData> SelectByProductWorkingSummaryDataId(Guid productWorkingSummaryDataId)
         {
             if (Disposed)
             {

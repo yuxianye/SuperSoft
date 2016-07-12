@@ -57,9 +57,10 @@ namespace SuperSoft.BLL.DownloadData
 
                 var detailedFilePath = detailedFileFullName.Substring(detailedFileFullName.Length - 17, 17);
                 var productWorkingSummaryDataBLL = new ProductWorkingSummaryDataBLL();
-                Expression<Func<ProductWorkingSummaryData, bool>> condition =
-                    t => t.ProductId == indexFileField.ProductId && t.FileName == detailedFilePath;
-                var listProductRuningSummaryDatas = productWorkingSummaryDataBLL.GetByCondition(condition);
+                //Expression<Func<ProductWorkingSummaryData, bool>> condition =
+                //    t => t.ProductId == indexFileField.ProductId && t.FileName == detailedFilePath;
+                //var listProductRuningSummaryDatas = productWorkingSummaryDataBLL.GetByCondition(condition);
+                var listProductRuningSummaryDatas = productWorkingSummaryDataBLL.SelectByProductIdFileName(indexFileField.ProductId, detailedFilePath);
                 productWorkingSummaryDataBLL.Dispose();
                 productWorkingSummaryDataBLL = null;
                 if (listProductRuningSummaryDatas != null && listProductRuningSummaryDatas.Count() > 0)

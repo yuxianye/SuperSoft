@@ -45,19 +45,27 @@ namespace SuperSoft.View.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            //SimpleIoc.Default.Register<PatientListViewModel>();
-            SimpleIoc.Default.Register<PatientAddViewModel>();
-            //SimpleIoc.Default.Register<PatientEditViewModel>();
             SimpleIoc.Default.Register<PatientListViewModel>();
+            SimpleIoc.Default.Register<PatientAddViewModel>();
+            SimpleIoc.Default.Register<PatientDeleteViewModel>();
+            SimpleIoc.Default.Register<PatientEditViewModel>();
+
+            SimpleIoc.Default.Register<DoctorListViewModel>();
+            SimpleIoc.Default.Register<DoctorAddViewModel>();
+            SimpleIoc.Default.Register<DoctorDeleteViewModel>();
+            SimpleIoc.Default.Register<DoctorEditViewModel>();
+
+
+
+            //SimpleIoc.Default.Register<PatientListViewModel>();
             //SimpleIoc.Default.Register<PatientHomeViewModel>();
 
+            //SimpleIoc.Default.Register<AutoAnalysisSettingsViewModel>();
+            //SimpleIoc.Default.Register<ChannelSettingsViewModel>();
 
 
             SimpleIoc.Default.Register<SwitchLanguageViewModel>();
             SimpleIoc.Default.Register<HelpViewModel>();
-
-            //SimpleIoc.Default.Register<AutoAnalysisSettingsViewModel>();
-            //SimpleIoc.Default.Register<ChannelSettingsViewModel>();
 
             SimpleIoc.Default.Register<AddAdviseViewModel>();
 
@@ -71,28 +79,7 @@ namespace SuperSoft.View.ViewModel
             }
         }
 
-        //public PatientListViewModel PatientListViewModel
-        //{
-        //    get
-        //    {
-        //        return ServiceLocator.Current.GetInstance<PatientListViewModel>();
-        //    }
-        //}
-
-        public PatientAddViewModel PatientAddViewModel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<PatientAddViewModel>();
-            }
-        }
-        //public PatientEditViewModel PatientEditViewModel
-        //{
-        //    get
-        //    {
-        //        return ServiceLocator.Current.GetInstance<PatientEditViewModel>();
-        //    }
-        //}
+        #region Patient
 
         public PatientListViewModel PatientListViewModel
         {
@@ -102,6 +89,80 @@ namespace SuperSoft.View.ViewModel
             }
         }
 
+        public PatientAddViewModel PatientAddViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PatientAddViewModel>();
+            }
+        }
+        public PatientDeleteViewModel PatientDeleteViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PatientDeleteViewModel>();
+            }
+        }
+
+        public PatientEditViewModel PatientEditViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<PatientEditViewModel>();
+            }
+        }
+
+        #endregion
+
+        #region Doctor
+
+        public DoctorListViewModel DoctorListViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DoctorListViewModel>();
+            }
+        }
+
+        public DoctorAddViewModel DoctorAddViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DoctorAddViewModel>();
+            }
+        }
+
+        public DoctorDeleteViewModel DoctorDeleteViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DoctorDeleteViewModel>();
+            }
+        }
+
+        public DoctorEditViewModel DoctorEditViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DoctorEditViewModel>();
+            }
+        }
+
+        #endregion
+
+
+
+
+
+        //public PatientListViewModel PatientListViewModel
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<PatientListViewModel>();
+        //    }
+        //}
+
+
         //public PatientHomeViewModel PatientHomeViewModel
         //{
         //    get
@@ -109,6 +170,9 @@ namespace SuperSoft.View.ViewModel
         //        return ServiceLocator.Current.GetInstance<PatientHomeViewModel>();
         //    }
         //}
+
+
+
 
         public SwitchLanguageViewModel SwitchLanguageViewModel
         {
@@ -156,17 +220,20 @@ namespace SuperSoft.View.ViewModel
             // TODO Clear the ViewModel
 
             SimpleIoc.Default.Unregister<MainViewModel>();
-            //SimpleIoc.Default.Register<PatientListViewModel>();
+            SimpleIoc.Default.Register<PatientListViewModel>();
             SimpleIoc.Default.Unregister<PatientAddViewModel>();
-            //SimpleIoc.Default.Unregister<PatientEditViewModel>();
-            SimpleIoc.Default.Unregister<PatientListViewModel>();
+            SimpleIoc.Default.Unregister<PatientDeleteViewModel>();
+            SimpleIoc.Default.Unregister<PatientEditViewModel>();
+
+
             //SimpleIoc.Default.Unregister<PatientHomeViewModel>();
 
 
 
             SimpleIoc.Default.Unregister<SwitchLanguageViewModel>();
-            //SimpleIoc.Default.Unregister<AutoAnalysisSettingsViewModel>();
-            //SimpleIoc.Default.Unregister<ChannelSettingsViewModel>();
+            SimpleIoc.Default.Unregister<HelpViewModel>();
+            SimpleIoc.Default.Unregister<AddAdviseViewModel>();
+
         }
         protected override void DisposeManagedResources()
         {

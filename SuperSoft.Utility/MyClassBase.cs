@@ -122,7 +122,7 @@ namespace SuperSoft.Utility
         /// <param name="propertyName">Name of the property.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+                var handler = PropertyChanged;
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));

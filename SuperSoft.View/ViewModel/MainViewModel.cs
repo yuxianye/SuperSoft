@@ -22,6 +22,9 @@ using SuperSoft.BLL;
 using System.Linq;
 using System.IO;
 using SuperSoft.Utility;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using SuperSoft.BLL.DownloadData;
 
 namespace SuperSoft.View.ViewModel
 {
@@ -46,9 +49,8 @@ namespace SuperSoft.View.ViewModel
         {
             initCommand();
             registerMessenger();
-
-            //DownloadFormFileCommand = new RelayCommand(OnExecuteDownloadFormFileCommand, OnCanExecuteDownloadFormFileCommand);
-            //DownloadFormSdCommand = new RelayCommand(OnExecuteDownloadFormSdCommand, OnCanExecuteDownloadFormSdCommand);
+            initPatientSearchConditionList();
+            initDoctorSearchConditionList();
 
         }
 
@@ -59,26 +61,27 @@ namespace SuperSoft.View.ViewModel
         /// </summary>
         private void initCommand()
         {
-            PatientAddCommand = new RelayCommand(OnExecutePatientAddCommand);
             PatientListCommand = new RelayCommand(OnExecutePatientListCommand);
+            PatientAddCommand = new RelayCommand(OnExecutePatientAddCommand);
+            PatientEditCommand = new RelayCommand(OnExecutePatientEditCommand, OnCanExecutePatientEditCommand);
+            PatientDeleteCommand = new RelayCommand(OnExecutePatientDeleteCommand, OnCanExecutePatientDeleteCommand);
+            PatientSearchCommand = new RelayCommand(OnExecutePatientSearchCommand, OnCanExecutePatientSearchCommand);
 
-            RespiratoryEventAnalysisCommand = new RelayCommand(OnExecuteRespiratoryEventAnalysisCommand);
-            SnoreAnalysisCommand = new RelayCommand(OnExecuteSnoreAnalysisCommand);
+            DoctorListCommand = new RelayCommand(OnExecuteDoctorListCommand);
+            DoctorAddCommand = new RelayCommand(OnExecuteDoctorAddCommand);
+            DoctorEditCommand = new RelayCommand(OnExecuteDoctorEditCommand, OnCanExecuteDoctorEditCommand);
+            DoctorDeleteCommand = new RelayCommand(OnExecuteDoctorDeleteCommand, OnCanExecuteDoctorDeleteCommand);
+            DoctorSearchCommand = new RelayCommand(OnExecuteDoctorSearchCommand, OnCanExecuteDoctorSearchCommand);
 
-            PreviousEventsCommand = new RelayCommand(OnExecutePreviousEventsCommand);
-            NextEventsCommand = new RelayCommand(OnExecuteNextEventsCommand);
 
-            GraphZoomInCommand = new RelayCommand(OnExecuteGraphZoomInCommand);
-            GraphZoomOutCommand = new RelayCommand(OnExecuteGraphZoomOutCommand);
 
-            ChannelSettingsCommand = new RelayCommand(OnExecuteChannelSettingsCommand);
-            AutoAnalysisSettingsCommand = new RelayCommand(OnExecuteAutoAnalysisSettingsCommand);
+            DownloadFormFileCommand = new RelayCommand(OnExecuteDownloadFormFileCommand, OnCanExecuteDownloadFormFileCommand);
+            DownloadFormSdCommand = new RelayCommand(OnExecuteDownloadFormSdCommand, OnCanExecuteDownloadFormSdCommand);
 
-            //PatientListCommand = new RelayCommand(OnExecutePatientListCommand, OnCanExecutePatientListCommand);
+            SettingsCommand = new RelayCommand(OnExecuteSettingsCommand);
             SwitchLanguageCommand = new RelayCommand(OnExecuteSwitchLanguageCommand);
 
             HelpCommand = new RelayCommand(OnExecuteHelpCommand);
-
         }
 
         /// <summary>
@@ -112,19 +115,22 @@ namespace SuperSoft.View.ViewModel
         private void Navigate(ViewInfo viewInfo)
         {
             UserControlBase view;
+            view =
+                   System.Reflection.Assembly.Load(@"SuperSoft.View")
+                       .CreateInstance(@"SuperSoft.View.View." + viewInfo.ViewName.ToString()) as UserControlBase;
 
-            if (Equals(viewInfo.Parameter, null))
-            {
-                view =
-                    System.Reflection.Assembly.Load(@"SuperSoft.View")
-                        .CreateInstance(@"SuperSoft.View.View." + viewInfo.ViewName.ToString()) as UserControlBase;
-            }
-            else
-            {
-                view = System.Reflection.Assembly.Load(@"SuperSoft.View").
-                    CreateInstance(@"SuperSoft.View.View." + viewInfo.ViewName.ToString(), true, System.Reflection.BindingFlags.Default,
-                        null, new[] { viewInfo.Parameter }, null, null) as UserControlBase;
-            }
+            //if (Equals(viewInfo.Parameter, null))
+            //{
+            //    view =
+            //        System.Reflection.Assembly.Load(@"SuperSoft.View")
+            //            .CreateInstance(@"SuperSoft.View.View." + viewInfo.ViewName.ToString()) as UserControlBase;
+            //}
+            //else
+            //{
+            //    view = System.Reflection.Assembly.Load(@"SuperSoft.View").
+            //        CreateInstance(@"SuperSoft.View.View." + viewInfo.ViewName.ToString(), true, System.Reflection.BindingFlags.Default,
+            //            null, new[] { viewInfo.Parameter }, null, null) as UserControlBase;
+            //}
             if (view == null)
             {//未找到视图，抛出异常
                 throw new Exception(viewInfo.ViewName.ToString());
@@ -227,25 +233,25 @@ namespace SuperSoft.View.ViewModel
         {
             switch (menuInfo.MenuName)
             {
-                case MenuName.RespiratoryEventAnalysisMenu:
-                    RespiratoryEventAnalysisCommandIsEnabled = menuInfo.IsEnabled;
-                    break;
-                case MenuName.SnoreAnalysisMenu:
-                    // SnoreAnalysisCommandIsEnabled = menuInfo.IsEnabled;
-                    SnoreAnalysisCommandIsEnabled = false;//验收时不需要鼾声相关的内容和功能
-                    break;
-                case MenuName.PreviousEventsMenu:
-                    PreviousEventsCommandIsEnabled = menuInfo.IsEnabled;
-                    break;
-                case MenuName.NextEventsMenu:
-                    NextEventsCommandIsEnabled = menuInfo.IsEnabled;
-                    break;
-                case MenuName.GraphZoomInMenu:
-                    GraphZoomInCommandIsEnabled = menuInfo.IsEnabled;
-                    break;
-                case MenuName.GraphZoomOutMenu:
-                    GraphZoomOutCommandIsEnabled = menuInfo.IsEnabled;
-                    break;
+                //case MenuName.RespiratoryEventAnalysisMenu:
+                //    RespiratoryEventAnalysisCommandIsEnabled = menuInfo.IsEnabled;
+                //    break;
+                //case MenuName.SnoreAnalysisMenu:
+                //    // SnoreAnalysisCommandIsEnabled = menuInfo.IsEnabled;
+                //    SnoreAnalysisCommandIsEnabled = false;//验收时不需要鼾声相关的内容和功能
+                //    break;
+                //case MenuName.PreviousEventsMenu:
+                //    PreviousEventsCommandIsEnabled = menuInfo.IsEnabled;
+                //    break;
+                //case MenuName.NextEventsMenu:
+                //    NextEventsCommandIsEnabled = menuInfo.IsEnabled;
+                //    break;
+                //case MenuName.GraphZoomInMenu:
+                //    GraphZoomInCommandIsEnabled = menuInfo.IsEnabled;
+                //    break;
+                //case MenuName.GraphZoomOutMenu:
+                //    GraphZoomOutCommandIsEnabled = menuInfo.IsEnabled;
+                //    break;
             }
         }
 
@@ -253,8 +259,8 @@ namespace SuperSoft.View.ViewModel
 
         #region 主区域内容，默认为PatientListView（除了上部菜单之外的其他主要内容）
 
-        //默认页面为患者列表
-        private UserControlBase mainContent = new PatientListView();
+
+        private UserControlBase mainContent;
 
         /// <summary>
         /// 主区域内容
@@ -263,6 +269,70 @@ namespace SuperSoft.View.ViewModel
         {
             get { return mainContent; }
             set { Set(ref mainContent, value); }
+        }
+
+        #endregion
+
+        #region 患者管理
+
+        #region PatientListCommand
+
+        public ICommand PatientListCommand { get; private set; }
+
+        private void OnExecutePatientListCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+
+            //var openFileDialog = new OpenFileDialog();
+            //openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
+            //openFileDialog.FileName = Const.RMSFileName;
+            //openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    //StartDownload(openFileDialog.FileName);
+            //    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, openFileDialog.FileName), Model.MessengerToken.Navigate);
+
+            //}
+            //openFileDialog = null;
+
+            //NewCaseCommand.CanExecute(false);
+
+            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup), Token.Navigate);
+
+            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
+            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
+
+            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
+            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
+
+            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
+            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
+            //nma.Execute();
+
+            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
+            //nmaa.Execute("NotificationMessageAction<string>");
+
+
+            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
+            //nmaacbcb.Execute("NotificationMessageWithCallback");
+
+            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
+
+            //aa.Execute("");
+
+            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
+
+            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
+            //Model.Patient patient = new Model.Patient();
+            //patient.Id = System.Guid.NewGuid();
+            //patient.FirstName = "FirstName";
+            //patient.LastName = "LastName";
+            //patientBLL.Insert(patient);
+            //// patientBLL.SaveChanges();
+            //patientBLL.ExecuteSqlCommand("delete from Patients");
+
+            ////Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
+            //GalaSoft.MvvmLight.Views.INavigationService a;
         }
 
         #endregion
@@ -329,849 +399,555 @@ namespace SuperSoft.View.ViewModel
 
         #endregion
 
-        #region PatientListCommand
+        #region PatientDeleteCommand
 
-        public ICommand PatientListCommand { get; private set; }
+        public ICommand PatientDeleteCommand { get; private set; }
 
-        private void OnExecutePatientListCommand()
+        private void OnExecutePatientDeleteCommand()
         {
-            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.Popup), Model.MessengerToken.Navigate);
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientDeleteView, ViewType.Popup), Model.MessengerToken.Navigate);
+        }
 
-            //var openFileDialog = new OpenFileDialog();
-            //openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
-            //openFileDialog.FileName = Const.RMSFileName;
-            //openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
-            //if (openFileDialog.ShowDialog() == true)
-            //{
-            //    //StartDownload(openFileDialog.FileName);
-            //    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, openFileDialog.FileName), Model.MessengerToken.Navigate);
+        private bool OnCanExecutePatientDeleteCommand()
+        {
+            if (StaticDatas.CurrentSelectedPatient != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
-            //}
-            //openFileDialog = null;
+        #endregion PatientDeleteCommand
 
-            //NewCaseCommand.CanExecute(false);
+        #region PatientEditCommand
 
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup), Token.Navigate);
+        public ICommand PatientEditCommand { get; private set; }
 
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
+        /// <summary>
+        /// 编辑患者命令执行
+        /// </summary>
+        private void OnExecutePatientEditCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientEditView, ViewType.Popup), Model.MessengerToken.Navigate);
+        }
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
+        private bool OnCanExecutePatientEditCommand()
+        {
+            if (StaticDatas.CurrentSelectedPatient != null)
+            {
+                return true;
+            }
+            return false;
+        }
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
+        #endregion PatientEditCommand
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
+        #region PatientSearchCommand
 
+        public ICommand PatientSearchCommand { get; private set; }
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
+        /// <summary>
+        /// 搜索患者命令执行
+        /// </summary>
+        private void OnExecutePatientSearchCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View, new KeyValuePair<string, string>(SelectedSearchConditionPatient.Key, ConditionContainPatient)),
+               Model.MessengerToken.Navigate);
+        }
 
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
+        private bool OnCanExecutePatientSearchCommand()
+        {
+            return true;
+        }
 
-            //aa.Execute("");
+        /// <summary>
+        /// 患者搜索条件列表
+        /// </summary>
+        public ICollection<KeyValuePair<string, string>> PatientSearchConditionList { get; private set; }
 
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
+        private KeyValuePair<string, string> selectedSearchConditionPatient;
 
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
+        /// <summary>
+        /// 选择的患者搜索条件
+        /// </summary>
+        public KeyValuePair<string, string> SelectedSearchConditionPatient
+        {
+            get { return selectedSearchConditionPatient; }
+            set { Set(ref selectedSearchConditionPatient, value); }
+        }
 
-            ////Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-            //GalaSoft.MvvmLight.Views.INavigationService a;
+        /// <summary>
+        /// 初始化患者搜索条件列表
+        /// </summary>
+        private void initPatientSearchConditionList()
+        {
+            PatientSearchConditionList = new Collection<KeyValuePair<string, string>>();
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("FirstName",
+                ResourceHelper.LoadString("MainView_PatientSearchFirstName")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("LastName",
+                ResourceHelper.LoadString("MainView_PatientSearchLastName")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("DateOfBirth",
+                ResourceHelper.LoadString("MainView_PatientSearchDateOfBirth")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("Weight",
+                ResourceHelper.LoadString("MainView_PatientSearchWeight")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("Height",
+                ResourceHelper.LoadString("MainView_PatientSearchHeight")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("Gender",
+                ResourceHelper.LoadString("MainView_PatientSearchGender")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("EMail",
+                ResourceHelper.LoadString("MainView_PatientSearchEMail")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("TelephoneNumbers",
+                ResourceHelper.LoadString("MainView_PatientSearchTelephoneNumbers")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("PostalCode",
+                ResourceHelper.LoadString("MainView_PatientSearchPostalCode")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("Address",
+                ResourceHelper.LoadString("MainView_PatientSearchAddress")));
+            PatientSearchConditionList.Add(new KeyValuePair<string, string>("Diagnosis",
+                ResourceHelper.LoadString("MainView_PatientSearchDiagnosis")));
+            SelectedSearchConditionPatient = PatientSearchConditionList.FirstOrDefault();
+        }
+
+        private string conditionContainPatient;
+
+        /// <summary>
+        /// 患者搜索条件的内容
+        /// </summary>
+        public string ConditionContainPatient
+        {
+            get { return conditionContainPatient; }
+            set { Set(ref conditionContainPatient, value); }
+        }
+
+        #endregion PatientSearchCommand
+
+        #endregion
+
+        #region 医生管理
+
+        #region DoctorListCommand
+
+        public ICommand DoctorListCommand { get; private set; }
+
+        private void OnExecuteDoctorListCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorListView, ViewType.View), Model.MessengerToken.Navigate);
         }
 
         #endregion
 
-        #region RespiratoryEventAnalysisCommand
+        #region DoctorAddCommand
 
-        public ICommand RespiratoryEventAnalysisCommand { get; private set; }
+        public ICommand DoctorAddCommand { get; private set; }
 
-        private void OnExecuteRespiratoryEventAnalysisCommand()
+        /// <summary>
+        /// 新增医生命令执行
+        /// </summary>
+        private void OnExecuteDoctorAddCommand()
         {
-            Messenger.Default.Send<object>(null, Model.MessengerToken.EventAnalysis);
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorAddView, ViewType.Popup), Model.MessengerToken.Navigate);
+        }
 
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+        #endregion DoctorAddCommand
 
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
+        #region DoctorDeleteCommand
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
+        public ICommand DoctorDeleteCommand { get; private set; }
+
+        private void OnExecuteDoctorDeleteCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorDeleteView, ViewType.Popup, null), Model.MessengerToken.Navigate);
+        }
+
+        private bool OnCanExecuteDoctorDeleteCommand()
+        {
+            if (StaticDatas.CurrentSelectedDoctor != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion DoctorDeleteCommand
+
+        #region DoctorEditCommand
+
+        public ICommand DoctorEditCommand { get; private set; }
+
+        /// <summary>
+        /// 编辑医生命令执行
+        /// </summary>
+        private void OnExecuteDoctorEditCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorEditView, ViewType.Popup), Model.MessengerToken.Navigate);
+        }
+
+        private bool OnCanExecuteDoctorEditCommand()
+        {
+            if (StaticDatas.CurrentSelectedDoctor != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion DoctorEditCommand
+
+        #region DoctorSearchCommand
+
+        public ICommand DoctorSearchCommand { get; private set; }
+
+        /// <summary>
+        /// 搜索医生命令执行
+        /// </summary>
+        private void OnExecuteDoctorSearchCommand()
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorListView, ViewType.View, new KeyValuePair<string, string>(SelectedSearchConditionDoctor.Key, ConditionContainDoctor)),
+                Model.MessengerToken.Navigate);
+        }
+
+        private bool OnCanExecuteDoctorSearchCommand()
+        {
+            return true;
+        }
+
+        #endregion DoctorSearchCommand
 
 
+        /// <summary>
+        /// 医生搜索条件列表
+        /// </summary>
+        public ICollection<KeyValuePair<string, string>> DoctorSearchConditionList { get; private set; }
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
+        private KeyValuePair<string, string> selectedSearchConditionDoctor;
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
+        /// <summary>
+        /// 选择的患者搜索条件
+        /// </summary>
+        public KeyValuePair<string, string> SelectedSearchConditionDoctor
+        {
+            get { return selectedSearchConditionDoctor; }
+            set { Set(ref selectedSearchConditionDoctor, value); }
+        }
 
+        /// <summary>
+        /// 初始化医生搜索条件列表
+        /// </summary>
+        private void initDoctorSearchConditionList()
+        {
+            DoctorSearchConditionList = new Collection<KeyValuePair<string, string>>();
+            DoctorSearchConditionList.Add(new KeyValuePair<string, string>("FirstName",
+                ResourceHelper.LoadString("MainView_DoctorSearchFirstName")));
+            DoctorSearchConditionList.Add(new KeyValuePair<string, string>("LastName",
+                ResourceHelper.LoadString("MainView_DoctorSearchLastName")));
+            SelectedSearchConditionDoctor = DoctorSearchConditionList.FirstOrDefault();
+        }
 
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
+        private string conditionContainDoctor;
 
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
+        /// <summary>
+        /// 医生搜索条件的内容
+        /// </summary>
+        public string ConditionContainDoctor
+        {
+            get { return conditionContainDoctor; }
+            set { Set(ref conditionContainDoctor, value); }
         }
 
         #endregion
 
-        #region RespiratoryEventAnalysisCommandIsEnabled
+        #region 数据下载
 
-        private bool respiratoryEventAnalysisCommandIsEnabled = false;
+        #region DownloadCommand
 
-        public bool RespiratoryEventAnalysisCommandIsEnabled
+        public ICommand DownloadCommand { get; private set; }
+
+        /// <summary>
+        /// 下载命令执行
+        /// </summary>
+        private void OnExecuteDownloadCommand()
         {
-            get { return respiratoryEventAnalysisCommandIsEnabled; }
-            set { Set(ref respiratoryEventAnalysisCommandIsEnabled, value); }
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DownloadView, ViewType.View), Model.MessengerToken.Navigate);
         }
+
+        #endregion DownloadCommand
+
+        #region DownloadFormFileCommand
+
+        public ICommand DownloadFormFileCommand { get; private set; }
+
+        /// <summary>
+        /// 下载命令执行
+        /// </summary>
+        private void OnExecuteDownloadFormFileCommand()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = ResourceHelper.LoadString("MainView_OpenFileDialogTitle");
+            openFileDialog.FileName = Const.RMSFileName;
+            openFileDialog.Filter = ResourceHelper.LoadString("MainView_RMSFileFilter");
+            if (openFileDialog.ShowDialog() == true)
+            {
+                StartDownload(openFileDialog.FileName);
+                //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, "123456798013245678"), Model.MessengerToken.Navigate);
+            }
+            openFileDialog = null;
+        }
+
+        private bool OnCanExecuteDownloadFormFileCommand()
+        {
+            //判断文件下载按钮是否可用
+            if (bllDownloadData != null)
+            {
+                return !bllDownloadData.IsBusy();
+            }
+            return true;
+        }
+
+        #endregion DownloadFormFileCommand
+
+        #region DownloadFormSdCommand
+
+        public ICommand DownloadFormSdCommand { get; private set; }
+
+        /// <summary>
+        /// 下载命令执行
+        /// </summary>
+        private void OnExecuteDownloadFormSdCommand()
+        {
+            var deviceList = from a in DriveInfo.GetDrives()
+                             where a.DriveType == DriveType.Removable
+                             select a;
+            if (deviceList != null && deviceList.Count() > 0)
+            {
+                var deviceListArrary = deviceList.ToArray();
+                for (var i = 0; i < deviceList.Count(); i++)
+                {
+                    var indexFileName = deviceListArrary[i].Name + Const.RMSFileName;
+                    if (File.Exists(indexFileName))
+                    {
+                        StartDownload(indexFileName);
+                        break;
+                    }
+                    if (i == deviceList.Count() - 1)
+                    {
+                        MessageBox.Show(Application.Current.MainWindow,
+                            string.Format(ResourceHelper.LoadString("DataFileNotFound") + Environment.NewLine,
+                                indexFileName)
+                            , ResourceHelper.LoadString("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    var result =
+                        MessageBox.Show(Application.Current.MainWindow,
+                            string.Format(ResourceHelper.LoadString("IndexFileNotFound") + Environment.NewLine,
+                                indexFileName)
+                            , ResourceHelper.LoadString("Error"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 找到索引文件之后，开始下载
+        /// </summary>
+        /// <param name="indexFileName"></param>
+        private void StartDownload(string indexFileName)
+        {
+            //LogHelper.Info("start download:" + indexFileName);
+            if (File.Exists(indexFileName))
+            {
+                var indexFileField = DownloadData.GetIndexFileField(indexFileName);
+                if (indexFileField == null || indexFileField.SerialNumber.Length != 18)
+                {
+                    MessageBox.Show(Application.Current.MainWindow,
+                        string.Format(ResourceHelper.LoadString("RMSFileFormatError") + Environment.NewLine,
+                            indexFileName, ResourceHelper.LoadString("RMSFileName"))
+                        , ResourceHelper.LoadString("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                var viewPatientProductBLL = new ViewPatientsProductBLL();
+                var viewPatientProductsList = viewPatientProductBLL.SelectBySerialNumber(indexFileField.SerialNumber);
+                if (viewPatientProductsList != null && viewPatientProductsList.Count() > 0)
+                {
+                    //有产品数据 和患者信息 直接下载
+                    downloadData(viewPatientProductsList.FirstOrDefault().PatientId, indexFileName);
+                }
+                else
+                {
+                    //无产品数据，增加患者 ,然后检查是否增加成功，为增加成功 直接返回，增加成功 直接下载
+                    //Navigate(ViewNames.PatientAddView, indexFileField.SerialNumber);
+                    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, indexFileField.SerialNumber), Model.MessengerToken.Navigate);
+
+                    viewPatientProductsList = viewPatientProductBLL.SelectBySerialNumber(indexFileField.SerialNumber);
+
+                    if (viewPatientProductsList != null && viewPatientProductsList.Count() > 0)
+                    {
+                        //有产品数据 和患者信息 直接下载
+                        downloadData(viewPatientProductsList.FirstOrDefault().PatientId, indexFileName);
+                    }
+                }
+            }
+        }
+
+        private bool OnCanExecuteDownloadFormSdCommand()
+        {
+            //判断SD卡下载按钮是否可用
+            //找到移动存储 即表示可用。
+            var v = from a in DriveInfo.GetDrives()
+                    where a.DriveType == DriveType.Removable
+                    select a;
+            if (v != null && v.Count() > 0)
+            {
+                if (bllDownloadData != null)
+                {
+                    return !bllDownloadData.IsBusy();
+                }
+                return true;
+            }
+            return false;
+        }
+
+        #endregion DownloadFormSdCommand
+
+        #region DownloadDataProgressVisibility
+
+        private Visibility downloadDataProgressVisibility = Visibility.Collapsed;
+
+        public Visibility DownloadDataProgressVisibility
+        {
+            get { return downloadDataProgressVisibility; }
+            set { Set(ref downloadDataProgressVisibility, value); }
+        }
+
+        #endregion DownloadDataProgress
+
+        #region DownloadDataProgress
+
+        private int downloadDataProgress;
+
+        public int DownloadDataProgress
+        {
+            get { return downloadDataProgress; }
+            set { Set(ref downloadDataProgress, value); }
+        }
+
+        #endregion DownloadDataProgress
+
+        #region   BLL.DownloadData.DownloadData 定义 事件
+
+        private DownloadData bllDownloadData;
+#if DEBUG
+        System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
+
+#endif
+
+
+        private void downloadData(Guid patientId, string indexFileName)
+        {
+            if (bllDownloadData == null)
+            {
+#if DEBUG
+                st.Start();
+#endif
+
+                bllDownloadData = new DownloadData();
+
+                bllDownloadData.ProgressChanged -= DownloadData_ProgressChanged;
+                bllDownloadData.RunWorkerCompleted -= DownloadData_RunWorkerCompleted;
+
+                bllDownloadData.ProgressChanged += DownloadData_ProgressChanged;
+                bllDownloadData.RunWorkerCompleted += DownloadData_RunWorkerCompleted;
+            }
+            bllDownloadData.Start(patientId, indexFileName);
+
+            DownloadDataProgressVisibility = Visibility.Visible;
+        }
+
+        private void DownloadData_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            DownloadDataProgress = e.ProgressPercentage;
+        }
+
+        private void DownloadData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                DownloadDataProgressVisibility = Visibility.Collapsed;
+                DownloadDataProgress = 0;
+                // First, handle the case where an exception was thrown.
+                if (e.Error != null)
+                {
+                    LogHelper.Error(ToString(), e.Error);
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("Error") + e.Error.Message +
+                        (e.Error.InnerException == null ? string.Empty : e.Error.InnerException.Message)
+                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Warning);
+                }
+                else if (e.Cancelled)
+                {
+                    // Next, handle the case where the user canceled 
+                    // the operation.
+                    // Note that due to a race condition in 
+                    // the DoWork event handler, the Cancelled
+                    // flag may not have been set, even though
+                    // CancelAsync was called.
+                    //LogHelper.Info(ResourceHelper.LoadString("DownloadCanceled"));
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("MainView_DownloadCanceled") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Warning);
+                }
+                else
+                {
+#if DEBUG
+                    st.Stop();
+                    Console.WriteLine("数据下载用时：{0}", st.ElapsedMilliseconds.ToString());
+#endif
+                    // Finally, handle the case where the operation 
+                    // succeeded.
+                    MessageBox.Show(Application.Current.MainWindow,
+                        ResourceHelper.LoadString("MainView_DownloadCompleted") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        , MessageBoxButton.OK
+                        , MessageBoxImage.Information);
+                }
+            }
+            finally
+            {
+                if (!Equals(bllDownloadData, null))
+                {
+                    bllDownloadData.Dispose();
+                    bllDownloadData = null;
+                }
+            }
+        }
+
+        #endregion DownloadData 事件
 
         #endregion
 
-        #region SnoreAnalysisCommand
+        #region 系统设置 
 
-        public ICommand SnoreAnalysisCommand { get; private set; }
+        #region SettingsCommand
 
-        private void OnExecuteSnoreAnalysisCommand()
+        public ICommand SettingsCommand { get; private set; }
+
+        /// <summary>
+        /// 命令执行
+        /// </summary>
+        private void OnExecuteSettingsCommand()
         {
-            Messenger.Default.Send<object>(null, Model.MessengerToken.SnoreAnalysis);
-
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.SystemParameterSettingView, ViewType.View), Model.MessengerToken.Navigate);
         }
 
         #endregion
-
-        #region SnoreAnalysisCommandIsEnabled
-
-        private bool snoreAnalysisCommandIsEnabled = false;
-
-        public bool SnoreAnalysisCommandIsEnabled
-        {
-            get { return snoreAnalysisCommandIsEnabled; }
-            set { Set(ref snoreAnalysisCommandIsEnabled, value); }
-        }
-
-        #endregion
-
-        #region PreviousEventsCommand
-
-        public ICommand PreviousEventsCommand { get; private set; }
-
-        private void OnExecutePreviousEventsCommand()
-        {
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
-        }
-
-        #endregion
-
-        #region PreviousEventsCommandIsEnabled
-
-        private bool previousEventsCommandIsEnabled = false;
-
-        public bool PreviousEventsCommandIsEnabled
-        {
-            get { return previousEventsCommandIsEnabled; }
-            set { Set(ref previousEventsCommandIsEnabled, value); }
-        }
-
-        #endregion
-
-        #region NextEventsCommand
-
-        public ICommand NextEventsCommand { get; private set; }
-
-        private void OnExecuteNextEventsCommand()
-        {
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
-        }
-
-        #endregion
-
-        #region NextEventsCommandIsEnabled
-
-        private bool nextEventsCommandIsEnabled = false;
-
-        public bool NextEventsCommandIsEnabled
-        {
-            get { return nextEventsCommandIsEnabled; }
-            set { Set(ref nextEventsCommandIsEnabled, value); }
-        }
-
-        #endregion
-
-        #region GraphZoomInCommand
-
-        public ICommand GraphZoomInCommand { get; private set; }
-
-        private void OnExecuteGraphZoomInCommand()
-        {
-            //Messenger.Default.Send<object>(null, Model.MessengerToken.ZoomIn);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
-        }
-
-        #endregion
-
-        #region GraphZoomInCommandIsEnabled
-
-        private bool graphZoomInCommandIsEnabled = false;
-
-        public bool GraphZoomInCommandIsEnabled
-        {
-            get { return graphZoomInCommandIsEnabled; }
-            set { Set(ref graphZoomInCommandIsEnabled, value); }
-        }
-
-        #endregion
-
-        #region GraphZoomOutCommand
-
-        public ICommand GraphZoomOutCommand { get; private set; }
-
-        private void OnExecuteGraphZoomOutCommand()
-        {
-            //Messenger.Default.Send<object>(null, Model.MessengerToken.ZoomOut);
-
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            //Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-
-        }
-
-        #endregion
-
-        #region GraphZoomOutCommandIsEnabled
-
-        private bool graphZoomOutCommandIsEnabled = false;
-
-        public bool GraphZoomOutCommandIsEnabled
-        {
-            get { return graphZoomOutCommandIsEnabled; }
-            set { Set(ref graphZoomOutCommandIsEnabled, value); }
-        }
-
-        #endregion
-
-        #region ChannelSettingsCommand
-
-        public ICommand ChannelSettingsCommand { get; private set; }
-
-        private void OnExecuteChannelSettingsCommand()
-        {
-            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.ChannelSettingsView, ViewType.Popup), Model.MessengerToken.Navigate);
-
-            //var openFileDialog = new OpenFileDialog();
-            //openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
-            //openFileDialog.FileName = Const.RMSFileName;
-            //openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
-            //if (openFileDialog.ShowDialog() == true)
-            //{
-            //    //StartDownload(openFileDialog.FileName);
-            //    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, openFileDialog.FileName), Model.MessengerToken.Navigate);
-
-            //}
-            //openFileDialog = null;
-
-            //NewCaseCommand.CanExecute(false);
-
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup), Token.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            ////Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-            //GalaSoft.MvvmLight.Views.INavigationService a;
-        }
-
-        #endregion
-
-        #region AutoAnalysisSettingsCommand
-
-        public ICommand AutoAnalysisSettingsCommand { get; private set; }
-
-        private void OnExecuteAutoAnalysisSettingsCommand()
-        {
-            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.AutoAnalysisSettingsView, ViewType.Popup), Model.MessengerToken.Navigate);
-
-            //var openFileDialog = new OpenFileDialog();
-            //openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
-            //openFileDialog.FileName = Const.RMSFileName;
-            //openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
-            //if (openFileDialog.ShowDialog() == true)
-            //{
-            //    //StartDownload(openFileDialog.FileName);
-            //    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, openFileDialog.FileName), Model.MessengerToken.Navigate);
-
-            //}
-            //openFileDialog = null;
-
-            //NewCaseCommand.CanExecute(false);
-
-            //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup), Token.Navigate);
-
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string>("123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<string, PageTwoViewModel>("123");
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessage m = new GalaSoft.MvvmLight.Messaging.NotificationMessage(this, "123");
-            //GalaSoft.MvvmLight.Messaging.Messenger.Default.Send<GalaSoft.MvvmLight.Messaging.GenericMessage<int>>(new GalaSoft.MvvmLight.Messaging.GenericMessage<int>(999));
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction(this, new PageTwoViewModel(), "123", new Action(aa));
-            ////GalaSoft.MvvmLight.Messaging.NotificationMessageAction nma = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction("123", aa);
-            //nma.Execute();
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string> nmaa = new GalaSoft.MvvmLight.Messaging.NotificationMessageAction<string>("123",,, new Action<string>(aaa));
-            //nmaa.Execute("NotificationMessageAction<string>");
-
-
-            //GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback nmaacbcb = new GalaSoft.MvvmLight.Messaging.NotificationMessageWithCallback("111", new Action<string>(aaa));
-            //nmaacbcb.Execute("NotificationMessageWithCallback");
-
-            //GalaSoft.MvvmLight.Helpers.WeakAction<string> aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //aa.Execute("");
-
-            ///....WeakAction aa = new GalaSoft.MvvmLight.Helpers.WeakAction<string>(aaa);
-
-            //BLL.PatientBLL patientBLL = new BLL.PatientBLL();
-            //Model.Patient patient = new Model.Patient();
-            //patient.Id = System.Guid.NewGuid();
-            //patient.FirstName = "FirstName";
-            //patient.LastName = "LastName";
-            //patientBLL.Insert(patient);
-            //// patientBLL.SaveChanges();
-            //patientBLL.ExecuteSqlCommand("delete from Patients");
-
-            ////Title = patientBLL.Count() + "ChangeTitleHello MvvmLight";
-            //GalaSoft.MvvmLight.Views.INavigationService a;
-        }
-
-        #endregion
-
-
-
-        //#region DownloadFormFileCommand
-
-        //public ICommand DownloadFormFileCommand { get; private set; }
-
-        ///// <summary>
-        ///// 下载命令执行
-        ///// </summary>
-        //private void OnExecuteDownloadFormFileCommand()
-        //{
-        //    var openFileDialog = new OpenFileDialog();
-        //    openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
-        //    openFileDialog.FileName = Const.RMSFileName;
-        //    openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
-        //    if (openFileDialog.ShowDialog() == true)
-        //    {
-        //        StartDownload(openFileDialog.FileName);
-        //    }
-        //    openFileDialog = null;
-        //}
-
-        //private bool OnCanExecuteDownloadFormFileCommand()
-        //{
-        //    //判断文件下载按钮是否可用
-        //    if (bllDownloadData != null)
-        //    {
-        //        return !bllDownloadData.IsBusy();
-        //    }
-        //    return true;
-        //}
-
-        //#endregion DownloadFormFileCommand
-
-        //#region DownloadFormSdCommand
-
-        //public ICommand DownloadFormSdCommand { get; private set; }
-
-        ///// <summary>
-        ///// 下载命令执行
-        ///// </summary>
-        //private void OnExecuteDownloadFormSdCommand()
-        //{
-        //    var deviceList = from a in DriveInfo.GetDrives()
-        //                     where a.DriveType == DriveType.Removable
-        //                     select a;
-        //    if (deviceList != null && deviceList.Count() > 0)
-        //    {
-        //        var deviceListArrary = deviceList.ToArray();
-        //        for (var i = 0; i < deviceList.Count(); i++)
-        //        {
-        //            var indexFileName = deviceListArrary[i].Name + Const.RMSFileName;
-        //            if (File.Exists(indexFileName))
-        //            {
-        //                StartDownload(indexFileName);
-        //                break;
-        //            }
-        //            if (i == deviceList.Count() - 1)
-        //            {
-        //                MessageBox.Show(Application.Current.MainWindow,
-        //                    string.Format(ResourceHelper.LoadString("DataFileNotFound") + Environment.NewLine,
-        //                        indexFileName)
-        //                    , ResourceHelper.LoadString("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
-        //                return;
-        //            }
-        //            var result =
-        //                MessageBox.Show(Application.Current.MainWindow,
-        //                    string.Format(ResourceHelper.LoadString("IndexFileNotFound") + Environment.NewLine,
-        //                        indexFileName)
-        //                    , ResourceHelper.LoadString("Error"), MessageBoxButton.YesNo, MessageBoxImage.Warning);
-        //            if (result == MessageBoxResult.Yes)
-        //            {
-        //            }
-        //            else
-        //            {
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 找到索引文件之后，开始下载
-        ///// </summary>
-        ///// <param name="indexFileName"></param>
-        //private void StartDownload(string indexFileName)
-        //{
-        //    //LogHelper.Info("start download:" + indexFileName);
-        //    if (File.Exists(indexFileName))
-        //    {
-        //        var indexFileField = DownloadData.GetIndexFileField(indexFileName);
-        //        if (indexFileField == null || indexFileField.SerialNumber.Length != 18)
-        //        {
-        //            MessageBox.Show(Application.Current.MainWindow,
-        //                string.Format(ResourceHelper.LoadString("RMSFileFormatError") + Environment.NewLine,
-        //                    indexFileName, ResourceHelper.LoadString("RMSFileName"))
-        //                , ResourceHelper.LoadString("Error"), MessageBoxButton.OK, MessageBoxImage.Warning);
-        //            return;
-        //        }
-        //        var viewPatientProductsBLL = new ViewPatientsProductsBLL();
-        //        Expression<Func<ViewPatientsProduct, bool>> condition =
-        //            t => t.SerialNumber == indexFileField.SerialNumber;
-        //        var viewPatientProductsList = viewPatientProductsBLL.GetByCondition(condition);
-        //        if (viewPatientProductsList != null && viewPatientProductsList.Count() > 0)
-        //        {
-        //            //有产品数据 和患者信息 直接下载
-        //            downloadData(viewPatientProductsList.FirstOrDefault().PatientId, indexFileName);
-        //        }
-        //        else
-        //        {
-        //            //无产品数据，增加患者 ,然后检查是否增加成功，为增加成功 直接返回，增加成功 直接下载
-        //            //Navigate(ViewNames.PatientAddView, indexFileField.SerialNumber);
-        //            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, indexFileField.SerialNumber), Model.MessengerToken.Navigate);
-
-        //            viewPatientProductsList = viewPatientProductsBLL.GetByCondition(condition);
-
-        //            if (viewPatientProductsList != null && viewPatientProductsList.Count() > 0)
-        //            {
-        //                //有产品数据 和患者信息 直接下载
-        //                downloadData(viewPatientProductsList.FirstOrDefault().PatientId, indexFileName);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private bool OnCanExecuteDownloadFormSdCommand()
-        //{
-        //    //判断SD卡下载按钮是否可用
-        //    //找到移动存储 即表示可用。
-        //    var v = from a in DriveInfo.GetDrives()
-        //            where a.DriveType == DriveType.Removable
-        //            select a;
-        //    if (v != null && v.Count() > 0)
-        //    {
-        //        if (bllDownloadData != null)
-        //        {
-        //            return !bllDownloadData.IsBusy();
-        //        }
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-        //#endregion DownloadFormSdCommand
-
-        //#region DownloadDataProgressVisibility
-
-        //private Visibility downloadDataProgressVisibility = Visibility.Collapsed;
-
-        //public Visibility DownloadDataProgressVisibility
-        //{
-        //    get { return downloadDataProgressVisibility; }
-        //    set { Set(ref downloadDataProgressVisibility, value); }
-        //}
-
-        //#endregion DownloadDataProgress
-
-//        #region DownloadDataProgress
-
-//        private int downloadDataProgress;
-
-//        public int DownloadDataProgress
-//        {
-//            get { return downloadDataProgress; }
-//            set { Set(ref downloadDataProgress, value); }
-//        }
-
-//        #endregion DownloadDataProgress
-
-//        #region   BLL.DownloadData.DownloadData 定义 事件
-
-//        private DownloadData bllDownloadData;
-//#if DEBUG
-//        System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-
-//#endif 
-
-
-//        private void downloadData(Guid patientId, string indexFileName)
-//        {
-//            if (bllDownloadData == null)
-//            {
-//#if DEBUG
-//                st.Start();
-//#endif 
-
-//                bllDownloadData = new DownloadData();
-
-//                bllDownloadData.ProgressChanged -= DownloadData_ProgressChanged;
-//                bllDownloadData.RunWorkerCompleted -= DownloadData_RunWorkerCompleted;
-
-//                bllDownloadData.ProgressChanged += DownloadData_ProgressChanged;
-//                bllDownloadData.RunWorkerCompleted += DownloadData_RunWorkerCompleted;
-//            }
-//            bllDownloadData.Start(patientId, indexFileName);
-
-//            DownloadDataProgressVisibility = Visibility.Visible;
-//        }
-
-//        private void DownloadData_ProgressChanged(object sender, ProgressChangedEventArgs e)
-//        {
-//            DownloadDataProgress = e.ProgressPercentage;
-//        }
-
-//        private void DownloadData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-//        {
-//            try
-//            {
-//                DownloadDataProgressVisibility = Visibility.Collapsed;
-//                DownloadDataProgress = 0;
-//                // First, handle the case where an exception was thrown.
-//                if (e.Error != null)
-//                {
-//                    LogHelper.Error(ToString(), e.Error);
-//                    MessageBox.Show(Application.Current.MainWindow,
-//                        ResourceHelper.LoadString("DownloadError") + e.Error.Message +
-//                        (e.Error.InnerException == null ? string.Empty : e.Error.InnerException.Message)
-//                        , ResourceHelper.LoadString("DownloadData")
-//                        , MessageBoxButton.OK
-//                        , MessageBoxImage.Warning);
-//                }
-//                else if (e.Cancelled)
-//                {
-//                    // Next, handle the case where the user canceled 
-//                    // the operation.
-//                    // Note that due to a race condition in 
-//                    // the DoWork event handler, the Cancelled
-//                    // flag may not have been set, even though
-//                    // CancelAsync was called.
-//                    //LogHelper.Info(ResourceHelper.LoadString("DownloadCanceled"));
-//                    MessageBox.Show(Application.Current.MainWindow,
-//                        ResourceHelper.LoadString("DownloadCanceled") + (e.Result == null ? string.Empty : e.Result)
-//                        , ResourceHelper.LoadString("DownloadData")
-//                        , MessageBoxButton.OK
-//                        , MessageBoxImage.Warning);
-//                }
-//                else
-//                {
-//#if DEBUG
-//                    st.Stop();
-//                    Console.WriteLine("数据下载用时：{0}", st.ElapsedMilliseconds.ToString());
-//#endif 
-//                    // Finally, handle the case where the operation 
-//                    // succeeded.
-//                    MessageBox.Show(Application.Current.MainWindow,
-//                        ResourceHelper.LoadString("MainView_DownloadCompleted") + (e.Result == null ? string.Empty : e.Result)
-//                        , ResourceHelper.LoadString("DownloadData")
-//                        , MessageBoxButton.OK
-//                        , MessageBoxImage.Information);
-
-//                    var product = new Product();
-//                    product.Id = DateTime.Now.ToGuid();
-//                    product.SerialNumber = "000000000000000000";
-
-//                    ProductBLL productBLL = new ProductBLL();
-
-//                    productBLL.Insert(product);
-
-//                    int a = productBLL.Count();
-//                }
-//            }
-//            finally
-//            {
-//                if (!Equals(bllDownloadData, null))
-//                {
-//                    bllDownloadData.Dispose();
-//                    bllDownloadData = null;
-//                }
-//            }
-//        }
-
-//        #endregion DownloadData 事件
-
-
-
-
-
-
-
 
         #region SwitchLanguageCommand
 
@@ -1198,6 +974,8 @@ namespace SuperSoft.View.ViewModel
         }
 
         #endregion
+
+        #endregion 
 
         #region HelpCommand
 

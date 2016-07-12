@@ -36,16 +36,14 @@ TherapyMode,IPAP,EPAP,RiseTime,RespiratoryRate,InspireTime,ITrigger,ETrigger,Ram
 Alert_Tube,Alert_Apnea,Alert_MinuteVentilation,Alert_HRate,Alert_LRate,Alert_Reserve1,Alert_Reserve2,Alert_Reserve3,Alert_Reserve4,Config_HumidifierLevel,Config_DataStore,
 Config_SmartStart,Config_PressureUnit,Config_Language,Config_Backlight,Config_MaskPressure,Config_ClinicalSet,Config_Reserve1,Config_Reserve2,Content 
 FROM ViewProductWorkingSummaryDetailedDatas 
-WHERE TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime 
-ORDER BY Id DESC";
+WHERE TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime";
 
         private const string selectByPatientIdTherapyModeDataTime = @"SELECT Id,PatientId,ProductId,FileName,StartTime,EndTime,ProductVersion,ProductModel,WorkingTime,CurrentTime,
 TherapyMode,IPAP,EPAP,RiseTime,RespiratoryRate,InspireTime,ITrigger,ETrigger,Ramp,ExhaleTime,IPAPMax,EPAPMin,PSMax,PSMin,CPAP,CFlex,CPAPStart,CPAPMax,CPAPMin,Alert,
 Alert_Tube,Alert_Apnea,Alert_MinuteVentilation,Alert_HRate,Alert_LRate,Alert_Reserve1,Alert_Reserve2,Alert_Reserve3,Alert_Reserve4,Config_HumidifierLevel,Config_DataStore,
 Config_SmartStart,Config_PressureUnit,Config_Language,Config_Backlight,Config_MaskPressure,Config_ClinicalSet,Config_Reserve1,Config_Reserve2,Content 
 FROM ViewProductWorkingSummaryDetailedDatas 
-WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime 
-ORDER BY Id DESC";
+WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime";
 
         #endregion
 
@@ -57,19 +55,23 @@ ORDER BY Id DESC";
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryDetailedData> SelectByTherapyModeDataTime(int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ViewProductWorkingSummaryDetailedData> SelectByTherapyModeDataTime(int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<ViewProductWorkingSummaryDetailedData> resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryDetailedData>();
+            ICollection<ViewProductWorkingSummaryDetailedData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByTherapyModeDataTime,
                 new SQLiteParameter("@TherapyMode", therapyMode),
                 new SQLiteParameter("@StartTime", startTime),
                 new SQLiteParameter("@EndTime", endTime)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryDetailedData>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingSummaryDetailedData result = new ViewProductWorkingSummaryDetailedData();
@@ -96,18 +98,18 @@ ORDER BY Id DESC";
                     result.IPAPMax = reader.GetFloat(20);
                     result.EPAPMin = reader.GetFloat(21);
                     result.PSMax = reader.GetFloat(22);
-                    result.PSMin = reader.GetInt32(23);
-                    result.CPAP = reader.GetInt32(24);
-                    result.CFlex = reader.GetInt32(25);
-                    result.CPAPStart = reader.GetInt32(26);
-                    result.CPAPMax = reader.GetInt32(27);
-                    result.CPAPMin = reader.GetInt32(28);
-                    result.Alert = reader.GetInt32(29);
-                    result.Alert_Tube = reader.GetInt32(30);
-                    result.Alert_Apnea = reader.GetInt32(31);
-                    result.Alert_MinuteVentilation = reader.GetInt32(32);
-                    result.Alert_HRate = reader.GetInt32(33);
-                    result.Alert_LRate = reader.GetInt32(34);
+                    result.PSMin = reader.GetValue(23).GetInt();
+                    result.CPAP = reader.GetValue(24).GetInt();
+                    result.CFlex = reader.GetValue(25).GetInt();
+                    result.CPAPStart = reader.GetValue(26).GetInt();
+                    result.CPAPMax = reader.GetValue(27).GetInt();
+                    result.CPAPMin = reader.GetValue(28).GetInt();
+                    result.Alert = reader.GetValue(29).GetInt();
+                    result.Alert_Tube = reader.GetValue(30).GetInt();
+                    result.Alert_Apnea = reader.GetValue(31).GetInt();
+                    result.Alert_MinuteVentilation = reader.GetValue(32).GetInt();
+                    result.Alert_HRate = reader.GetValue(33).GetInt();
+                    result.Alert_LRate = reader.GetValue(34).GetInt();
                     result.Alert_Reserve1 = reader.GetInt32(35);
                     result.Alert_Reserve2 = reader.GetInt32(36);
                     result.Alert_Reserve3 = reader.GetInt32(37);
@@ -124,7 +126,7 @@ ORDER BY Id DESC";
                     result.Config_Reserve2 = reader.GetInt32(48);
                     if (!reader.IsDBNull(49))
                     {
-                        long length = reader.GetBytes(48, 0, null, 0, int.MaxValue);
+                        long length = reader.GetBytes(49, 0, null, 0, int.MaxValue);
                         if (length > 0)
                         {
                             var blob = new Byte[length];
@@ -147,13 +149,13 @@ ORDER BY Id DESC";
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryDetailedData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ViewProductWorkingSummaryDetailedData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<ViewProductWorkingSummaryDetailedData> resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryDetailedData>();
+            ICollection<ViewProductWorkingSummaryDetailedData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientIdTherapyModeDataTime,
                 new SQLiteParameter("@PatientId", patientId),
                 new SQLiteParameter("@TherapyMode", therapyMode),
@@ -161,6 +163,10 @@ ORDER BY Id DESC";
                 new SQLiteParameter("@EndTime", endTime)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryDetailedData>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingSummaryDetailedData result = new ViewProductWorkingSummaryDetailedData();
@@ -215,7 +221,7 @@ ORDER BY Id DESC";
                     result.Config_Reserve2 = reader.GetInt32(48);
                     if (!reader.IsDBNull(49))
                     {
-                        long length = reader.GetBytes(48, 0, null, 0, int.MaxValue);
+                        long length = reader.GetBytes(49, 0, null, 0, int.MaxValue);
                         if (length > 0)
                         {
                             var blob = new Byte[length];

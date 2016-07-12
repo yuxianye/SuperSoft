@@ -39,11 +39,11 @@ namespace SuperSoft.DAL
 
         private const string selectById = "SELECT Id,PatientId,ProductId FROM PatientsProducts WHERE Id =@Id";
 
-        private const string selectPaging = "SELECT Id,PatientId,ProductId FROM PatientsProducts ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
-        private const string selectByPatientId = "SELECT Id,PatientId,ProductId FROM PatientsProducts WHERE PatientId=@PatientId ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+        private const string selectPaging = "SELECT Id,PatientId,ProductId FROM PatientsProducts ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
+        private const string selectByPatientId = "SELECT Id,PatientId,ProductId FROM PatientsProducts WHERE PatientId=@PatientId ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectByPatientIdCount = "SELECT COUNT(*) FROM PatientsProducts WHERE PatientId=@PatientId";
 
-        private const string selectByPatientId2 = "SELECT Id,PatientId,ProductId FROM PatientsProducts WHERE PatientId=@PatientId ORDER BY Id DESC";
+        private const string selectByPatientId2 = "SELECT Id,PatientId,ProductId FROM PatientsProducts WHERE PatientId=@PatientId";
 
         #endregion
 
@@ -111,7 +111,7 @@ namespace SuperSoft.DAL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<PatientsProduct> entitys)
+        public virtual void Insert(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -146,7 +146,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -269,7 +269,7 @@ namespace SuperSoft.DAL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<PatientsProduct> entitys)
+        public virtual void Delete(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -295,7 +295,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -359,7 +359,7 @@ namespace SuperSoft.DAL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<PatientsProduct> entitys)
+        public virtual void Update(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -394,7 +394,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -439,13 +439,17 @@ namespace SuperSoft.DAL
             {
                 throw new ObjectDisposedException(ToString());
             }
+            PatientsProduct result = null;
             if (id != Guid.Empty)
             {
-                PatientsProduct result = new PatientsProduct();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new PatientsProduct();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -454,9 +458,8 @@ namespace SuperSoft.DAL
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(PatientsProduct);
+            return result;
         }
 
         /// <summary>
@@ -466,7 +469,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<PatientsProduct> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -474,12 +477,16 @@ namespace SuperSoft.DAL
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<PatientsProduct> resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+            ICollection<PatientsProduct> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+                }
                 while (reader.Read())
                 {
                     PatientsProduct result = new PatientsProduct();
@@ -501,7 +508,7 @@ namespace SuperSoft.DAL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectByPatientId(Guid patientId, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<PatientsProduct> SelectByPatientId(Guid patientId, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -511,13 +518,17 @@ namespace SuperSoft.DAL
                  new SQLiteParameter("@PatientId", patientId)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<PatientsProduct> resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+            ICollection<PatientsProduct> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientId,
                 new SQLiteParameter("@PatientId", patientId),
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+                }
                 while (reader.Read())
                 {
                     PatientsProduct result = new PatientsProduct();
@@ -536,18 +547,23 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="patientId">patientId</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectByPatientId(Guid patientId)
+        public virtual ICollection<PatientsProduct> SelectByPatientId(Guid patientId)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<PatientsProduct> resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+            ICollection<PatientsProduct> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientId2,
                 new SQLiteParameter("@PatientId", patientId)
                 ))
             {
+
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<PatientsProduct>();
+                }
                 while (reader.Read())
                 {
                     PatientsProduct result = new PatientsProduct();

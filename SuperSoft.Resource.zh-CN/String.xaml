@@ -5,6 +5,7 @@
     <!--////////////////////////////////////////////////////////////////////////////-->
     <!--每个页面单独配置-->
     <!--MainView-->
+    <!--患者管理-->
     <sys:String x:Key="MainView_PatientManagement">患者管理</sys:String>
     <sys:String x:Key="MainView_PatientList">患者列表</sys:String>
     <sys:String x:Key="MainView_PatientListToolTip">显示患者列表</sys:String>
@@ -18,7 +19,21 @@
     <sys:String x:Key="MainView_PatientDeleteToolTip">删除患者</sys:String>
     <sys:String x:Key="MainView_PatientSearch">患者搜索</sys:String>
     <sys:String x:Key="MainView_PatientSearchToolTip">按条件搜索患者</sys:String>
+    <sys:String x:Key="MainView_PatientSearchFirstName">姓</sys:String>
+    <sys:String x:Key="MainView_PatientSearchLastName">名</sys:String>
+    <sys:String x:Key="MainView_PatientSearchDateOfBirth">出生日期</sys:String>
+    <sys:String x:Key="MainView_PatientSearchAge">年龄</sys:String>
+    <sys:String x:Key="MainView_PatientSearchWeight">体重(kg)</sys:String>
+    <sys:String x:Key="MainView_PatientSearchHeight">身高(cm)</sys:String>
+    <sys:String x:Key="MainView_PatientSearchBMI">BMI</sys:String>
+    <sys:String x:Key="MainView_PatientSearchGender">性别</sys:String>
+    <sys:String x:Key="MainView_PatientSearchEMail">邮箱</sys:String>
+    <sys:String x:Key="MainView_PatientSearchTelephoneNumbers">电话号码</sys:String>
+    <sys:String x:Key="MainView_PatientSearchPostalCode">邮编</sys:String>
+    <sys:String x:Key="MainView_PatientSearchAddress">地址</sys:String>
+    <sys:String x:Key="MainView_PatientSearchDiagnosis">病症</sys:String>
 
+    <!--医生管理-->
     <sys:String x:Key="MainView_DoctorManagement">医生管理</sys:String>
     <sys:String x:Key="MainView_DoctorList">医生列表</sys:String>
     <sys:String x:Key="MainView_DoctorListToolTip">显示医生列表</sys:String>
@@ -32,24 +47,35 @@
     <sys:String x:Key="MainView_DoctorDeleteToolTip">删除医生</sys:String>
     <sys:String x:Key="MainView_DoctorSearch">医生搜索</sys:String>
     <sys:String x:Key="MainView_DoctorSearchToolTip">按条件搜索患者医生</sys:String>
+    <sys:String x:Key="MainView_DoctorSearchFirstName">姓</sys:String>
+    <sys:String x:Key="MainView_DoctorSearchLastName">名</sys:String>
 
+    <!--数据下载-->
     <sys:String x:Key="MainView_DownloadData">数据下载</sys:String>
     <sys:String x:Key="MainView_Open">打开本地数据</sys:String>
     <sys:String x:Key="MainView_Import">导入U盘数据</sys:String>
     <sys:String x:Key="MainView_DownloadCompleted">下载已完成</sys:String>
-    <!--<sys:String x:Key="MainView_OpenFileDialogTitle">打开Respircare文件</sys:String>
-    <sys:String x:Key="MainView_RMSFileFilter">(Respircare flies)|*.TXT</sys:String>-->
+    <sys:String x:Key="MainView_DownloadCanceled">下载已关闭</sys:String>
+    <sys:String x:Key="MainView_DownloadProgress">下载进度</sys:String>
 
+    <sys:String x:Key="MainView_OpenFileDialogTitle">打开Respircare文件</sys:String>
+    <sys:String x:Key="MainView_RMSFileFilter">(Respircare flies)|*.TXT</sys:String>
+
+    <!--系统设置-->
     <sys:String x:Key="MainView_SystemSettings">系统设置</sys:String>
     <sys:String x:Key="MainView_SystemParameter">系统参数设置</sys:String>
     <sys:String x:Key="MainView_SwitchLanguage">切换界面语言</sys:String>
 
+    <!--帮助-->
     <sys:String x:Key="MainView_HelpToolTip">打开帮助文档</sys:String>
+
+    <!--PatientListView-->
+    <sys:String x:Key="PatientListView_PatientCount">患者数:</sys:String>
 
     <!--PatientAddView-->
     <sys:String x:Key="PatientAddView_Title">新增患者</sys:String>
-    <sys:String x:Key="PatientAddView_FirstName">姓</sys:String>
-    <sys:String x:Key="PatientAddView_LastName">名</sys:String>
+    <sys:String x:Key="PatientAddView_FirstName">姓*</sys:String>
+    <sys:String x:Key="PatientAddView_LastName">名*</sys:String>
     <sys:String x:Key="PatientAddView_DateOfBirth">出生日期</sys:String>
     <sys:String x:Key="PatientAddView_Age">年龄</sys:String>
     <sys:String x:Key="PatientAddView_Weight">体重(kg)</sys:String>
@@ -62,13 +88,117 @@
     <sys:String x:Key="PatientAddView_Address">地址</sys:String>
     <sys:String x:Key="PatientAddView_Diagnosis">病症</sys:String>
     <sys:String x:Key="PatientAddView_Doctor">医生</sys:String>
-    <sys:String x:Key="PatientAddView_SerialNumber">序列号</sys:String>
+    <sys:String x:Key="PatientAddView_SerialNumber">序列号*</sys:String>
+    <sys:String x:Key="PatientAddView_FirstNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientAddView_LastNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientAddView_WeightValidation">体重应该在0-255kg之间</sys:String>
+    <sys:String x:Key="PatientAddView_HeightValidation">身高应该在0-255cm之间</sys:String>
+    <sys:String x:Key="PatientAddView_TelephoneNumbersValidation">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientAddView_EMailValidationLength">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientAddView_EMailValidationFormat">邮箱格式不正确,正确格式例如:132456.qq.com</sys:String>
+    <sys:String x:Key="PatientAddView_PostalCodeValidation">长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientAddView_AddressValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientAddView_DiagnosisValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientAddView_SerialNumberValidation">必填,序列号为18个数字</sys:String>
 
-    <sys:String x:Key="PatientAddView_Male">男</sys:String>
-    <sys:String x:Key="PatientAddView_Female">女</sys:String>
+    <!--PatientDeleteView-->
+    <sys:String x:Key="PatientDeleteView_Title">删除患者</sys:String>
+    <sys:String x:Key="PatientDeleteView_FirstName">姓*</sys:String>
+    <sys:String x:Key="PatientDeleteView_LastName">名*</sys:String>
+    <sys:String x:Key="PatientDeleteView_DateOfBirth">出生日期</sys:String>
+    <sys:String x:Key="PatientDeleteView_Age">年龄</sys:String>
+    <sys:String x:Key="PatientDeleteView_Weight">体重(kg)</sys:String>
+    <sys:String x:Key="PatientDeleteView_Height">身高(cm)</sys:String>
+    <sys:String x:Key="PatientDeleteView_BMI">BMI</sys:String>
+    <sys:String x:Key="PatientDeleteView_Gender">性别</sys:String>
+    <sys:String x:Key="PatientDeleteView_EMail">邮箱</sys:String>
+    <sys:String x:Key="PatientDeleteView_TelephoneNumbers">电话号码</sys:String>
+    <sys:String x:Key="PatientDeleteView_PostalCode">邮编</sys:String>
+    <sys:String x:Key="PatientDeleteView_Address">地址</sys:String>
+    <sys:String x:Key="PatientDeleteView_Diagnosis">病症</sys:String>
+    <sys:String x:Key="PatientDeleteView_Doctor">医生</sys:String>
+    <sys:String x:Key="PatientDeleteView_SerialNumber">序列号*</sys:String>
+    <sys:String x:Key="PatientDeleteView_FirstNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_LastNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_WeightValidation">体重应该在0-255kg之间</sys:String>
+    <sys:String x:Key="PatientDeleteView_HeightValidation">身高应该在0-255cm之间</sys:String>
+    <sys:String x:Key="PatientDeleteView_TelephoneNumbersValidation">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_EMailValidationLength">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_EMailValidationFormat">邮箱格式不正确,正确格式例如:132456.qq.com</sys:String>
+    <sys:String x:Key="PatientDeleteView_PostalCodeValidation">长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_AddressValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_DiagnosisValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientDeleteView_SerialNumberValidation">必填,序列号为18个数字</sys:String>
+    <sys:String x:Key="PatientDeleteView_DeleteMessage">患者信息(患者信息和使用数据)删除后不能恢复，请慎重操作。</sys:String>
+
+    <!--PatientEditView-->
+    <sys:String x:Key="PatientEditView_Title">编辑患者</sys:String>
+    <sys:String x:Key="PatientEditView_FirstName">姓*</sys:String>
+    <sys:String x:Key="PatientEditView_LastName">名*</sys:String>
+    <sys:String x:Key="PatientEditView_DateOfBirth">出生日期</sys:String>
+    <sys:String x:Key="PatientEditView_Age">年龄</sys:String>
+    <sys:String x:Key="PatientEditView_Weight">体重(kg)</sys:String>
+    <sys:String x:Key="PatientEditView_Height">身高(cm)</sys:String>
+    <sys:String x:Key="PatientEditView_BMI">BMI</sys:String>
+    <sys:String x:Key="PatientEditView_Gender">性别</sys:String>
+    <sys:String x:Key="PatientEditView_EMail">邮箱</sys:String>
+    <sys:String x:Key="PatientEditView_TelephoneNumbers">电话号码</sys:String>
+    <sys:String x:Key="PatientEditView_PostalCode">邮编</sys:String>
+    <sys:String x:Key="PatientEditView_Address">地址</sys:String>
+    <sys:String x:Key="PatientEditView_Diagnosis">病症</sys:String>
+    <sys:String x:Key="PatientEditView_Doctor">医生</sys:String>
+    <sys:String x:Key="PatientEditView_SerialNumber">序列号*</sys:String>
+    <sys:String x:Key="PatientEditView_FirstNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientEditView_LastNameValidationRequired">必填,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientEditView_WeightValidation">体重应该在0-255kg之间</sys:String>
+    <sys:String x:Key="PatientEditView_HeightValidation">身高应该在0-255cm之间</sys:String>
+    <sys:String x:Key="PatientEditView_TelephoneNumbersValidation">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientEditView_EMailValidationLength">长度不能超过32个字符</sys:String>
+    <sys:String x:Key="PatientEditView_EMailValidationFormat">邮箱格式不正确,正确格式例如:132456.qq.com</sys:String>
+    <sys:String x:Key="PatientEditView_PostalCodeValidation">长度不能超过16个字符</sys:String>
+    <sys:String x:Key="PatientEditView_AddressValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientEditView_DiagnosisValidation">长度不能超过128个字符</sys:String>
+    <sys:String x:Key="PatientEditView_SerialNumberValidation">必填,序列号为18个数字</sys:String>
     <!--SystemParameterSettingView-->
     <sys:String x:Key="SystemParameterSettingView_Title">系统参数设置</sys:String>
 
+    <!--DoctorListView-->
+    <sys:String x:Key="DoctorListView_DoctorCount">医生数:</sys:String>
+    <sys:String x:Key="DoctorListView_PatientCount">患者数:</sys:String>
+    <sys:String x:Key="DoctorListView_FirstName">姓</sys:String>
+    <sys:String x:Key="DoctorListView_LastName">名</sys:String>
+    <sys:String x:Key="DoctorListView_DateOfBirth">出生日期</sys:String>
+    <sys:String x:Key="DoctorListView_Age">年龄</sys:String>
+    <sys:String x:Key="DoctorListView_Weight">体重(kg)</sys:String>
+    <sys:String x:Key="DoctorListView_Height">身高(cm)</sys:String>
+    <sys:String x:Key="DoctorListView_BMI">BMI</sys:String>
+    <sys:String x:Key="DoctorListView_Gender">性别</sys:String>
+    <sys:String x:Key="DoctorListView_EMail">邮箱</sys:String>
+    <sys:String x:Key="DoctorListView_TelephoneNumbers">电话号码</sys:String>
+    <sys:String x:Key="DoctorListView_PostalCode">邮编</sys:String>
+    <sys:String x:Key="DoctorListView_Address">地址</sys:String>
+    <sys:String x:Key="DoctorListView_Diagnosis">病症</sys:String>
+    <!--DoctorAddView-->
+    <sys:String x:Key="DoctorAddView_Title">新增医生</sys:String>
+    <sys:String x:Key="DoctorAddView_FirstName">姓</sys:String>
+    <sys:String x:Key="DoctorAddView_LastName">名</sys:String>
+    <sys:String x:Key="DoctorAddView_FirstNameValidationRequired">姓不能为空,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="DoctorAddView_LastNameValidationRequired">名不能为空,长度不能超过16个字符</sys:String>
+
+    <!--DoctorEditView-->
+    <sys:String x:Key="DoctorEditView_Title">编辑医生</sys:String>
+    <sys:String x:Key="DoctorEditView_FirstName">姓</sys:String>
+    <sys:String x:Key="DoctorEditView_LastName">名</sys:String>
+    <sys:String x:Key="DoctorEditView_FirstNameValidationRequired">姓不能为空,长度不能超过16个字符</sys:String>
+    <sys:String x:Key="DoctorEditView_LastNameValidationRequired">名不能为空,长度不能超过16个字符</sys:String>
+
+    <!--DoctorDeleteView-->
+    <sys:String x:Key="DoctorDeleteView_Title">删除医生</sys:String>
+    <sys:String x:Key="DoctorDeleteView_FirstName">姓</sys:String>
+    <sys:String x:Key="DoctorDeleteView_LastName">名</sys:String>
+    <!--<sys:String x:Key="DoctorDeleteView_FirstNameValidationRequired">姓不能为空,长度不能超过16个字符</sys:String>-->
+    <!--<sys:String x:Key="DoctorDeleteView_LastNameValidationRequired">名不能为空,长度不能超过16个字符</sys:String>-->
+    <sys:String x:Key="DoctorDeleteView_DeleteMessage">有患者需要医生治疗，不能删除。</sys:String>
     <!--SwitchLanguageView-->
     <sys:String x:Key="SwitchLanguageView_Title">切换界面语言</sys:String>
     <sys:String x:Key="SwitchLanguageView_LanguageMessage">请选择显示语言，然后点击[确定]按钮.</sys:String>
@@ -80,9 +210,13 @@
     <!--Public Buttons-->
     <sys:String x:Key="Confirm">确定</sys:String>
     <sys:String x:Key="Cancel">取消</sys:String>
+    <sys:String x:Key="WithoutData">没有相关数据!</sys:String>
+    <sys:String x:Key="Selected">选中</sys:String>
 
+    <sys:String x:Key="Error">错误</sys:String>
     <sys:String x:Key="DataAccessError">数据访问错误</sys:String>
-
+    <sys:String x:Key="Male">男</sys:String>
+    <sys:String x:Key="Female">女</sys:String>
     <!--////////////////////////////////////////////////////////////////////////////-->
 
     <!--PatientListView-->

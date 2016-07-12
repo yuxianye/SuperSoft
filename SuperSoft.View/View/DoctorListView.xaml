@@ -1,0 +1,122 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.View.DoctorListView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:local="clr-namespace:SuperSoft.View.View"
+                    xmlns:localBll="clr-namespace:SuperSoft.BLL;assembly=SuperSoft.BLL"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <UserControl.Resources>
+        <localBll:GenderConverter x:Key="genderConverter" />
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Path="DoctorListViewModel"
+                 Source="{StaticResource ResourceKey=Locator}"></Binding>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{DynamicResource LeftPanelWidth}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{DynamicResource TextBlockDefaultStyle}"
+                   Text="{DynamicResource  WithoutData}" />
+        <DataGrid Name="DataGridAllDoctorList"
+                  Grid.Column="0"
+                  IsReadOnly="True"
+                  RenderOptions.ClearTypeHint="Enabled"
+                  TextOptions.TextFormattingMode="Display"
+                  HeadersVisibility="None"
+                  ToolTip="{Binding DoctorCount}"
+                  SelectedItem="{Binding SelectedDoctor}"
+                  Visibility="{Binding  AllDoctorListVisibility}"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding AllDoctorList}"
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <!--<DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="{DynamicResource Selected}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Header="{DynamicResource FirstName}"
+                                    Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="{DynamicResource LastName}"
+                                    Binding="{Binding LastName}" />-->
+                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Binding="{Binding FirstName}" />
+                <DataGridTextColumn Binding="{Binding LastName}" />
+            </DataGrid.Columns>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />
+                </Style>
+            </DataGrid.Style>
+        </DataGrid>
+        <GridSplitter Background="{StaticResource ControlBorderBrush}"
+                      Width="1"
+                      Visibility="{Binding AllDoctorListVisibility}" />
+        <TextBlock Style="{DynamicResource  TextBlockDefaultStyle}"
+                   Text="{StaticResource  WithoutData}"
+                   Grid.Column="1"
+                   Visibility="{Binding AllDoctorListVisibility}" />
+        <DataGrid Grid.Column="1"
+                  IsReadOnly="True"
+                  RenderOptions.ClearTypeHint="Enabled"
+                  TextOptions.TextFormattingMode="Display"
+                  HeadersVisibility="Column"
+                  ToolTip="{Binding PatientCount}"
+                  SelectedItem="{Binding SelectedDoctor}"
+                  SelectionUnit="FullRow"
+                  SelectionMode="Single"
+                  ItemsSource="{Binding AllPatientList}"
+                  Visibility="{Binding AllPatientListVisibility}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="{DynamicResource Selected}"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_FirstName}"
+                                    Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_LastName}"
+                                    Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_DateOfBirth}"
+                                    Binding="{Binding DateOfBirth,StringFormat='yyyy/MM/dd'}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Age}"
+                                    Binding="{Binding Age}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Weight}"
+                                    Binding="{Binding Weight}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Height}"
+                                    Binding="{Binding Height}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_BMI}"
+                                    Binding="{Binding BMI,StringFormat={}{0:N}}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Gender}"
+                                    Binding="{Binding Gender,Converter={StaticResource genderConverter}}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_TelephoneNumbers}"
+                                    Binding="{Binding TelephoneNumbers}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_EMail}"
+                                    Binding="{Binding EMail}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_PostalCode}"
+                                    Binding="{Binding PostalCode}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Address}"
+                                    Binding="{Binding Address}" />
+                <DataGridTextColumn Header="{DynamicResource DoctorListView_Diagnosis}"
+                                    Binding="{Binding Diagnosis}" />
+            </DataGrid.Columns>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />
+                </Style>
+            </DataGrid.Style>
+        </DataGrid>
+    </Grid>
+</ss:UserControlBase>

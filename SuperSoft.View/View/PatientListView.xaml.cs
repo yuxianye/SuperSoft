@@ -1,4 +1,5 @@
-﻿using SuperSoft.Model;
+﻿using Microsoft.Practices.ServiceLocation;
+using SuperSoft.Model;
 using SuperSoft.View.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -26,18 +27,18 @@ namespace SuperSoft.View.View
         public PatientListView()
         {
             InitializeComponent();
-            DataContext = new PatientListViewModel();
+            //DataContext = ServiceLocator.Current.GetInstance<DoctorAddViewModel>();
         }
 
-        /// <summary>
-        /// 搜索条件的构造
-        /// </summary>
-        /// <param name="condition"></param>
-        public PatientListView(Expression<Func<Patient, bool>> condition)
-        {
-            InitializeComponent();
-            //DataContext = new PatientListViewModel(condition);
-        }
+        ///// <summary>
+        ///// 搜索条件的构造
+        ///// </summary>
+        ///// <param name="condition"></param>
+        //public PatientListView(Expression<Func<Patient, bool>> condition)
+        //{
+        //    InitializeComponent();
+        //    //DataContext = new PatientListViewModel(condition);
+        //}
 
         private void DataGridAllPatientList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

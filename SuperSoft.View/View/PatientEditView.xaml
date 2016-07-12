@@ -1,0 +1,247 @@
+﻿<ss:UserControlBase  x:Class="SuperSoft.View.View.PatientEditView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:ss="clr-namespace:SuperSoft.View"
+                     mc:Ignorable="d"
+                     Tag="{DynamicResource PatientEditView_Title}"
+                     Width="{DynamicResource PopupWinodwsWidth}"
+                     Height="{DynamicResource PopupWinodwsHeight}"
+                     d:DesignHeight="300"
+                     d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="PatientEditViewModel"
+                 Source="{StaticResource   ResourceKey=Locator}"></Binding>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource PopupWinodwsContentHeight}" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource PopupWinodwsColumn1Width1}" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="{StaticResource PopupWinodwsColumn3Width1}" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_FirstName}" />
+            <TextBlock Grid.Row="1"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_LastName}" />
+            <TextBlock Grid.Row="2"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_DateOfBirth}" />
+            <TextBlock Grid.Row="3"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Age}" />
+            <TextBlock Grid.Row="4"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Weight}" />
+            <TextBlock Grid.Row="5"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Height}" />
+            <TextBlock Grid.Row="6"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_BMI}" />
+            <TextBlock Grid.Row="7"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Gender}" />
+            <TextBlock Grid.Row="8"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_TelephoneNumbers}" />
+            <TextBlock Grid.Row="9"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_EMail}" />
+            <TextBlock Grid.Row="10"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_PostalCode}" />
+            <TextBlock Grid.Row="11"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Address}" />
+            <TextBlock Grid.Row="12"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Doctor}" />
+            <TextBlock Grid.Row="13"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_Diagnosis}" />
+            <TextBlock Grid.Row="14"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource PatientEditView_SerialNumber}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="0"
+                     VerticalAlignment="Center"
+                     MaxLength="16"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_FirstNameValidationRequired}"
+                     Text="{Binding Patient.FirstName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                     Name="txtbox_FirstName" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="1"
+                     VerticalAlignment="Center"
+                     MaxLength="16"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_LastNameValidationRequired}"
+                     Text="{Binding Patient.LastName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <DatePicker Grid.Column="1"
+                        Grid.Row="2"
+                        VerticalAlignment="Center"
+                        Margin="{DynamicResource ControlMargin}"
+                        SelectedDate="{Binding Patient.DateOfBirth}"
+                        DisplayDateEnd="{Binding CurrentDate}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="3"
+                     VerticalAlignment="Center"
+                     Margin="{DynamicResource ControlMargin}"
+                     Text="{Binding Patient.Age,Mode=OneWay}"
+                     IsEnabled="False" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="4"
+                     x:Name="weightTextBox"
+                     KeyDown="TextBox_KeyDown"
+                     LostFocus="weightTextBox_LostFocus"
+                     VerticalAlignment="Center"
+                     MaxLength="4"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_WeightValidation}"
+                     Text="{Binding Patient.Weight , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="5"
+                     x:Name="heightTextBox"
+                     KeyDown="TextBox_KeyDown"
+                     LostFocus="heightTextBox_LostFocus"
+                     VerticalAlignment="Center"
+                     MaxLength="4"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_HeightValidation}"
+                     Text="{Binding Patient.Height , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="6"
+                     VerticalAlignment="Center"
+                     Margin="{DynamicResource ControlMargin}"
+                     Text="{Binding Patient.BMI, StringFormat={}{0:N}, Mode=OneWay}"
+                     IsEnabled="False" />
+            <Grid Grid.Column="1"
+                  Grid.Row="7"
+                  VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             GroupName="sex"
+                             Content="{DynamicResource Female}"
+                             IsChecked="True" />
+                <RadioButton Grid.Column="1"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             GroupName="sex"
+                             Content="{DynamicResource Male}"
+                             IsChecked="{Binding Patient.Gender}" />
+            </Grid>
+            <TextBox Grid.Column="1"
+                     Grid.Row="8"
+                     VerticalAlignment="Center"
+                     MaxLength="32"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_TelephoneNumbersValidation}"
+                     Text="{Binding Patient.TelephoneNumbers , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="9"
+                     VerticalAlignment="Center"
+                     MaxLength="32"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_EMailValidationLength}"
+                     Text="{Binding Patient.EMail , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="10"
+                     VerticalAlignment="Center"
+                     MaxLength="16"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_PostalCodeValidation}"
+                     Text="{Binding Patient.PostalCode , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="11"
+                     VerticalAlignment="Center"
+                     MaxLength="128"
+                     MaxLines="2"
+                     TextWrapping="Wrap"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_AddressValidation}"
+                     Text="{Binding Patient.Address , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <ComboBox Grid.Column="1"
+                      Grid.Row="12"
+                      VerticalAlignment="Center"
+                      Margin="{DynamicResource ControlMargin}"
+                      ItemsSource="{Binding DoctorList}"
+                      SelectedValuePath="Key"
+                      DisplayMemberPath="Value"
+                      SelectedIndex="0"
+                      SelectedValue="{Binding Patient.DoctorId }" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="13"
+                     VerticalAlignment="Center"
+                     MaxLength="128"
+                     MaxLines="2"
+                     TextWrapping="Wrap"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_DiagnosisValidation}"
+                     Text="{Binding Patient.Diagnosis , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="14"
+                     IsEnabled="False"
+                     x:Name="snTextBox"
+                     KeyDown="TextBox_KeyDown"
+                     VerticalAlignment="Center"
+                     MaxLength="18"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientEditView_SerialNumberValidation}"
+                     Text="{Binding Patient.SerialNumber , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Confirm}"
+                    Command="{Binding ConfirmCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+            <Button Grid.Column="1"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Cancel}"
+                    Command="{Binding CancelCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+        </Grid>
+    </Grid>
+</ss:UserControlBase>

@@ -92,7 +92,7 @@ namespace SuperSoft.BLL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Insert(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -239,7 +239,7 @@ namespace SuperSoft.BLL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Delete(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -284,6 +284,30 @@ namespace SuperSoft.BLL
             }
         }
 
+        /// <summary>
+        /// 删除对象，使用显示事物
+        /// </summary>
+        /// <param name="transaction">事物对象</param>
+        /// <param name="productId">productId</param>
+        public virtual void DeleteByProductId(SQLiteTransaction transaction, Guid productId)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (productId != Guid.Empty)
+
+                {
+                    dal.DeleteByProductId(transaction, productId);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+        }
         #endregion
 
         #region Update
@@ -340,7 +364,7 @@ namespace SuperSoft.BLL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Update(ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -364,7 +388,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<ProductWorkingStatisticsData> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -419,7 +443,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -451,7 +475,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime, int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -477,10 +501,37 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="productId">productId</param>
         /// <param name="therapyMode">therapyMode</param>
+        /// <param name="dataTime">dataTime</param>
+        /// <returns></returns>
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime dataTime)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (productId != Guid.Empty)
+                {
+                    return dal.SelectByProductIdTherapyModeDataTime(productId, therapyMode, dataTime);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="productId">productId</param>
+        /// <param name="therapyMode">therapyMode</param>
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ProductWorkingStatisticsData> SelectByProductIdTherapyModeDataTime(Guid productId, int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {

@@ -368,6 +368,7 @@ namespace SuperSoft.Utility
             return new DateTime(dateTime.Year, 12, 31);
         }
 
+        private static int guidkey = 0;
         /// <summary>
         /// 返回Guid用于数据库操作，特定的时间代码可以提高检索效率
         /// </summary>
@@ -375,26 +376,31 @@ namespace SuperSoft.Utility
         /// <returns>COMB类型 Guid 数据</returns>
         public static Guid ToGuid(this DateTime dateTime)
         {
-            var guidArray = Guid.NewGuid().ToByteArray();
-            var dtBase = new DateTime(1900, 1, 1);
-            //获取用于生成byte字符串的天数与毫秒数
-            var days = new TimeSpan(dateTime.Ticks - dtBase.Ticks);
-            var msecs = new TimeSpan(dateTime.Ticks - new DateTime(dateTime.Year, dateTime.Month, dateTime.Day).Ticks);
-            //转换成byte数组
-            //注意SqlServer的时间计数只能精确到1/300秒
-            var daysArray = BitConverter.GetBytes(days.Days);
-            var msecsArray = BitConverter.GetBytes((long)(msecs.TotalMilliseconds / 3.333333));
+            //var guidArray = Guid.NewGuid().ToByteArray();
+            //var dtBase = new DateTime(1900, 1, 1);
+            ////获取用于生成byte字符串的天数与毫秒数
+            //var days = new TimeSpan(dateTime.Ticks - dtBase.Ticks);
+            //var msecs = new TimeSpan(dateTime.Ticks - new DateTime(dateTime.Year, dateTime.Month, dateTime.Day).Ticks);
+            ////转换成byte数组
+            ////注意SqlServer的时间计数只能精确到1/300秒
+            //var daysArray = BitConverter.GetBytes(days.Days);
+            //var msecsArray = BitConverter.GetBytes((long)(msecs.TotalMilliseconds / 3.333333));
 
-            //反转字节以符合SqlServer的排序
-            Array.Reverse(daysArray);
-            Array.Reverse(msecsArray);
+            ////反转字节以符合SqlServer的排序
+            //Array.Reverse(daysArray);
+            //Array.Reverse(msecsArray);
 
-            //把字节复制到Guid中
-            Array.Copy(daysArray, daysArray.Length - 2, guidArray, guidArray.Length - 6, 2);
-            Array.Copy(msecsArray, msecsArray.Length - 4, guidArray, guidArray.Length - 4, 4);
-            daysArray = null;
-            msecsArray = null;
-            var result = new Guid(guidArray);
+            ////把字节复制到Guid中
+            //Array.Copy(daysArray, daysArray.Length - 2, guidArray, guidArray.Length - 6, 2);
+            //Array.Copy(msecsArray, msecsArray.Length - 4, guidArray, guidArray.Length - 4, 4);
+            //daysArray = null;
+            //msecsArray = null;
+            //var result = new Guid(guidArray);
+            //return result;
+
+            var guidString = dateTime.ToString("yyyyMMddHHmmssfffffff") + guidkey++.ToString("00000000000");
+            //var guidString = dateTime.ToString("yyyyMMddHHmmssfffffff") + "00000000000";
+            var result = Guid.Parse(guidString);
             return result;
         }
 

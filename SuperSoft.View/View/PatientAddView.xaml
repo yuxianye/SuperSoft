@@ -92,29 +92,29 @@
             <TextBox Grid.Column="1"
                      Grid.Row="0"
                      VerticalAlignment="Center"
-                     MaxLength="32"
+                     MaxLength="16"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource FirstNameValidationRequired}"
-                     Text="{Binding PatientModel.FirstName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_FirstNameValidationRequired}"
+                     Text="{Binding Patient.FirstName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                      Name="txtbox_FirstName" />
             <TextBox Grid.Column="1"
                      Grid.Row="1"
                      VerticalAlignment="Center"
-                     MaxLength="32"
+                     MaxLength="16"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource LastNameValidationRequired}"
-                     Text="{Binding PatientModel.LastName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_LastNameValidationRequired}"
+                     Text="{Binding Patient.LastName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <DatePicker Grid.Column="1"
                         Grid.Row="2"
                         VerticalAlignment="Center"
                         Margin="{DynamicResource ControlMargin}"
-                        SelectedDate="{Binding PatientModel.DateOfBirth2}"
+                        SelectedDate="{Binding Patient.DateOfBirth}"
                         DisplayDateEnd="{Binding CurrentDate}" />
             <TextBox Grid.Column="1"
                      Grid.Row="3"
                      VerticalAlignment="Center"
                      Margin="{DynamicResource ControlMargin}"
-                     Text="{Binding PatientModel.Age}"
+                     Text="{Binding Patient.Age,Mode=OneWay}"
                      IsEnabled="False" />
             <TextBox Grid.Column="1"
                      Grid.Row="4"
@@ -122,25 +122,25 @@
                      KeyDown="TextBox_KeyDown"
                      LostFocus="weightTextBox_LostFocus"
                      VerticalAlignment="Center"
-                     MaxLength="3"
+                     MaxLength="4"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource WeightValidation}"
-                     Text="{Binding PatientModel.Weight , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_WeightValidation}"
+                     Text="{Binding Patient.Weight , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="5"
                      x:Name="heightTextBox"
                      KeyDown="TextBox_KeyDown"
                      LostFocus="heightTextBox_LostFocus"
                      VerticalAlignment="Center"
-                     MaxLength="3"
+                     MaxLength="4"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource HeightValidation}"
-                     Text="{Binding PatientModel.Height , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_HeightValidation}"
+                     Text="{Binding Patient.Height , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="6"
                      VerticalAlignment="Center"
                      Margin="{DynamicResource ControlMargin}"
-                     Text="{Binding PatientModel.BMI, StringFormat={}{0:N}}"
+                     Text="{Binding Patient.BMI, StringFormat={}{0:N}, Mode=OneWay}"
                      IsEnabled="False" />
             <Grid Grid.Column="1"
                   Grid.Row="7"
@@ -153,36 +153,36 @@
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
                              GroupName="sex"
-                             Content="{DynamicResource PatientAddView_Female}"
+                             Content="{DynamicResource Female}"
                              IsChecked="True" />
                 <RadioButton Grid.Column="1"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Center"
                              GroupName="sex"
-                             Content="{DynamicResource PatientAddView_Male}"
-                             IsChecked="{Binding PatientModel.Gender}" />
+                             Content="{DynamicResource Male}"
+                             IsChecked="{Binding Patient.Gender}" />
             </Grid>
             <TextBox Grid.Column="1"
                      Grid.Row="8"
                      VerticalAlignment="Center"
                      MaxLength="32"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource TelephoneNumbersValidation}"
-                     Text="{Binding PatientModel.TelephoneNumbers , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_TelephoneNumbersValidation}"
+                     Text="{Binding Patient.TelephoneNumbers , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="9"
                      VerticalAlignment="Center"
                      MaxLength="32"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource EMailValidationLength}"
-                     Text="{Binding PatientModel.EMail , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_EMailValidationLength}"
+                     Text="{Binding Patient.EMail , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="10"
                      VerticalAlignment="Center"
-                     MaxLength="32"
+                     MaxLength="16"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource PostalCodeValidation}"
-                     Text="{Binding PatientModel.PostalCode , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_PostalCodeValidation}"
+                     Text="{Binding Patient.PostalCode , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="11"
                      VerticalAlignment="Center"
@@ -191,8 +191,8 @@
                      TextWrapping="Wrap"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource AddressValidation}"
-                     Text="{Binding PatientModel.Address , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_AddressValidation}"
+                     Text="{Binding Patient.Address , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <ComboBox Grid.Column="1"
                       Grid.Row="12"
                       VerticalAlignment="Center"
@@ -201,7 +201,7 @@
                       SelectedValuePath="Key"
                       DisplayMemberPath="Value"
                       SelectedIndex="0"
-                      SelectedValue="{Binding PatientModel.DoctorId }" />
+                      SelectedValue="{Binding Patient.DoctorId }" />
             <TextBox Grid.Column="1"
                      Grid.Row="13"
                      VerticalAlignment="Center"
@@ -210,8 +210,8 @@
                      TextWrapping="Wrap"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource DiagnosisValidation}"
-                     Text="{Binding PatientModel.Diagnosis , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_DiagnosisValidation}"
+                     Text="{Binding Patient.Diagnosis , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             <TextBox Grid.Column="1"
                      Grid.Row="14"
                      x:Name="snTextBox"
@@ -219,9 +219,9 @@
                      VerticalAlignment="Center"
                      MaxLength="18"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource SerialNumberValidation}"
-                     Text="{Binding ProductModel.SerialNumber , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                     IsEnabled="{Binding NotHaveCondition}" />
+                     Metro:TextBoxHelper.Watermark="{DynamicResource PatientAddView_SerialNumberValidation}"
+                     Text="{Binding Patient.SerialNumber , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                     IsEnabled="{Binding IsEnabledSerialNumbeControl}" />
 
         </Grid>
         <Grid Grid.Row="1"

@@ -35,13 +35,13 @@ namespace SuperSoft.DAL
 FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolumeP95,TidalVolumeMedian,MinuteVentilationMax,MinuteVentilationP95,MinuteVentilationMedian,
 SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
 IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
-FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime ORDER BY Id";
+FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND DataTime>=@StartTime AND DataTime<@EndTime";
 
         private const string selectByPatientIdTherapyMode = @"SELECT Id,PatientId,ProductId,TherapyMode,DataTime,TotalUsage,CountAHI,CountAI,CountHI,CountSnore,CountPassive,PressureMax,PressureP95,PressureMedian,
 FlowMax,FlowP95,FlowMedian,LeakMax,LeakP95,LeakMedian,TidalVolumeMax,TidalVolumeP95,TidalVolumeMedian,MinuteVentilationMax,MinuteVentilationP95,MinuteVentilationMedian,
 SpO2Max,SpO2P95,SpO2Median,PulseRateMax,PulseRateP95,PulseRateMedian,RespiratoryRateMax,RespiratoryRateP95,RespiratoryRateMedian,IERatioMax,IERatioP95,IERatioMedian,
 IPAPMax,IPAPP95,IPAPMedian,EPAPMax,EPAPP95,EPAPMedian 
-FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode ORDER BY Id";
+FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode";
 
         private const string selectTherapyModeByPatientId = @"SELECT TherapyMode FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId GROUP BY (TherapyMode) ORDER BY TherapyMode";
 
@@ -58,13 +58,13 @@ FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMod
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingStatisticsData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ViewProductWorkingStatisticsData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<ViewProductWorkingStatisticsData> resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingStatisticsData>();
+            ICollection<ViewProductWorkingStatisticsData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientIdTherapyModeDataTime,
                 new SQLiteParameter("@PatientId", patientId),
                 new SQLiteParameter("@TherapyMode", therapyMode),
@@ -72,6 +72,10 @@ FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMod
                 new SQLiteParameter("@EndTime", endTime)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingStatisticsData>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingStatisticsData result = new ViewProductWorkingStatisticsData();
@@ -132,18 +136,22 @@ FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMod
         /// <param name="patientId">patientId</param>
         /// <param name="therapyMode">therapyMode</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingStatisticsData> SelectByPatientIdTherapyMode(Guid patientId, int therapyMode)
+        public virtual ICollection<ViewProductWorkingStatisticsData> SelectByPatientIdTherapyMode(Guid patientId, int therapyMode)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<ViewProductWorkingStatisticsData> resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingStatisticsData>();
+            ICollection<ViewProductWorkingStatisticsData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientIdTherapyMode,
                 new SQLiteParameter("@PatientId", patientId),
                 new SQLiteParameter("@TherapyMode", therapyMode)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingStatisticsData>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingStatisticsData result = new ViewProductWorkingStatisticsData();
@@ -209,11 +217,15 @@ FROM ViewProductWorkingStatisticsDatas WHERE PatientId=@PatientId AND TherapyMod
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<KeyValuePair<TherapyMode, string>> resultList = new Collection<KeyValuePair<TherapyMode, string>>();
+            ICollection<KeyValuePair<TherapyMode, string>> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectTherapyModeByPatientId,
                 new SQLiteParameter("@PatientId", patientId)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new Collection<KeyValuePair<TherapyMode, string>>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingStatisticsData result = new ViewProductWorkingStatisticsData();

@@ -36,8 +36,7 @@ TherapyMode,IPAP,EPAP,RiseTime,RespiratoryRate,InspireTime,ITrigger,ETrigger,Ram
 Alert_Tube,Alert_Apnea,Alert_MinuteVentilation,Alert_HRate,Alert_LRate,Alert_Reserve1,Alert_Reserve2,Alert_Reserve3,Alert_Reserve4,Config_HumidifierLevel,Config_DataStore,
 Config_SmartStart,Config_PressureUnit,Config_Language,Config_Backlight,Config_MaskPressure,Config_ClinicalSet,Config_Reserve1,Config_Reserve2 
 FROM ViewProductWorkingSummaryDatas 
-WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime 
-ORDER BY Id DESC";
+WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime";
 
         private const string selectMaxWorkingTimeByPatientIdTherapyModeDataTime = @"SELECT Id,PatientId,ProductId,FileName,StartTime,EndTime,ProductVersion,ProductModel,WorkingTime,CurrentTime,
 TherapyMode,IPAP,EPAP,RiseTime,RespiratoryRate,InspireTime,ITrigger,ETrigger,Ramp,ExhaleTime,IPAPMax,EPAPMin,PSMax,PSMin,CPAP,CFlex,CPAPStart,CPAPMax,CPAPMin,Alert,
@@ -45,7 +44,8 @@ Alert_Tube,Alert_Apnea,Alert_MinuteVentilation,Alert_HRate,Alert_LRate,Alert_Res
 Config_SmartStart,Config_PressureUnit,Config_Language,Config_Backlight,Config_MaskPressure,Config_ClinicalSet,Config_Reserve1,Config_Reserve2 
 FROM ViewProductWorkingSummaryDatas 
 WHERE PatientId=@PatientId AND TherapyMode=@TherapyMode AND StartTime>=@StartTime AND EndTime<@EndTime 
-ORDER BY WorkingTime DESC LIMIT 1 OFFSET 0";
+ORDER BY WorkingTime DESC";
+
         #endregion
 
 
@@ -59,14 +59,14 @@ ORDER BY WorkingTime DESC LIMIT 1 OFFSET 0";
         /// <param name="startTime">startTime</param>
         /// <param name="endTime">endTime</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewProductWorkingSummaryData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
+        public virtual ICollection<ViewProductWorkingSummaryData> SelectByPatientIdTherapyModeDataTime(Guid patientId, int therapyMode, DateTime startTime, DateTime endTime)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<ViewProductWorkingSummaryData> resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryData>();
+            ICollection<ViewProductWorkingSummaryData> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientIdTherapyModeDataTime,
                 new SQLiteParameter("@PatientId", patientId),
                 new SQLiteParameter("@TherapyMode", therapyMode),
@@ -74,6 +74,10 @@ ORDER BY WorkingTime DESC LIMIT 1 OFFSET 0";
                 new SQLiteParameter("@EndTime", endTime)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewProductWorkingSummaryData>();
+                }
                 while (reader.Read())
                 {
                     ViewProductWorkingSummaryData result = new ViewProductWorkingSummaryData();
@@ -149,7 +153,7 @@ ORDER BY WorkingTime DESC LIMIT 1 OFFSET 0";
             }
             if (patientId != Guid.Empty)
             {
-                ViewProductWorkingSummaryData result = new ViewProductWorkingSummaryData();
+                ViewProductWorkingSummaryData result = null;
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectMaxWorkingTimeByPatientIdTherapyModeDataTime,
                        new SQLiteParameter("@PatientId", patientId),
                        new SQLiteParameter("@TherapyMode", therapyMode),
@@ -157,6 +161,10 @@ ORDER BY WorkingTime DESC LIMIT 1 OFFSET 0";
                        new SQLiteParameter("@EndTime", endTime)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new ViewProductWorkingSummaryData();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);

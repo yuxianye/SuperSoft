@@ -31,11 +31,10 @@ namespace SuperSoft.DAL
         #region 数据库操作字符串SQL语句
         //8个字段
         private const string selectByPatientId = @"SELECT Id,PatientId,FirstName,LastName,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime 
-FROM ViewPatientsProducts WHERE PatientId=@PatientId ORDER BY Id";
-
+FROM ViewPatientsProducts WHERE PatientId=@PatientId";
 
         private const string selectBySerialNumber = @"SELECT Id,PatientId,FirstName,LastName,SerialNumber,ProductVersion,ProductModel,TotalWorkingTime 
-FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
+FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber";
 
         #endregion
 
@@ -46,17 +45,21 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
         /// </summary>
         /// <param name="patientId">patientId</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewPatientsProduct> SelectByPatientId(Guid patientId)
+        public virtual ICollection<ViewPatientsProduct> SelectByPatientId(Guid patientId)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<ViewPatientsProduct> resultList = new System.Collections.ObjectModel.Collection<ViewPatientsProduct>();
+            ICollection<ViewPatientsProduct> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientId,
                 new SQLiteParameter("@PatientId", patientId)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewPatientsProduct>();
+                }
                 while (reader.Read())
                 {
                     ViewPatientsProduct result = new ViewPatientsProduct();
@@ -64,8 +67,8 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
                     result.PatientId = reader.GetGuid(1);
                     result.FirstName = reader.GetString(2);
                     result.LastName = reader.GetString(3);
-                    result.SerialNumber = reader.GetString(4);
-                    result.ProductVersion = reader.GetString(5);
+                    result.SerialNumber = reader.GetValue(4).GetString();
+                    result.ProductVersion = reader.GetValue(5).GetString();
                     result.ProductModel = reader.GetInt32(6);
                     result.TotalWorkingTime = reader.GetInt32(7);
                     resultList.Add(result);
@@ -80,18 +83,22 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
         /// </summary>
         /// <param name="serialNumber">serialNumber</param>
         /// <returns></returns>
-        public virtual IEnumerable<ViewPatientsProduct> SelectBySerialNumber(string serialNumber)
+        public virtual ICollection<ViewPatientsProduct> SelectBySerialNumber(string serialNumber)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
 
-            ICollection<ViewPatientsProduct> resultList = new System.Collections.ObjectModel.Collection<ViewPatientsProduct>();
+            ICollection<ViewPatientsProduct> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber,
                 new SQLiteParameter("@SerialNumber", serialNumber)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<ViewPatientsProduct>();
+                }
                 while (reader.Read())
                 {
                     ViewPatientsProduct result = new ViewPatientsProduct();
@@ -100,9 +107,9 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber ORDER BY Id DESC";
                     result.FirstName = reader.GetString(2);
                     result.LastName = reader.GetString(3);
                     result.SerialNumber = reader.GetString(4);
-                    result.ProductVersion = reader.GetString(5);
-                    result.ProductModel = reader.GetInt32(6);
-                    result.TotalWorkingTime = reader.GetInt32(7);
+                    result.ProductVersion = reader.GetValue(5).GetString();
+                    result.ProductModel = reader.GetValue(6).GetInt();
+                    result.TotalWorkingTime = reader.GetValue(7).GetInt();
                     resultList.Add(result);
                 }
                 reader.Close();

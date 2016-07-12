@@ -1,4 +1,5 @@
-﻿using SuperSoft.View.ViewModel;
+﻿using GalaSoft.MvvmLight.Messaging;
+using SuperSoft.View.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,5 +90,31 @@ namespace SuperSoft.View.View
         //    //  DoctorSearchButton1.IsChecked = true;
         //}
 
+
+        private void PatientManagementRibbonTabItem_Selected(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+            patientListButton.IsChecked = true;
+        }
+
+        private void DoctorManagementRibbonTabItem_Selected(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DoctorListView, ViewType.View), Model.MessengerToken.Navigate);
+            doctorListButton.IsChecked = true;
+        }
+
+        private void DownloadDataRibbonTabItem_Selected(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DownloadView, ViewType.View, new KeyValuePair<string, string>(null, null)), Model.MessengerToken.Navigate);
+            doctorListButton.IsChecked = true;
+
+        }
+
+        private void SettingsRibbonTabItem_Selected(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.DownloadView, ViewType.View, new KeyValuePair<string, string>(null, null)), Model.MessengerToken.Navigate);
+            doctorListButton.IsChecked = true;
+
+        }
     }
 }

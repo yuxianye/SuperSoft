@@ -15,10 +15,12 @@
     <sys:Double x:Key="PopupWinodwsWidth">600</sys:Double>
     <sys:Double x:Key="PopupWinodwsWidth2">800</sys:Double>
     <sys:Double x:Key="PopupWinodwsHeight">600</sys:Double>
+    <sys:Double x:Key="PopupWinodwsHeight2">170</sys:Double>
 
     <!--popup窗体中内容的总高度-->
     <sysWin:GridLength x:Key="PopupWinodwsContentHeight">525</sysWin:GridLength>
     <sysWin:GridLength x:Key="PopupWinodwsContentHeight2">530</sysWin:GridLength>
+    <sysWin:GridLength x:Key="PopupWinodwsContentHeight3">95</sysWin:GridLength>
 
     <!--popup窗体中某列的宽度，一般分三列，设置首列和尾列，中间列自适应-->
     <sysWin:GridLength x:Key="PopupWinodwsColumn1Width1">160</sysWin:GridLength>

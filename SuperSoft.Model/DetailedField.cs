@@ -19,7 +19,7 @@ namespace SuperSoft.Model
     /// 10--18	备用
     /// </summary>
     [ProtoContract]
-    public class DetailedField : MyClassBase
+    public struct DetailedField
     {
         [ProtoMember(1)]
         public DateTime RecoredTime { get; set; }

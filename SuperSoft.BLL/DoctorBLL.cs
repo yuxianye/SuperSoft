@@ -92,7 +92,7 @@ namespace SuperSoft.BLL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<Doctor> entitys)
+        public virtual void Insert(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -239,7 +239,7 @@ namespace SuperSoft.BLL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<Doctor> entitys)
+        public virtual void Delete(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -340,7 +340,7 @@ namespace SuperSoft.BLL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<Doctor> entitys)
+        public virtual void Update(ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -364,7 +364,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<Doctor> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<Doctor> entitys)
         {
             if (Disposed)
             {
@@ -419,7 +419,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Doctor> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -448,7 +448,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Doctor> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -474,7 +474,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="firstName">firstName</param>
         /// <returns></returns>
-        public virtual IEnumerable<Doctor> SelectByFirstName(string firstName)
+        public virtual ICollection<Doctor> SelectByFirstName(string firstName)
         {
             if (Disposed)
             {
@@ -494,6 +494,30 @@ namespace SuperSoft.BLL
             return null;
         }
 
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="lastName">lastName</param>
+        /// <returns></returns>
+        public virtual ICollection<Doctor> SelectByLastName(string lastName)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(lastName))
+                {
+                    return dal.SelectByLastName(lastName);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+            }
+            return null;
+        }
         #endregion
 
         #region Dispose 

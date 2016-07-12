@@ -1,0 +1,75 @@
+﻿<ss:UserControlBase  x:Class="SuperSoft.View.View.DoctorAddView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:ss="clr-namespace:SuperSoft.View"
+                     mc:Ignorable="d"
+                     Tag="{DynamicResource DoctorAddView_Title}"
+                     Width="{DynamicResource PopupWinodwsWidth}"
+                     Height="{DynamicResource PopupWinodwsHeight2}"
+                     d:DesignHeight="300"
+                     d:DesignWidth="300">
+    <UserControl.DataContext>
+        <Binding Path="DoctorAddViewModel"
+                 Source="{StaticResource   ResourceKey=Locator}"></Binding>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{DynamicResource PopupWinodwsContentHeight3}" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource PopupWinodwsColumn1Width1}" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="{StaticResource PopupWinodwsColumn3Width1}" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource DoctorAddView_FirstName}" />
+            <TextBlock Grid.Row="1"
+                       Style="{StaticResource TextBlockContentTitleDefaultStyle}"
+                       Text="{DynamicResource DoctorAddView_LastName}" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="0"
+                     VerticalAlignment="Center"
+                     MaxLength="16"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource DoctorAddView_FirstNameValidationRequired}"
+                     Text="{Binding Doctor.FirstName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                     Name="txtbox_FirstName" />
+            <TextBox Grid.Column="1"
+                     Grid.Row="1"
+                     VerticalAlignment="Center"
+                     MaxLength="16"
+                     Margin="{DynamicResource ControlMargin}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource DoctorAddView_LastNameValidationRequired}"
+                     Text="{Binding Doctor.LastName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Confirm}"
+                    Command="{Binding ConfirmCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+            <Button Grid.Column="1"
+                    Width="{DynamicResource DefaultButtonWidth}"
+                    Margin="{DynamicResource ControlMargin}"
+                    Content="{DynamicResource Cancel}"
+                    Command="{Binding CancelCommand}"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+        </Grid>
+    </Grid>
+</ss:UserControlBase>

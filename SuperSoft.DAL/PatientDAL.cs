@@ -43,13 +43,46 @@ Gender=@Gender,Photo=@Photo,EMail=@EMail,TelephoneNumbers=@TelephoneNumbers,Post
 EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId FROM Patients WHERE Id =@Id";
 
         private const string selectPaging = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
-FROM Patients ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+FROM Patients ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectByFirstName = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
-FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC LIMIT @PageSize OFFSET @OffictCount";
+FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC LIMIT @PageSize OFFSET @OffsetCount";
         private const string selectByFirstNameCount = "SELECT COUNT(*) FROM Patients WHERE FirstName LIKE %@FirstName%";
 
         private const string selectByFirstName2 = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
-FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
+FROM Patients WHERE FirstName like @FirstName";
+
+        private const string selectByLastName = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE LastName like @LastName";
+
+        private const string selectByDateOfBirth = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE DateOfBirth like @DateOfBirth";
+
+        private const string selectByWeight = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE Weight = @Weight";
+
+        private const string selectByHeight = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE Height = @Height";
+
+        private const string selectByGender = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE Gender = @Gender";
+
+        private const string selectByEMail = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE EMail like @EMail";
+
+        private const string selectByTelephoneNumbers = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE TelephoneNumbers like @TelephoneNumbers";
+
+        private const string selectByPostalCode = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE PostalCode like @PostalCode";
+
+        private const string selectByAddress = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE Address like @Address";
+
+        private const string selectByDiagnosis = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE Diagnosis like @Diagnosis";
+
+        private const string selectByDoctorId = @"SELECT Id,FirstName,LastName,DateOfBirth,Weight,Height,Gender,Photo,EMail,TelephoneNumbers,PostalCode,Address,Diagnosis,DoctorId 
+FROM Patients WHERE DoctorId=@DoctorId";
         #endregion
 
         #region Count
@@ -138,7 +171,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<Patient> entitys)
+        public virtual void Insert(ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -173,7 +206,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -208,7 +241,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         #region Delete
 
         /// <summary>
-        /// 删除对象
+        /// 删除对象,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="id">一个实体对象的Id</param>
         public virtual void Delete(Guid id)
@@ -226,7 +259,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         }
 
         /// <summary>
-        /// 删除对象，使用显示事物
+        /// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="id">一个实体对象的Id</param>
@@ -245,7 +278,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         }
 
         /// <summary>
-        /// 删除对象
+        /// 删除对象,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="entity">一个实体对象</param>
         public virtual void Delete(Patient entity)
@@ -261,7 +294,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         }
 
         /// <summary>
-        /// 删除对象，使用显示事物
+        /// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
@@ -293,10 +326,10 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         }
 
         /// <summary>
-        /// 删除实体对象集合
+        /// 删除实体对象集合,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<Patient> entitys)
+        public virtual void Delete(ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -318,11 +351,11 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         }
 
         /// <summary>
-        /// 删除实体对象集合，使用显示事物
+        /// 删除实体对象集合，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -408,7 +441,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<Patient> entitys)
+        public virtual void Update(ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -443,7 +476,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<Patient> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<Patient> entitys)
         {
             if (Disposed)
             {
@@ -488,13 +521,17 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
             {
                 throw new ObjectDisposedException(ToString());
             }
+            Patient result = null;
             if (id != Guid.Empty)
             {
-                Patient result = new Patient();
                 using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
                       new SQLiteParameter("@Id", id)
                       ))
                 {
+                    if (reader.HasRows)
+                    {
+                        result = new Patient();
+                    }
                     while (reader.Read())
                     {
                         result.Id = reader.GetGuid(0);
@@ -523,9 +560,8 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
                     }
                     reader.Close();
                 }
-                return result;
             }
-            return default(Patient);
+            return result;
         }
 
         /// <summary>
@@ -535,7 +571,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Patient> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Patient> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -543,12 +579,16 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
             }
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Patient> resultList = new System.Collections.ObjectModel.Collection<Patient>();
+            ICollection<Patient> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
                 while (reader.Read())
                 {
                     Patient result = new Patient();
@@ -590,7 +630,7 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<Patient> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<Patient> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
         {
             if (Disposed)
             {
@@ -600,13 +640,17 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
                new SQLiteParameter("@FirstName", firstName)
                ));
             int offsetCount = (pageIndex - 1) * pageSize;
-            ICollection<Patient> resultList = new System.Collections.ObjectModel.Collection<Patient>();
+            ICollection<Patient> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByFirstName,
                 new SQLiteParameter("@FirstName", firstName),
                 new SQLiteParameter("@PageSize", pageSize),
                 new SQLiteParameter("@OffsetCount", offsetCount)
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
                 while (reader.Read())
                 {
                     Patient result = new Patient();
@@ -645,17 +689,605 @@ FROM Patients WHERE FirstName like %@FirstName% ORDER BY Id DESC";
         /// </summary>
         /// <param name="firstName">firstName</param>
         /// <returns></returns>
-        public virtual IEnumerable<Patient> SelectByFirstName(string firstName)
+        public virtual ICollection<Patient> SelectByFirstName(string firstName)
         {
             if (Disposed)
             {
                 throw new ObjectDisposedException(ToString());
             }
-            ICollection<Patient> resultList = new System.Collections.ObjectModel.Collection<Patient>();
+            ICollection<Patient> resultList = null;
             using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByFirstName2,
-                new SQLiteParameter("@FirstName", firstName)
+                new SQLiteParameter("@FirstName", "%" + firstName + "%")
                 ))
             {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="lastName">lastName</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByLastName(string lastName)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByLastName,
+                new SQLiteParameter("@LastName", "%" + lastName + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="dateOfBirth">dateOfBirth</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByDateOfBirth(DateTime dateOfBirth)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByDateOfBirth,
+                new SQLiteParameter("@DateOfBirth", "%" + dateOfBirth + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="weight">weight</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByWeight(int weight)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByWeight,
+                new SQLiteParameter("@Weight", weight)
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="height">height</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByHeight(int height)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByHeight,
+                new SQLiteParameter("@Height", height)
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="gender">gender</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByGender(bool gender)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByGender,
+                new SQLiteParameter("@Gender", gender)
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="eMail">eMail</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByEMail(string eMail)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByEMail,
+                new SQLiteParameter("@EMail", "%" + eMail + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="telephoneNumbers">telephoneNumbers</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SselectByTelephoneNumbers(string telephoneNumbers)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByTelephoneNumbers,
+                new SQLiteParameter("@TelephoneNumbers", "%" + telephoneNumbers + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="postalCode">postalCode</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByPostalCode(string postalCode)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPostalCode,
+                new SQLiteParameter("@PostalCode", "%" + postalCode + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="address">address</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByAddress(string address)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByAddress,
+                new SQLiteParameter("@Address", "%" + address + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="diagnosis">diagnosis</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByDiagnosis(string diagnosis)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByDiagnosis,
+                new SQLiteParameter("@Diagnosis", "%" + diagnosis + "%")
+                ))
+            {
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
+                while (reader.Read())
+                {
+                    Patient result = new Patient();
+                    result.Id = reader.GetGuid(0);
+                    result.FirstName = reader.GetString(1);
+                    result.LastName = reader.GetString(2);
+                    result.DateOfBirth = reader.GetDateTime(3);
+                    result.Weight = reader.GetInt32(4);
+                    result.Height = reader.GetInt32(5);
+                    result.Gender = reader.GetBoolean(6);
+                    if (!reader.IsDBNull(7))
+                    {
+                        long length = reader.GetBytes(7, 0, null, 0, int.MaxValue);
+                        if (length > 0)
+                        {
+                            var blob = new Byte[length];
+                            reader.GetBytes(7, 0, blob, 0, blob.Length);
+                            result.Photo = blob;
+                        }
+                    }
+                    result.EMail = reader.GetValue(8).GetString();
+                    result.TelephoneNumbers = reader.GetValue(9).GetString();
+                    result.PostalCode = reader.GetValue(10).GetString();
+                    result.Address = reader.GetValue(11).GetString();
+                    result.Diagnosis = reader.GetValue(12).GetString();
+                    result.DoctorId = reader.GetGuid(13);
+                    resultList.Add(result);
+                }
+                reader.Close();
+            }
+            return resultList;
+        }
+
+        /// <summary>
+        /// 查询,使用Id desc排序
+        /// </summary>
+        /// <param name="doctorId">doctorId</param>
+        /// <returns></returns>
+        public virtual ICollection<Patient> SelectByDoctorId(Guid doctorId)
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+            ICollection<Patient> resultList = null;
+            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByDoctorId,
+                new SQLiteParameter("@doctorId", doctorId)
+                ))
+            {
+
+                if (reader.HasRows)
+                {
+                    resultList = new System.Collections.ObjectModel.Collection<Patient>();
+                }
                 while (reader.Read())
                 {
                     Patient result = new Patient();

@@ -33,7 +33,6 @@ namespace SuperSoft.View.View
         {
             InitializeComponent();
             txtbox_FirstName.Focus();
-            //DataContext = new PatientAddViewModel(sn);
             weightTextBox.Text = "0";
             heightTextBox.Text = "0";
         }

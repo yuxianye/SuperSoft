@@ -18,13 +18,16 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <Fluent:Ribbon Grid.Row="0"
                        AutomaticStateManagement="True"
                        CanCustomizeQuickAccessToolBar="False">
             <!--患者管理菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource  MainView_PatientManagement}">
+            <Fluent:RibbonTabItem Header="{DynamicResource  MainView_PatientManagement}"
+                                  Selector.Selected="PatientManagementRibbonTabItem_Selected">
                 <Fluent:RibbonGroupBox Header="{DynamicResource MainView_PatientManagement}">
                     <Fluent:ToggleButton GroupName="PatientManagement"
+                                         Name="patientListButton"
                                          Header="{DynamicResource MainView_PatientList}"
                                          ToolTip="{DynamicResource MainView_PatientListToolTip}"
                                          Command="{Binding PatientListCommand}"
@@ -55,10 +58,10 @@
                                      ItemsSource="{Binding PatientSearchConditionList}"
                                      DisplayMemberPath="Value"
                                      SelectedValuePath="Key"
-                                     SelectedItem="{Binding SelectedSearchCondition}" />
+                                     SelectedItem="{Binding SelectedSearchConditionPatient}" />
                     <Fluent:TextBox Name="PatientSearchConditionContainTextBox"
                                     Width="{DynamicResource PatientSearchControlWidth}"
-                                    Text="{Binding ConditionContain}"
+                                    Text="{Binding ConditionContainPatient}"
                                     KeyUp="PatientSearchConditionContainTextBox_KeyUp" />
                     <Fluent:ToggleButton GroupName="PatientManagement"
                                          Name="PatientSearchButton"
@@ -70,9 +73,11 @@
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <!--医生管理菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DoctorManagement}">
+            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DoctorManagement}"
+                                  Selector.Selected="DoctorManagementRibbonTabItem_Selected">
                 <Fluent:RibbonGroupBox Header="{DynamicResource MainView_DoctorManagement}">
                     <Fluent:ToggleButton GroupName="DoctorManagement"
+                                         Name="doctorListButton"
                                          Header="{DynamicResource MainView_DoctorList}"
                                          ToolTip="{DynamicResource MainView_DoctorListToolTip}"
                                          Command="{Binding DoctorListCommand}"
@@ -119,8 +124,15 @@
             </Fluent:RibbonTabItem>
 
             <!--下载菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DownloadData}">
+            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DownloadData}"
+                                  Selector.Selected="DownloadDataRibbonTabItem_Selected">
                 <Fluent:RibbonGroupBox Header="{DynamicResource MainView_DownloadData}">
+                    <Fluent:ToggleButton GroupName="DownloadData"
+                                         Header=""
+                                         Visibility="Collapsed"
+                                         Name="downloadButton"
+                                         Command="{Binding DownloadCommand}"
+                                         LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Folder_32x32.png" />
                     <Fluent:Button Header="{DynamicResource MainView_Open}"
                                    ToolTip="{DynamicResource MainView_Open}"
                                    Command="{Binding DownloadFormFileCommand}"
@@ -133,12 +145,16 @@
             </Fluent:RibbonTabItem>
 
             <!--设置菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_SystemSettings}">
+            <Fluent:RibbonTabItem Header="{DynamicResource MainView_SystemSettings}"
+                                  Selector.Selected="SettingsRibbonTabItem_Selected">
                 <Fluent:RibbonGroupBox Header="{DynamicResource MainView_SystemSettings}">
-                    <Fluent:Button  Command="{Binding SettingsCommand}"
-                                    Header="{DynamicResource MainView_SystemParameter}"
-                                    ToolTip="{DynamicResource MainView_SystemParameter}"
-                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings2_32x32.png" />
+                    <Fluent:ToggleButton GroupName="Settings"
+                                         IsChecked="True"
+                                         Name="settingsButton"
+                                         Header="{DynamicResource MainView_SystemParameter}"
+                                         ToolTip="{DynamicResource MainView_SystemParameter}"
+                                         Command="{Binding SettingsCommand}"
+                                         LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings2_32x32.png" />
                     <Fluent:Button  Command="{Binding SwitchLanguageCommand}"
                                     Header="{DynamicResource MainView_SwitchLanguage}"
                                     ToolTip="{DynamicResource MainView_SwitchLanguage}"
@@ -151,7 +167,7 @@
             <Fluent:Ribbon.ToolBarItems>
                 <StackPanel Visibility="{Binding DownloadDataProgressVisibility}"
                             Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource DownloadProgress}"
+                    <TextBlock Text="{DynamicResource MainView_DownloadProgress}"
                                VerticalAlignment="Center" />
                     <TextBlock Text=":"
                                VerticalAlignment="Center" />
@@ -170,8 +186,9 @@
             </Fluent:Ribbon.ToolBarItems>
 
         </Fluent:Ribbon>
+
         <!--右下角的公司图标-->
-        <!--<Grid  Grid.Row="1"
+        <Grid  Grid.Row="1"
                HorizontalAlignment="Right"
                VerticalAlignment="Bottom"
                Width="746"
@@ -179,7 +196,7 @@
                Margin=" 0,0,40,40"
                Opacity="0.2"
                Background="{DynamicResource  Logo-cn}">
-        </Grid>-->
+        </Grid>
 
         <!--主区域内容-->
         <UserControl  x:Name="mainCounten"

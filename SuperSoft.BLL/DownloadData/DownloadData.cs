@@ -227,8 +227,9 @@ namespace SuperSoft.BLL.DownloadData
             //取得产品信息
             using (var productBLL = new ProductBLL())
             {
-                Expression<Func<Product, bool>> condition = c => c.SerialNumber == indexFileField.SerialNumber;
-                var productTmp = productBLL.GetByCondition(condition);
+                //Expression<Func<Product, bool>> condition = c => c.SerialNumber == indexFileField.SerialNumber;
+                //var productTmp = productBLL.GetByCondition(condition);
+                var productTmp = productBLL.SelectBySerialNumber(indexFileField.SerialNumber);
                 if (productTmp != null && productTmp.Count() > 0)
                 {
                     //更新产品
@@ -372,8 +373,9 @@ namespace SuperSoft.BLL.DownloadData
             //更新产品型号
             using (var productBLL = new ProductBLL())
             {
-                Expression<Func<Product, bool>> condition = c => c.SerialNumber == indexFileField.SerialNumber;
-                var productTmp = productBLL.GetByCondition(condition);
+                //Expression<Func<Product, bool>> condition = c => c.SerialNumber == indexFileField.SerialNumber;
+                //var productTmp = productBLL.GetByCondition(condition);
+                var productTmp = productBLL.SelectBySerialNumber(indexFileField.SerialNumber);
                 if (productTmp != null && productTmp.Count() > 0)
                 {
                     //更新产品
@@ -438,10 +440,11 @@ namespace SuperSoft.BLL.DownloadData
                 IEnumerable<ViewProductWorkingSummaryDetailedData> listSummaryDetailed;
                 using (var viewProductWorkingSummaryDetailedDataBLL = new ViewProductWorkingSummaryDetailedDataBLL())
                 {
-                    Expression<Func<ViewProductWorkingSummaryDetailedData, bool>> condition =
-                        t =>
-                            t.StartTime >= startTime && t.EndTime < endTime && t.TherapyMode == dataTimeItem.TherapyMode;
-                    listSummaryDetailed = viewProductWorkingSummaryDetailedDataBLL.GetByCondition(condition);
+                    //Expression<Func<ViewProductWorkingSummaryDetailedData, bool>> condition =
+                    //    t =>
+                    //        t.StartTime >= startTime && t.EndTime < endTime && t.TherapyMode == dataTimeItem.TherapyMode;
+                    //listSummaryDetailed = viewProductWorkingSummaryDetailedDataBLL.GetByCondition(condition);
+                    listSummaryDetailed = viewProductWorkingSummaryDetailedDataBLL.SelectByTherapyModeDataTime(dataTimeItem.TherapyMode, startTime, endTime);
                 }
                 if (listSummaryDetailed == null || listSummaryDetailed.Count() < 1)
                 {
@@ -626,14 +629,14 @@ namespace SuperSoft.BLL.DownloadData
                 IEnumerable<ProductWorkingStatisticsData> listProductWorkingStatisticsDatas;
                 using (var productWorkingStatisticsDataBLL = new ProductWorkingStatisticsDataBLL())
                 {
-                    listProductWorkingStatisticsDatas =
-                        productWorkingStatisticsDataBLL.GetByCondition(conditionStatistics);
+                    //listProductWorkingStatisticsDatas = productWorkingStatisticsDataBLL.GetByCondition(conditionStatistics);
+                    listProductWorkingStatisticsDatas = productWorkingStatisticsDataBLL.SelectByProductIdTherapyModeDataTime(productId, dataTimeItem.TherapyMode, dataTimeItem.DataTime);
 
                     if (listProductWorkingStatisticsDatas != null && listProductWorkingStatisticsDatas.Count() > 0)
                     {
                         //更新
                         productWorkingStatisticsData.Id = listProductWorkingStatisticsDatas.FirstOrDefault().Id;
-                        productWorkingStatisticsDataBLL.Update(listProductWorkingStatisticsDatas);
+                        productWorkingStatisticsDataBLL.Update(listProductWorkingStatisticsDatas.ToArray());
                     }
                     else
                     {

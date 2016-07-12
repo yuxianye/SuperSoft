@@ -92,7 +92,7 @@ namespace SuperSoft.BLL
         /// 创建实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(IEnumerable<PatientsProduct> entitys)
+        public virtual void Insert(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Insert(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -239,7 +239,7 @@ namespace SuperSoft.BLL
         /// 删除实体对象集合
         /// </summary>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(IEnumerable<PatientsProduct> entitys)
+        public virtual void Delete(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Delete(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -340,7 +340,7 @@ namespace SuperSoft.BLL
         /// 更新实体对象集合，内部采用事物整体提交
         /// </summary>
         /// <param name="entitys">将要编辑的实体对象集合</param>
-        public virtual void Update(IEnumerable<PatientsProduct> entitys)
+        public virtual void Update(ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -364,7 +364,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, IEnumerable<PatientsProduct> entitys)
+        public virtual void Update(SQLiteTransaction transaction, ICollection<PatientsProduct> entitys)
         {
             if (Disposed)
             {
@@ -409,7 +409,7 @@ namespace SuperSoft.BLL
             {
                 throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
             }
-            return default(PatientsProduct);
+            return null;
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectPaging(int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<PatientsProduct> SelectPaging(int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -448,7 +448,7 @@ namespace SuperSoft.BLL
         /// <param name="pageSize">页大小</param>
         /// <param name="recordCount">记录总数</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectByPatientId(Guid patientId, int pageIndex, int pageSize, out int recordCount)
+        public virtual ICollection<PatientsProduct> SelectByPatientId(Guid patientId, int pageIndex, int pageSize, out int recordCount)
         {
             recordCount = 0;
             if (Disposed)
@@ -474,7 +474,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="patientId">patientId</param>
         /// <returns></returns>
-        public virtual IEnumerable<PatientsProduct> SelectByFirstName(Guid patientId)
+        public virtual ICollection<PatientsProduct> SelectByFirstName(Guid patientId)
         {
             if (Disposed)
             {

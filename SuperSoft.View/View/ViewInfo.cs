@@ -12,19 +12,25 @@ namespace SuperSoft.View.View
     public enum ViewName
     {
         Unknown = 0,//枚举默认值为第一个从0开始
-        PatientAddView,
-        PatientEditView,
         PatientListView,
+        PatientAddView,
+        PatientDeleteView,
+        PatientEditView,
+
+        DoctorListView,
+        DoctorAddView,
+        DoctorEditView,
+        DoctorDeleteView,
+
+        DownloadView,
+
+
 
         PatientHomeView,
-        AutoAnalysisSettingsView,
-        ChannelSettingsView,
-        AddAdviseView,
+        //AutoAnalysisSettingsView,
+        //ChannelSettingsView,
+        //AddAdviseView,
 
-        //DoctorListView,
-        //DoctorAddView,
-        //DoctorEditView,
-        //DoctorDeleteView,
 
         //PatientListView,
         //PatientAddView,
