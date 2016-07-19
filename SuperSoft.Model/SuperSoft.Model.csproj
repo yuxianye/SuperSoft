@@ -57,12 +57,15 @@
     <Compile Include="DbEntity\ProductWorkingDetailedData.cs" />
     <Compile Include="DbEntity\ProductWorkingStatisticsData.cs" />
     <Compile Include="DbEntity\ProductWorkingSummaryData.cs" />
+    <Compile Include="ProductConfigInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportDatasource.cs" />
     <Compile Include="DbEntity\ViewPatientsProduct.cs" />
     <Compile Include="DbEntity\ViewProductWorkingStatisticsData.cs" />
     <Compile Include="DbEntity\ViewProductWorkingSummaryData.cs" />
     <Compile Include="DbEntity\ViewProductWorkingSummaryDetailedData.cs" />
+    <Compile Include="RespircareTreeViewItem.cs" />
+    <Compile Include="StatisticsInfoModel.cs" />
     <Compile Include="WaveLineDataItem.cs" />
   </ItemGroup>
   <ItemGroup>

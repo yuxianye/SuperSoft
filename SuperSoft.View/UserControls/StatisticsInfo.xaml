@@ -1,0 +1,513 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.UserControls.StatisticsInfo"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <Expander Header="{DynamicResource StatisticsInfo}"
+              Visibility="{Binding StatisticsInfoVisibility}"
+              IsExpanded="True">
+        <!--统计信息-->
+        <StackPanel>
+            <WrapPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource AHI1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource AHI}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.CountAHI,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource AI}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.CountAI,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource HI}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.CountHI ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource Pressure1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PressureMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PressureP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PressureMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource Flow1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.FlowMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.FlowP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.FlowMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource MinuteVentilation1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.MinuteVentilationMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.MinuteVentilationP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.MinuteVentilationMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource Leak1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.LeakMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.LeakP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.LeakMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource TidalVolume1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.TidalVolumeMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.TidalVolumeP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.TidalVolumeMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}"
+                            Visibility="{Binding RespiratoryRateInfoVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource RespiratoryRate1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.RespiratoryRateMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.RespiratoryRateP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.RespiratoryRateMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}"
+                            Visibility="{Binding IERatioInfoVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource IERatio1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IERatioMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IERatioP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IERatioMax,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}"
+                            Visibility="{Binding EPAPInfoVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource EPAP1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.EPAPMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.EPAPP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.EPAPMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}"
+                            Visibility="{Binding IPAPInfoVisibility}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource IPAP1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IPAPMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IPAPP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.IPAPMax ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource SpO21}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.SpO2Median,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.SpO2P95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.SpO2Max ,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+                <StackPanel Margin="{DynamicResource ControlMargin5}">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle5Style}"
+                                       Text="{DynamicResource PulseRate1}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MedianValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PulseRateMedian,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource P95Value}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PulseRateP95,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{DynamicResource TextBlockContentTitle4Style}"
+                                       Text="{DynamicResource MaxValue}" />
+                            <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                       Text=":" />
+                            <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                                       Text="{Binding StatisticsInfoModel.PulseRateMax,StringFormat={}{0:N1}}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator />
+                </StackPanel>
+
+            </WrapPanel>
+            <!--<vc:Chart Height="400"
+                      Padding="10,10"
+                      AnimatedUpdate="False"
+                      IndicatorEnabled="False"
+                      ScrollingEnabled="True"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      DataPointWidth="1">
+                <vc:Chart.Legends>
+                    <vc:Legend FontSize="11"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               MaxWidth="200"
+                               BorderThickness="0"
+                               LightingEnabled="False"
+                               ShadowEnabled="False"
+                               Background="Transparent"
+                               FontColor="#FF3D3D3D" />
+                </vc:Chart.Legends>
+                <vc:Chart.PlotArea>
+                    <vc:PlotArea BorderThickness="1"
+                                 CornerRadius="0,0,0,0"
+                                 Background="Transparent" />
+                </vc:Chart.PlotArea>
+                <vc:Chart.AxesX>
+                    <vc:Axis>
+                        <vc:Axis.AxisLabels>
+                            <vc:AxisLabels FontColor="#FF3D3D3D"
+                                           FontSize="11.5"
+                                           Foreground="{x:Null}" />
+                        </vc:Axis.AxisLabels>
+                        <vc:Axis.Ticks>
+                            <vc:Ticks LineColor="Black"
+                                      TickLength="5"
+                                      LineStyle="Dashed"
+                                      LineThickness="0.24" />
+                            <vc:Ticks LineColor="White"
+                                      TickLength="1"
+                                      LineStyle="Dashed"
+                                      LineThickness="0.24" />
+                        </vc:Axis.Ticks>
+                    </vc:Axis>
+                </vc:Chart.AxesX>
+                <vc:Chart.AxesY>
+                    <vc:Axis LineThickness="0">
+                        <vc:Axis.Grids>
+                            <vc:ChartGrid LineStyle="Solid" />
+                        </vc:Axis.Grids>
+                        <vc:Axis.Ticks>
+                            <vc:Ticks LineColor="White"
+                                      TickLength="7"
+                                      LineStyle="Dashed"
+                                      LineThickness="0.24" />
+                        </vc:Axis.Ticks>
+                        <vc:Axis.AxisLabels>
+                            <vc:AxisLabels FontSize="11.5"
+                                           Background="Transparent" />
+                        </vc:Axis.AxisLabels>
+                    </vc:Axis>
+                </vc:Chart.AxesY>
+                <vc:Chart.Series>
+                    <vc:DataSeries RenderAs="StackedColumn"
+                                   Color="{StaticResource RespircareColorBrush3}"
+                                   Bevel="False"
+                                   DataSource="{Binding ViewProductWorkingStatisticsDataList, Mode=OneWay}"
+                                   LegendText="AI"
+                                   XValueType="Date">
+                        <vc:DataSeries.DataMappings>
+                            <vc:DataMappingCollection>
+                                <vc:DataMapping MemberName="XValue"
+                                                Path="DataTime" />
+                                <vc:DataMapping MemberName="YValue"
+                                                Path="CountAI" />
+                            </vc:DataMappingCollection>
+                        </vc:DataSeries.DataMappings>
+                    </vc:DataSeries>
+                    <vc:DataSeries RenderAs="StackedColumn"
+                                   Color="{StaticResource RespircareColorBrush2}"
+                                   Bevel="False"
+                                   DataSource="{Binding ViewProductWorkingStatisticsDataList, Mode=OneWay}"
+                                   LegendText="HI"
+                                   XValueType="Date">
+                        <vc:DataSeries.DataMappings>
+                            <vc:DataMappingCollection>
+                                <vc:DataMapping MemberName="XValue"
+                                                Path="DataTime" />
+                                <vc:DataMapping MemberName="YValue"
+                                                Path="CountHI" />
+                            </vc:DataMappingCollection>
+                        </vc:DataSeries.DataMappings>
+                    </vc:DataSeries>
+                </vc:Chart.Series>
+            </vc:Chart>-->
+        </StackPanel>
+    </Expander>
+</ss:UserControlBase>

@@ -483,27 +483,27 @@ namespace SuperSoft.View.ViewModel
         {
             PatientSearchConditionList = new Collection<KeyValuePair<string, string>>();
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("FirstName",
-                ResourceHelper.LoadString("MainView_PatientSearchFirstName")));
+                ResourceHelper.LoadString("FirstName")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("LastName",
-                ResourceHelper.LoadString("MainView_PatientSearchLastName")));
+                ResourceHelper.LoadString("LastName")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("DateOfBirth",
-                ResourceHelper.LoadString("MainView_PatientSearchDateOfBirth")));
+                ResourceHelper.LoadString("DateOfBirth")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("Weight",
-                ResourceHelper.LoadString("MainView_PatientSearchWeight")));
+                ResourceHelper.LoadString("Weight")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("Height",
-                ResourceHelper.LoadString("MainView_PatientSearchHeight")));
+                ResourceHelper.LoadString("Height")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("Gender",
-                ResourceHelper.LoadString("MainView_PatientSearchGender")));
+                ResourceHelper.LoadString("Gender")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("EMail",
-                ResourceHelper.LoadString("MainView_PatientSearchEMail")));
+                ResourceHelper.LoadString("EMail")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("TelephoneNumbers",
-                ResourceHelper.LoadString("MainView_PatientSearchTelephoneNumbers")));
+                ResourceHelper.LoadString("TelephoneNumbers")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("PostalCode",
-                ResourceHelper.LoadString("MainView_PatientSearchPostalCode")));
+                ResourceHelper.LoadString("PostalCode")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("Address",
-                ResourceHelper.LoadString("MainView_PatientSearchAddress")));
+                ResourceHelper.LoadString("Address")));
             PatientSearchConditionList.Add(new KeyValuePair<string, string>("Diagnosis",
-                ResourceHelper.LoadString("MainView_PatientSearchDiagnosis")));
+                ResourceHelper.LoadString("Diagnosis")));
             SelectedSearchConditionPatient = PatientSearchConditionList.FirstOrDefault();
         }
 
@@ -636,9 +636,9 @@ namespace SuperSoft.View.ViewModel
         {
             DoctorSearchConditionList = new Collection<KeyValuePair<string, string>>();
             DoctorSearchConditionList.Add(new KeyValuePair<string, string>("FirstName",
-                ResourceHelper.LoadString("MainView_DoctorSearchFirstName")));
+                ResourceHelper.LoadString("FirstName")));
             DoctorSearchConditionList.Add(new KeyValuePair<string, string>("LastName",
-                ResourceHelper.LoadString("MainView_DoctorSearchLastName")));
+                ResourceHelper.LoadString("LastName")));
             SelectedSearchConditionDoctor = DoctorSearchConditionList.FirstOrDefault();
         }
 
@@ -681,13 +681,12 @@ namespace SuperSoft.View.ViewModel
         private void OnExecuteDownloadFormFileCommand()
         {
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = ResourceHelper.LoadString("MainView_OpenFileDialogTitle");
+            openFileDialog.Title = ResourceHelper.LoadString("OpenFileDialogTitle");
             openFileDialog.FileName = Const.RMSFileName;
-            openFileDialog.Filter = ResourceHelper.LoadString("MainView_RMSFileFilter");
+            openFileDialog.Filter = ResourceHelper.LoadString("RMSFileFilter");
             if (openFileDialog.ShowDialog() == true)
             {
                 StartDownload(openFileDialog.FileName);
-                //Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientAddView, ViewType.Popup, "123456798013245678"), Model.MessengerToken.Navigate);
             }
             openFileDialog = null;
         }
@@ -885,7 +884,7 @@ namespace SuperSoft.View.ViewModel
                     MessageBox.Show(Application.Current.MainWindow,
                         ResourceHelper.LoadString("Error") + e.Error.Message +
                         (e.Error.InnerException == null ? string.Empty : e.Error.InnerException.Message)
-                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        , ResourceHelper.LoadString("DownloadData")
                         , MessageBoxButton.OK
                         , MessageBoxImage.Warning);
                 }
@@ -899,8 +898,8 @@ namespace SuperSoft.View.ViewModel
                     // CancelAsync was called.
                     //LogHelper.Info(ResourceHelper.LoadString("DownloadCanceled"));
                     MessageBox.Show(Application.Current.MainWindow,
-                        ResourceHelper.LoadString("MainView_DownloadCanceled") + (e.Result == null ? string.Empty : e.Result)
-                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        ResourceHelper.LoadString("DownloadCanceled") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("DownloadData")
                         , MessageBoxButton.OK
                         , MessageBoxImage.Warning);
                 }
@@ -913,8 +912,8 @@ namespace SuperSoft.View.ViewModel
                     // Finally, handle the case where the operation 
                     // succeeded.
                     MessageBox.Show(Application.Current.MainWindow,
-                        ResourceHelper.LoadString("MainView_DownloadCompleted") + (e.Result == null ? string.Empty : e.Result)
-                        , ResourceHelper.LoadString("MainView_DownloadData")
+                        ResourceHelper.LoadString("DownloadCompleted") + (e.Result == null ? string.Empty : e.Result)
+                        , ResourceHelper.LoadString("DownloadData")
                         , MessageBoxButton.OK
                         , MessageBoxImage.Information);
                 }

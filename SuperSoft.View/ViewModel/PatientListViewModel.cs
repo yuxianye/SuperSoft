@@ -5,6 +5,7 @@ using SuperSoft.BLL;
 using SuperSoft.Model;
 using SuperSoft.Utility;
 using SuperSoft.Utility.Windows;
+using SuperSoft.View.UserControls;
 using SuperSoft.View.View;
 using System;
 using System.Collections.Generic;
@@ -233,17 +234,154 @@ namespace SuperSoft.View.ViewModel
             {
                 Set(ref selectedPatient, value);
                 StaticDatas.CurrentSelectedPatient = value;
-                //CommandManager.InvalidateRequerySuggested();
-                //if (!Equals(value, null))
-                //{
-                //    //AllPatientList = getAllPatient();
-                //}
+                CommandManager.InvalidateRequerySuggested();
+                if (!Equals(selectedPatient, null))
+                {
+                    initTherapyModeList();
+                }
             }
         }
 
         #endregion
 
-        #region PatientCount
+        #region 治疗模式 没有治疗模式则 后面的统计信息等不显示，由治疗模式改变出发加载数据
+
+        /// <summary>
+        /// 初始化治疗模式列表，根据产品的运行数据，加载不同的治疗模式，未使用的模式不列出。
+        /// 查询视图ViewProductWorkingStatisticsData中的治疗模式种类的数量
+        /// </summary>
+        private void initTherapyModeList()
+        {
+            var tmpTherapyModeList = new Collection<KeyValuePair<TherapyMode, string>>();
+            var viewProductWorkingStatisticsDataBLL = new ViewProductWorkingStatisticsDataBLL();
+            //Expression<Func<ViewProductWorkingStatisticsData, bool>> condition = t => t.PatientId == SelectedPatient.Id;
+            //var tmp = viewProductWorkingStatisticsDataBLL.GetByCondition(condition).GroupBy(a => a.TherapyMode);
+            var tmp = viewProductWorkingStatisticsDataBLL.SelectTherapyModeByPatientId(SelectedPatient.Id);
+            viewProductWorkingStatisticsDataBLL.Dispose();
+            viewProductWorkingStatisticsDataBLL = null;
+            if (tmp != null && tmp.Count() > 0)
+            {
+                //foreach (var v in tmp)
+                //{
+                //    var tm = (TherapyMode)v.Key;
+                //    tmpTherapyModeList.Add(new KeyValuePair<TherapyMode, string>(tm, tm.ToDescription()));
+                //}
+                StaticDatas.IsCurrentSelectedPatientHaveProduct = true;
+                TherapyModeList = tmp;
+                TherapyMode = TherapyModeList.FirstOrDefault();
+                TherapyModelInfoVisibility = Visibility.Visible;
+            }
+            else
+            {
+                StaticDatas.IsCurrentSelectedPatientHaveProduct = false;
+                //没有治疗模式不显示统计信息
+                TherapyMode = default(KeyValuePair<TherapyMode, string>);
+                TherapyModelInfoVisibility = Visibility.Collapsed;
+            }
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private IEnumerable<KeyValuePair<TherapyMode, string>> therapyModeList;
+
+        public IEnumerable<KeyValuePair<TherapyMode, string>> TherapyModeList
+        {
+            get { return therapyModeList; }
+            set { Set(ref therapyModeList, value); }
+        }
+
+        /// <summary>
+        /// 选择治疗模式
+        /// </summary>
+        private KeyValuePair<TherapyMode, string> therapyMode;
+
+        /// <summary>
+        /// 选择的治疗模式
+        /// </summary>
+        public KeyValuePair<TherapyMode, string> TherapyMode
+        {
+            get { return therapyMode; }
+            set
+            {
+                Set(ref therapyMode, value);
+                //TaskAsyncHelper.RunAsync(initData, initDataComplete);
+                initData();
+            }
+        }
+
+        #endregion
+
+        private void initData()
+        {
+            //改变子ViewModel的数据
+            PatientInfoViewModel.SelectedPatient = selectedPatient;
+            ProductInfoViewModel.SelectedPatient = selectedPatient;
+            StatisticsInfoViewModel.TherapyMode = TherapyMode.Key;
+            initViewProductWorkingStatisticsDataList();
+        }
+
+        private void initViewProductWorkingStatisticsDataList()
+        {
+            var viewProductWorkingStatisticsDataBLL = new ViewProductWorkingStatisticsDataBLL();
+            Expression<Func<ViewProductWorkingStatisticsData, bool>> condition =
+                t => t.PatientId == SelectedPatient.Id && t.TherapyMode == (byte)TherapyMode.Key;
+            //var tmp = viewProductWorkingStatisticsDataBLL.GetByCondition(condition);
+            var tmp = viewProductWorkingStatisticsDataBLL.SelectByPatientIdTherapyMode(SelectedPatient.Id, (byte)TherapyMode.Key);
+
+            StatisticsInfoViewModel.ViewProductWorkingStatisticsDataList = tmp;
+            viewProductWorkingStatisticsDataBLL.Dispose();
+            viewProductWorkingStatisticsDataBLL = null;
+        }
+
+
+        #region PatientInfoViewModel
+
+        private PatientInfoViewModel patientInfoViewModel = new PatientInfoViewModel();
+
+        public PatientInfoViewModel PatientInfoViewModel
+        {
+            get { return patientInfoViewModel; }
+            set { Set(ref patientInfoViewModel, value); }
+        }
+
+        #endregion
+
+        #region ProductInfoViewModel
+
+        private ProductInfoViewModel productInfoViewModel = new ProductInfoViewModel();
+
+        public ProductInfoViewModel ProductInfoViewModel
+        {
+            get { return productInfoViewModel; }
+            set { Set(ref productInfoViewModel, value); }
+        }
+
+        #endregion
+
+        #region StatisticsInfoViewModel
+
+        private StatisticsInfoViewModel statisticsInfoViewModel = new StatisticsInfoViewModel();
+
+        public StatisticsInfoViewModel StatisticsInfoViewModel
+        {
+            get { return statisticsInfoViewModel; }
+            set { Set(ref statisticsInfoViewModel, value); }
+        }
+
+        #endregion
+
+        #region TherapyModelInfoVisibility
+
+        private Visibility therapyModelInfoVisibility = Visibility.Collapsed;
+
+        public Visibility TherapyModelInfoVisibility
+        {
+            get { return therapyModelInfoVisibility; }
+            set { Set(ref therapyModelInfoVisibility, value); }
+        }
+
+        #endregion
+
+        #region AllPatientListVisibility
 
         private Visibility allPatientListVisibility;
 
@@ -271,6 +409,7 @@ namespace SuperSoft.View.ViewModel
                 Set(ref patientCount, value);
             }
         }
+
         #endregion
 
     }

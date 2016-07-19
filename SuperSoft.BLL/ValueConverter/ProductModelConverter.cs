@@ -1,11 +1,12 @@
-﻿using Respircare.PatientManagementSystem.Models;
-using Respircare.Utility;
+﻿using SuperSoft.Model;
+using SuperSoft.Utility;
+using SuperSoft.Utility.Windows;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Respircare.PatientManagementSystem.BLL
+namespace SuperSoft.BLL
 {
     /// <summary>
     /// Product Model Converter 

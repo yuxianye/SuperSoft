@@ -1,0 +1,501 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.UserControls.ProductConfigInfo"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    xmlns:localBll="clr-namespace:SuperSoft.BLL;assembly=SuperSoft.BLL"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <UserControl.Resources>
+        <localBll:SwitchConverter x:Key="switchConverter" />
+        <localBll:SwitchValueConverter x:Key="switchValueConverter" />
+        <localBll:SwitchValue2Converter x:Key="switchValue2Converter" />
+        <localBll:LanguageValueConverter x:Key="languageValueConverter" />
+        <localBll:BacklightValueConverter x:Key="backlightValueConverter" />
+        <localBll:PressureUnitValueConverter x:Key="pressureUnitValueConverter" />
+    </UserControl.Resources>
+    <Expander Style="{StaticResource ExpanderDefaultStyle}"
+              Header="{DynamicResource ProductConfig}"
+              IsExpanded="{Binding IsExpanded}"
+              Visibility="{Binding ProductConfigInfoVisibility}">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <Border BorderThickness="1"
+                        BorderBrush="{StaticResource ControlBorderBrush}">
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource TextBlockTitle3Style}"
+                                   Text="{StaticResource Parameter}" />
+                        <WrapPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding IPAPInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource IPAP1}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.IPAP,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding EPAPInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource EPAP1}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.EPAP,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding IPAPMaxInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource IPAPMax}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.IPAPMax,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding EPAPMinInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource EPAPMin}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.EPAPMin,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding PSMaxInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource PSMax}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.PSMax,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding PSMinInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource PSMin}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.PSMin,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding RiseTimeInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource RiseTime}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.RiseTime}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding RespiratoryRateInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource RespiratoryRate1}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.RespiratoryRate}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding InspireTimeInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource InspireTime}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.InspireTime}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding ITriggerInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource ITrigger}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.ITrigger,Converter={StaticResource switchValue2Converter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding ETriggerInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource ETrigger}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.ETrigger,Converter={StaticResource switchValue2Converter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding ExhaleTimeInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource ExhaleTime }" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.ExhaleTime}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding CPAPInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CPAP}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CPAP,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding CPAPStartInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CPAPStart}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CPAPStart,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding CPAPMaxInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CPAPMax}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CPAPMax,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding CPAPMinInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CPAPMin}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CPAPMin,StringFormat={}{0:N1}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Ramp}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Ramp,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}"
+                                        Visibility="{Binding CFlexInfoVisibility}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CFlex}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CFlex,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border BorderThickness="1"
+                        BorderBrush="{StaticResource ControlBorderBrush}">
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource TextBlockTitle3Style}"
+                                   Text="{StaticResource Alert1}" />
+                        <WrapPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert_Tube}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert_Tube,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert_Apnea}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert_Apnea,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert_MinuteVentilation}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert_MinuteVentilation,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert_HRate}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert_HRate,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Alert_LRate}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Alert_LRate,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border BorderThickness="1"
+                        BorderBrush="{StaticResource ControlBorderBrush}">
+                    <StackPanel>
+                        <TextBlock Style="{DynamicResource TextBlockTitle3Style}"
+                                   Text="{StaticResource Config}" />
+                        <WrapPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_HumidifierLevel}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_HumidifierLevel,Converter={StaticResource switchValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_DataStore}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_DataStore,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_SmartStart}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_SmartStart,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_PressureUnit}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_PressureUnit,Converter={StaticResource  pressureUnitValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_Language}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_Language,Converter={StaticResource  languageValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource CurrentTime}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.CurrentTime}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_Backlight}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_Backlight,Converter={StaticResource  backlightValueConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_MaskPressure}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_MaskPressure,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                            <StackPanel Margin="{StaticResource ControlMargin5}">
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left">
+                                    <TextBlock Style="{DynamicResource TextBlockContentTitle2Style}"
+                                               Text="{DynamicResource Config_ClinicalSet}" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                                               Text=":" />
+                                    <TextBlock Style="{DynamicResource TextBlockContent10Style}"
+                                               Text="{Binding ViewProductWorkingSummaryData.Config_ClinicalSet,Converter={StaticResource switchConverter}}" />
+                                </StackPanel>
+                                <Separator />
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Expander>
+</ss:UserControlBase>

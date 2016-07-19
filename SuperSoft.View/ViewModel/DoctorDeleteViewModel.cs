@@ -39,12 +39,12 @@ namespace SuperSoft.View.ViewModel
 
         #region DoctorDeleteMessageVisibility
 
-        private Visibility doctorDeleteMessageVisibility = Visibility.Collapsed;
+        private string doctorDeleteMessage;
 
-        public Visibility DoctorDeleteMessageVisibility
+        public string DoctorDeleteMessage
         {
-            get { return doctorDeleteMessageVisibility; }
-            set { Set(ref doctorDeleteMessageVisibility, value); }
+            get { return doctorDeleteMessage; }
+            set { Set(ref doctorDeleteMessage, value); }
         }
 
         #endregion
@@ -92,12 +92,12 @@ namespace SuperSoft.View.ViewModel
 
             if (v == null)
             {
-                DoctorDeleteMessageVisibility = Visibility.Collapsed;
+                DoctorDeleteMessage = ResourceHelper.LoadString("DoctorDeleteMessage2");
                 return true;
             }
             else
             {
-                DoctorDeleteMessageVisibility = Visibility.Visible;
+                DoctorDeleteMessage = ResourceHelper.LoadString("DoctorDeleteMessage");
                 return false;
             }
         }

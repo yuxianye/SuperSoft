@@ -29,6 +29,8 @@
     <!--内容字体大小-->
     <sys:Double x:Key="ContentFontSize">14</sys:Double>
 
+    <sys:Double x:Key="TabItemFontSize">18</sys:Double>
+
     <!--标题字体大小-->
     <sys:Double x:Key="HeaderFontSize">14</sys:Double>
     <sys:Double x:Key="HeaderFontSize2">18</sys:Double>
@@ -38,6 +40,8 @@
     <Thickness x:Key="ControlMargin">0,3,0,3</Thickness>
     <Thickness x:Key="ControlMargin1">5,5,5,5</Thickness>
     <Thickness x:Key="ControlMargin2">2,1,2,1</Thickness>
+    <Thickness x:Key="ControlMargin4">0 5 5 0</Thickness>
+    <Thickness x:Key="ControlMargin5">5 5 5 0</Thickness>
     <!--<Thickness x:Key="ControlMarginLeft">5 0 0 0</Thickness>-->
     <!--<Thickness x:Key="ControlMarginRight">0 0 5 0</Thickness>-->
 
@@ -64,7 +68,10 @@
     <!--<sys:Double x:Key="PopupWinodwsHeight3">170</sys:Double>-->
 
     <sysWin:GridLength x:Key="LeftPanelWidth">150</sysWin:GridLength>
+    <sys:Double x:Key="TabItemWidth">200</sys:Double>
 
+    <!--1000*60*60*24-->
+    <sys:Double x:Key="OneDayTotalMilliseconds">86400000</sys:Double>
     <!--<Thickness x:Key="ControlMargin">5 0 0 0</Thickness>
 
     <Thickness x:Key="ControlMargin2">0 0 0 0</Thickness>

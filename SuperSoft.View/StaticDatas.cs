@@ -21,6 +21,7 @@ namespace SuperSoft.View
         public static IEnumerable<Doctor> AllDoctorList { get; internal set; }
 
         public static Doctor CurrentSelectedDoctor { get; internal set; }
+        public static bool IsCurrentSelectedPatientHaveProduct { get; internal set; }
 
         private static object lockObj = new object();
 

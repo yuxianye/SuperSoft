@@ -3,7 +3,8 @@ using SuperSoft.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SqlClient;
+
 using System.Linq;
 using System.Text;
 
@@ -20,14 +21,14 @@ namespace SuperSoft.DAL
         /// </summary>
         public ViewProductWorkingSummaryDataDAL()
         {
-            sQLiteConnection = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString);
-            sQLiteConnection.Open();
+            dbConnection = new SqlConnection(Const.DbConnectionString);
+            dbConnection.Open();
         }
 
         /// <summary>
         /// 链接对象
         /// </summary>
-        private System.Data.SQLite.SQLiteConnection sQLiteConnection;
+        private SqlConnection dbConnection;
 
         #region 数据库操作字符串SQL语句
         //49个字段
@@ -67,11 +68,11 @@ ORDER BY WorkingTime DESC";
             }
 
             ICollection<ViewProductWorkingSummaryData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientIdTherapyModeDataTime,
-                new SQLiteParameter("@PatientId", patientId),
-                new SQLiteParameter("@TherapyMode", therapyMode),
-                new SQLiteParameter("@StartTime", startTime),
-                new SQLiteParameter("@EndTime", endTime)
+            using (var reader = SqlHelper.ExecuteReader(dbConnection, System.Data.CommandType.Text, selectByPatientIdTherapyModeDataTime,
+                new SqlParameter("@PatientId", patientId),
+                new SqlParameter("@TherapyMode", therapyMode),
+                new SqlParameter("@StartTime", startTime),
+                new SqlParameter("@EndTime", endTime)
                 ))
             {
                 if (reader.HasRows)
@@ -154,11 +155,11 @@ ORDER BY WorkingTime DESC";
             if (patientId != Guid.Empty)
             {
                 ViewProductWorkingSummaryData result = null;
-                using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectMaxWorkingTimeByPatientIdTherapyModeDataTime,
-                       new SQLiteParameter("@PatientId", patientId),
-                       new SQLiteParameter("@TherapyMode", therapyMode),
-                       new SQLiteParameter("@StartTime", startTime),
-                       new SQLiteParameter("@EndTime", endTime)
+                using (var reader = SqlHelper.ExecuteReader(dbConnection, System.Data.CommandType.Text, selectMaxWorkingTimeByPatientIdTherapyModeDataTime,
+                       new SqlParameter("@PatientId", patientId),
+                       new SqlParameter("@TherapyMode", therapyMode),
+                       new SqlParameter("@StartTime", startTime),
+                       new SqlParameter("@EndTime", endTime)
                       ))
                 {
                     if (reader.HasRows)
@@ -231,11 +232,11 @@ ORDER BY WorkingTime DESC";
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            if (!Equals(sQLiteConnection, null))
+            if (!Equals(dbConnection, null))
             {
-                sQLiteConnection.Close();
-                sQLiteConnection.Dispose();
-                sQLiteConnection = null;
+                dbConnection.Close();
+                dbConnection.Dispose();
+                dbConnection = null;
             }
         }
 

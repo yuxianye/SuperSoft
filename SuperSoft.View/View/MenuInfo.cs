@@ -27,6 +27,7 @@ namespace SuperSoft.View.View
         GraphZoomOutMenu,
 
         ChannelSettingsMenu,
+
         AutoAnalysisSettingsMenu,
 
         //PatientHomeView,

@@ -37,11 +37,8 @@ namespace SuperSoft.View.ViewModel
             {
                 AllDoctorList.Clear();
             }
-            var tt = getAllDoctor(searchCondition);
-            if (tt != null && tt.Count > 0)
-            {
-                AllDoctorList = tt.OrderByDescending(a => a.Id).ToList();
-            }
+            AllDoctorList = getAllDoctor(searchCondition);
+            
             if (AllDoctorList != null && AllDoctorList.Count() > 0)//有医生
             {
                 if (StaticDatas.CurrentSelectedDoctor == null) //默认选择第一个
@@ -72,7 +69,7 @@ namespace SuperSoft.View.ViewModel
             else
             {
                 AllDoctorListVisibility = Visibility.Visible;
-                DoctorCount = ResourceHelper.LoadString("DoctorListView_DoctorCount") + AllDoctorList.Count();
+                DoctorCount = ResourceHelper.LoadString("DoctorCount") + AllDoctorList.Count();
             }
         }
 
@@ -140,7 +137,7 @@ namespace SuperSoft.View.ViewModel
                 if (tmpList != null && tmpList.Count() > 0)
                 {
                     AllPatientListVisibility = Visibility.Visible;
-                    PatientCount = ResourceHelper.LoadString("DoctorListView_PatientCount") + tmpList.Count();
+                    PatientCount = ResourceHelper.LoadString("PatientCount") + tmpList.Count();
                 }
                 else
                 {

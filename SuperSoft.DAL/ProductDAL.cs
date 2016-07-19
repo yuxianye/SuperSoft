@@ -3,7 +3,7 @@ using SuperSoft.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -19,14 +19,14 @@ namespace SuperSoft.DAL
         /// </summary>
         public ProductDAL()
         {
-            sQLiteConnection = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString);
-            sQLiteConnection.Open();
+            sqlConnection = new SqlConnection(Const.DbConnectionString);
+            sqlConnection.Open();
         }
 
         /// <summary>
         /// 链接对象
         /// </summary>
-        private System.Data.SQLite.SQLiteConnection sQLiteConnection;
+        private SqlConnection sqlConnection;
 
         #region 数据库操作字符串SQL语句
         //5个字段
@@ -60,7 +60,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             {
                 throw new ObjectDisposedException(ToString());
             }
-            return SQLiteHelper.ExecuteScalar(sQLiteConnection, System.Data.CommandType.Text, selectCount).GetInt();
+            return SqlHelper.ExecuteScalar(sqlConnection, System.Data.CommandType.Text, selectCount).GetInt();
         }
 
         #endregion
@@ -79,12 +79,12 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, insert,
-                    new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@SerialNumber", entity.SerialNumber),
-                    new SQLiteParameter("@ProductVersion", entity.ProductVersion),
-                    new SQLiteParameter("@ProductModel", entity.ProductModel),
-                    new SQLiteParameter("@TotalWorkingTime", entity.TotalWorkingTime)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, insert,
+                    new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@SerialNumber", entity.SerialNumber),
+                    new SqlParameter("@ProductVersion", entity.ProductVersion),
+                    new SqlParameter("@ProductModel", entity.ProductModel),
+                    new SqlParameter("@TotalWorkingTime", entity.TotalWorkingTime)
                     );
             }
         }
@@ -94,7 +94,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Insert(SQLiteTransaction transaction, Product entity)
+        public virtual void Insert(SqlTransaction transaction, Product entity)
         {
             if (Disposed)
             {
@@ -102,12 +102,12 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
-                   new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@SerialNumber", entity.SerialNumber),
-                    new SQLiteParameter("@ProductVersion", entity.ProductVersion),
-                    new SQLiteParameter("@ProductModel", entity.ProductModel),
-                    new SQLiteParameter("@TotalWorkingTime", entity.TotalWorkingTime)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
+                   new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@SerialNumber", entity.SerialNumber),
+                    new SqlParameter("@ProductVersion", entity.ProductVersion),
+                    new SqlParameter("@ProductModel", entity.ProductModel),
+                    new SqlParameter("@TotalWorkingTime", entity.TotalWorkingTime)
                     );
             }
         }
@@ -124,7 +124,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -151,7 +151,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, ICollection<Product> entitys)
+        public virtual void Insert(SqlTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -159,7 +159,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -197,8 +197,8 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -208,7 +208,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="id">一个实体对象的Id</param>
-        public virtual void Delete(SQLiteTransaction transaction, Guid id)
+        public virtual void Delete(SqlTransaction transaction, Guid id)
         {
             if (Disposed)
             {
@@ -216,8 +216,8 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -243,7 +243,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Delete(SQLiteTransaction transaction, Product entity)
+        public virtual void Delete(SqlTransaction transaction, Product entity)
         {
             if (Disposed)
             {
@@ -251,7 +251,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entity != null)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     Delete(entity);
@@ -289,7 +289,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
                     sb.Append(',');
                 }
                 sb.Remove(sb.Length - 2, 1);
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteByIds, new SQLiteParameter("@Ids", sb.ToString()));
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteByIds, new SqlParameter("@Ids", sb.ToString()));
                 sb.Clear();
                 sb = null;
             }
@@ -300,7 +300,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, ICollection<Product> entitys)
+        public virtual void Delete(SqlTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -331,12 +331,12 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@SerialNumber", entity.SerialNumber),
-                    new SQLiteParameter("@ProductVersion", entity.ProductVersion),
-                    new SQLiteParameter("@ProductModel", entity.ProductModel),
-                    new SQLiteParameter("@TotalWorkingTime", entity.TotalWorkingTime),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@SerialNumber", entity.SerialNumber),
+                    new SqlParameter("@ProductVersion", entity.ProductVersion),
+                    new SqlParameter("@ProductModel", entity.ProductModel),
+                    new SqlParameter("@TotalWorkingTime", entity.TotalWorkingTime),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -346,7 +346,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Update(SQLiteTransaction transaction, Product entity)
+        public virtual void Update(SqlTransaction transaction, Product entity)
         {
             if (Disposed)
             {
@@ -354,12 +354,12 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@SerialNumber", entity.SerialNumber),
-                    new SQLiteParameter("@ProductVersion", entity.ProductVersion),
-                    new SQLiteParameter("@ProductModel", entity.ProductModel),
-                    new SQLiteParameter("@TotalWorkingTime", entity.TotalWorkingTime),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@SerialNumber", entity.SerialNumber),
+                    new SqlParameter("@ProductVersion", entity.ProductVersion),
+                    new SqlParameter("@ProductModel", entity.ProductModel),
+                    new SqlParameter("@TotalWorkingTime", entity.TotalWorkingTime),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -376,7 +376,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -403,7 +403,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, ICollection<Product> entitys)
+        public virtual void Update(SqlTransaction transaction, ICollection<Product> entitys)
         {
             if (Disposed)
             {
@@ -411,7 +411,7 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -451,8 +451,8 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             Product result = null;
             if (id != Guid.Empty)
             {
-                using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
-                      new SQLiteParameter("@Id", id)
+                using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectById,
+                      new SqlParameter("@Id", id)
                       ))
                 {
                     if (reader.HasRows)
@@ -489,9 +489,9 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<Product> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectPaging,
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -527,15 +527,15 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             {
                 throw new ObjectDisposedException(ToString());
             }
-            recordCount = Convert.ToInt32(SQLiteHelper.ExecuteScalar(sQLiteConnection, CommandType.Text, selectBySerialNumberCount,
-                 new SQLiteParameter("@SerialNumber", serialNumber)
+            recordCount = Convert.ToInt32(SqlHelper.ExecuteScalar(sqlConnection, CommandType.Text, selectBySerialNumberCount,
+                 new SqlParameter("@SerialNumber", serialNumber)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<Product> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber,
-                new SQLiteParameter("@SerialNumber", serialNumber),
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectBySerialNumber,
+                new SqlParameter("@SerialNumber", serialNumber),
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -570,8 +570,8 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
             }
 
             ICollection<Product> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber2,
-                new SQLiteParameter("@SerialNumber", serialNumber)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectBySerialNumber2,
+                new SqlParameter("@SerialNumber", serialNumber)
                 ))
             {
                 if (reader.HasRows)
@@ -600,11 +600,11 @@ VALUES(@Id,@SerialNumber,@ProductVersion,@ProductModel,@TotalWorkingTime)";
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            if (!Equals(sQLiteConnection, null))
+            if (!Equals(sqlConnection, null))
             {
-                sQLiteConnection.Close();
-                sQLiteConnection.Dispose();
-                sQLiteConnection = null;
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+                sqlConnection = null;
             }
         }
 

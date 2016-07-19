@@ -23,34 +23,34 @@
                        AutomaticStateManagement="True"
                        CanCustomizeQuickAccessToolBar="False">
             <!--患者管理菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource  MainView_PatientManagement}"
+            <Fluent:RibbonTabItem Header="{DynamicResource  PatientManagement}"
                                   Selector.Selected="PatientManagementRibbonTabItem_Selected">
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_PatientManagement}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource PatientManagement}">
                     <Fluent:ToggleButton GroupName="PatientManagement"
                                          Name="patientListButton"
-                                         Header="{DynamicResource MainView_PatientList}"
-                                         ToolTip="{DynamicResource MainView_PatientListToolTip}"
+                                         Header="{DynamicResource PatientList}"
+                                         ToolTip="{DynamicResource PatientListToolTip}"
                                          Command="{Binding PatientListCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/List_32x32.png" />
                     <Fluent:ToggleButton GroupName="PatientManagement"
-                                         Header="{DynamicResource MainView_PatientListRefresh}"
-                                         ToolTip="{DynamicResource MainView_PatientListRefreshToolTip}"
+                                         Header="{DynamicResource PatientListRefresh}"
+                                         ToolTip="{DynamicResource PatientListRefreshToolTip}"
                                          Command="{Binding PatientListCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Refresh_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_PatientAdd}"
-                                   ToolTip="{DynamicResource MainView_PatientAddToolTip}"
+                    <Fluent:Button Header="{DynamicResource PatientAdd}"
+                                   ToolTip="{DynamicResource PatientAddToolTip}"
                                    Command="{Binding PatientAddCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Add_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_PatientEdit}"
-                                   ToolTip="{DynamicResource MainView_PatientEditToolTip}"
+                    <Fluent:Button Header="{DynamicResource PatientEdit}"
+                                   ToolTip="{DynamicResource PatientEditToolTip}"
                                    Command="{Binding PatientEditCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Edit_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_PatientDelete}"
-                                   ToolTip="{DynamicResource MainView_PatientDeleteToolTip}"
+                    <Fluent:Button Header="{DynamicResource PatientDelete}"
+                                   ToolTip="{DynamicResource PatientDeleteToolTip}"
                                    Command="{Binding PatientDeleteCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_PatientSearch}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource PatientSearch}">
                     <Fluent:ComboBox IsEditable="False"
                                      SelectedIndex="0"
                                      Width="{DynamicResource PatientSearchControlWidth}"
@@ -66,41 +66,41 @@
                     <Fluent:ToggleButton GroupName="PatientManagement"
                                          Name="PatientSearchButton"
                                          KeyUp="PatientSearchButton_KeyUp"
-                                         Header="{DynamicResource MainView_PatientSearch}"
-                                         ToolTip="{DynamicResource MainView_PatientSearchToolTip}"
+                                         Header="{DynamicResource PatientSearch}"
+                                         ToolTip="{DynamicResource PatientSearchToolTip}"
                                          Command="{Binding PatientSearchCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Search_32x32.png" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <!--医生管理菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DoctorManagement}"
+            <Fluent:RibbonTabItem Header="{DynamicResource DoctorManagement}"
                                   Selector.Selected="DoctorManagementRibbonTabItem_Selected">
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_DoctorManagement}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource DoctorManagement}">
                     <Fluent:ToggleButton GroupName="DoctorManagement"
                                          Name="doctorListButton"
-                                         Header="{DynamicResource MainView_DoctorList}"
-                                         ToolTip="{DynamicResource MainView_DoctorListToolTip}"
+                                         Header="{DynamicResource DoctorList}"
+                                         ToolTip="{DynamicResource DoctorListToolTip}"
                                          Command="{Binding DoctorListCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/List_32x32.png" />
                     <Fluent:ToggleButton GroupName="DoctorManagement"
-                                         Header="{DynamicResource MainView_DoctorListRefresh}"
-                                         ToolTip="{DynamicResource MainView_DoctorListRefreshToolTip}"
+                                         Header="{DynamicResource DoctorListRefresh}"
+                                         ToolTip="{DynamicResource DoctorListRefreshToolTip}"
                                          Command="{Binding DoctorListCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Refresh_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_DoctorAdd}"
-                                   ToolTip="{DynamicResource MainView_DoctorAddToolTip}"
+                    <Fluent:Button Header="{DynamicResource DoctorAdd}"
+                                   ToolTip="{DynamicResource DoctorAddToolTip}"
                                    Command="{Binding DoctorAddCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Add_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_DoctorEdit}"
-                                   ToolTip="{DynamicResource MainView_DoctorEditToolTip}"
+                    <Fluent:Button Header="{DynamicResource DoctorEdit}"
+                                   ToolTip="{DynamicResource DoctorEditToolTip}"
                                    Command="{Binding DoctorEditCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Edit_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_DoctorDelete}"
-                                   ToolTip="{DynamicResource MainView_DoctorDeleteToolTip}"
+                    <Fluent:Button Header="{DynamicResource DoctorDelete}"
+                                   ToolTip="{DynamicResource DoctorDeleteToolTip}"
                                    Command="{Binding DoctorDeleteCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Del_32x32.png" />
                 </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_DoctorSearch}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource DoctorSearch}">
                     <Fluent:ComboBox IsEditable="False"
                                      SelectedIndex="0"
                                      Width="{DynamicResource DoctorSearchControlWidth}"
@@ -116,48 +116,48 @@
                     <Fluent:ToggleButton GroupName="DoctorManagement"
                                          Name="DoctorSearchButton"
                                          KeyUp="DoctorSearchButton_KeyUp"
-                                         Header="{DynamicResource MainView_DoctorSearch}"
-                                         ToolTip="{DynamicResource MainView_DoctorSearchToolTip}"
+                                         Header="{DynamicResource DoctorSearch}"
+                                         ToolTip="{DynamicResource DoctorSearchToolTip}"
                                          Command="{Binding DoctorSearchCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Search_32x32.png" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <!--下载菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_DownloadData}"
+            <Fluent:RibbonTabItem Header="{DynamicResource DownloadData}"
                                   Selector.Selected="DownloadDataRibbonTabItem_Selected">
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_DownloadData}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource DownloadData}">
                     <Fluent:ToggleButton GroupName="DownloadData"
                                          Header=""
                                          Visibility="Collapsed"
                                          Name="downloadButton"
                                          Command="{Binding DownloadCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Folder_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_Open}"
-                                   ToolTip="{DynamicResource MainView_Open}"
+                    <Fluent:Button Header="{DynamicResource Open}"
+                                   ToolTip="{DynamicResource Open}"
                                    Command="{Binding DownloadFormFileCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Folder_32x32.png" />
-                    <Fluent:Button Header="{DynamicResource MainView_Import}"
-                                   ToolTip="{DynamicResource MainView_Import}"
+                    <Fluent:Button Header="{DynamicResource Import}"
+                                   ToolTip="{DynamicResource Import}"
                                    Command="{Binding DownloadFormSdCommand}"
                                    LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Download3_32x32.png" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
 
             <!--设置菜单-->
-            <Fluent:RibbonTabItem Header="{DynamicResource MainView_SystemSettings}"
+            <Fluent:RibbonTabItem Header="{DynamicResource SystemSettings}"
                                   Selector.Selected="SettingsRibbonTabItem_Selected">
-                <Fluent:RibbonGroupBox Header="{DynamicResource MainView_SystemSettings}">
+                <Fluent:RibbonGroupBox Header="{DynamicResource SystemSettings}">
                     <Fluent:ToggleButton GroupName="Settings"
                                          IsChecked="True"
                                          Name="settingsButton"
-                                         Header="{DynamicResource MainView_SystemParameter}"
-                                         ToolTip="{DynamicResource MainView_SystemParameter}"
+                                         Header="{DynamicResource SystemParameter}"
+                                         ToolTip="{DynamicResource SystemParameter}"
                                          Command="{Binding SettingsCommand}"
                                          LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Settings2_32x32.png" />
                     <Fluent:Button  Command="{Binding SwitchLanguageCommand}"
-                                    Header="{DynamicResource MainView_SwitchLanguage}"
-                                    ToolTip="{DynamicResource MainView_SwitchLanguage}"
+                                    Header="{DynamicResource SwitchLanguage}"
+                                    ToolTip="{DynamicResource SwitchLanguage}"
                                     IsEnabled="{Binding SwitchLanguageCommandIsEnabled }"
                                     LargeIcon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Language_32x32.png" />
                 </Fluent:RibbonGroupBox>
@@ -167,7 +167,7 @@
             <Fluent:Ribbon.ToolBarItems>
                 <StackPanel Visibility="{Binding DownloadDataProgressVisibility}"
                             Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource MainView_DownloadProgress}"
+                    <TextBlock Text="{DynamicResource DownloadProgress}"
                                VerticalAlignment="Center" />
                     <TextBlock Text=":"
                                VerticalAlignment="Center" />
@@ -181,7 +181,7 @@
                 <Fluent:Button Size="Small"
                                Icon="pack://application:,,,/SuperSoft.Resource.Default;component/Images/Help_32x32.png"
                                Command="{Binding HelpCommand}"
-                               ToolTip="{DynamicResource MainView_HelpToolTip}">
+                               ToolTip="{DynamicResource HelpToolTip}">
                 </Fluent:Button>
             </Fluent:Ribbon.ToolBarItems>
 

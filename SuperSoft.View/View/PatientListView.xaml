@@ -4,6 +4,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:local="clr-namespace:SuperSoft.View.View"
+                    xmlns:localUc="clr-namespace:SuperSoft.View.UserControls"
                     xmlns:ss="clr-namespace:SuperSoft.View"
                     mc:Ignorable="d"
                     d:DesignHeight="300"
@@ -18,7 +19,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Style="{DynamicResource TextBlockDefaultStyle}"
-                   Text="{DynamicResource  WithoutData }" />
+                   Text="{DynamicResource  WithoutData}" />
         <DataGrid Name="DataGridAllPatientList"
                   Grid.Column="0"
                   IsReadOnly="True"
@@ -65,8 +66,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <StackPanel>
-                <!--<local:PatientInfo DataContext="{Binding PatientInfoViewModel}" />
-                <local:ProductInfo DataContext="{Binding  ProductInfoViewModel}" />-->
+                <localUc:PatientInfo DataContext="{Binding PatientInfoViewModel}" />
+                <localUc:ProductInfo DataContext="{Binding  ProductInfoViewModel}" />
                 <StackPanel Orientation="Horizontal"
                             Margin="{StaticResource ControlMargin2}"
                             Visibility="{Binding TherapyModelInfoVisibility}">
@@ -89,7 +90,7 @@
             </StackPanel>
             <ScrollViewer Grid.Row="1">
                 <StackPanel>
-                    <!--<local:StatisticsInfo DataContext="{Binding  StatisticsInfoViewModel}" />-->
+                    <localUc:StatisticsInfo DataContext="{Binding  StatisticsInfoViewModel}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

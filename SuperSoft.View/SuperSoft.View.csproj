@@ -89,6 +89,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticDatas.cs" />
     <Compile Include="UserControlBase.cs" />
+    <Compile Include="UserControls\PatientInfo.xaml.cs">
+      <DependentUpon>PatientInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PatientInfoViewModel.cs" />
+    <Compile Include="UserControls\ProductConfigInfo.xaml.cs">
+      <DependentUpon>ProductConfigInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProductConfigInfoViewModel.cs" />
+    <Compile Include="UserControls\ProductInfo.xaml.cs">
+      <DependentUpon>ProductInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProductInfoViewModel.cs" />
+    <Compile Include="UserControls\StatisticsInfo.xaml.cs">
+      <DependentUpon>StatisticsInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StatisticsInfoViewModel.cs" />
     <Compile Include="ViewModel\DownloadViewModel.cs" />
     <Compile Include="ViewModel\AddAdviseViewModel.cs" />
     <Compile Include="ViewModel\PatientEditViewModel.cs" />
@@ -109,6 +125,9 @@
     </Compile>
     <Compile Include="View\DoctorEditView.xaml.cs">
       <DependentUpon>DoctorEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PatientHomeView.xaml.cs">
+      <DependentUpon>PatientHomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SystemParameterSettingView.xaml.cs">
       <DependentUpon>SystemParameterSettingView.xaml</DependentUpon>
@@ -150,11 +169,31 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UserControls\PatientInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProductConfigInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ProductInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\StatisticsInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\DoctorDeleteView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DoctorEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PatientHomeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -217,9 +256,7 @@
       <Name>SuperSoft.Utility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserControl\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.102.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

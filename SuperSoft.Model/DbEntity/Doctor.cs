@@ -31,19 +31,19 @@ namespace SuperSoft.Model
             {
                 if (columnName == "FirstName" && string.IsNullOrWhiteSpace(FirstName))
                 {
-                    return ResourceHelper.LoadString("DoctorAddView_FirstNameValidationRequired");
+                    return ResourceHelper.LoadString("FirstNameValidationRequired");
                 }
                 if (columnName == "FirstName" && !string.IsNullOrWhiteSpace(FirstName) && FirstName.Length > 16)
                 {
-                    return ResourceHelper.LoadString("DoctorAddView_FirstNameValidationRequired");
+                    return ResourceHelper.LoadString("FirstNameValidationRequired");
                 }
                 if (columnName == "LastName" && string.IsNullOrWhiteSpace(LastName))
                 {
-                    return ResourceHelper.LoadString("DoctorAddView_LastNameValidationRequired");
+                    return ResourceHelper.LoadString("LastNameValidationRequired");
                 }
                 if (columnName == "LastName" && !string.IsNullOrWhiteSpace(LastName) && LastName.Length > 16)
                 {
-                    return ResourceHelper.LoadString("DoctorAddView_LastNameValidationRequired");
+                    return ResourceHelper.LoadString("LastNameValidationRequired");
                 }
                 return null;
             }

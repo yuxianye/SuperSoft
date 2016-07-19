@@ -3,7 +3,8 @@ using SuperSoft.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SqlClient;
+
 using System.Linq;
 using System.Text;
 
@@ -19,14 +20,14 @@ namespace SuperSoft.DAL
         /// </summary>
         public ProductWorkingStatisticsDataDAL()
         {
-            sQLiteConnection = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString);
-            sQLiteConnection.Open();
+            sqlConnection = new SqlConnection(Const.DbConnectionString);
+            sqlConnection.Open();
         }
 
         /// <summary>
         /// 链接对象
         /// </summary>
-        private System.Data.SQLite.SQLiteConnection sQLiteConnection;
+        private SqlConnection sqlConnection;
 
         #region 数据库操作字符串SQL语句
         //43个字段
@@ -107,7 +108,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             {
                 throw new ObjectDisposedException(ToString());
             }
-            return SQLiteHelper.ExecuteScalar(sQLiteConnection, System.Data.CommandType.Text, selectCount).GetInt();
+            return SqlHelper.ExecuteScalar(sqlConnection, System.Data.CommandType.Text, selectCount).GetInt();
         }
 
         #endregion
@@ -126,50 +127,50 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, insert,
-                    new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@ProductId", entity.ProductId),
-                    new SQLiteParameter("@TherapyMode", entity.TherapyMode),
-                    new SQLiteParameter("@DataTime", entity.DataTime),
-                    new SQLiteParameter("@TotalUsage", entity.TotalUsage),
-                    new SQLiteParameter("@CountAHI", entity.CountAHI),
-                    new SQLiteParameter("@CountAI", entity.CountAI),
-                    new SQLiteParameter("@CountHI", entity.CountHI),
-                    new SQLiteParameter("@CountSnore", entity.CountSnore),
-                    new SQLiteParameter("@CountPassive", entity.CountPassive),
-                    new SQLiteParameter("@PressureMax", entity.PressureMax),
-                    new SQLiteParameter("@PressureP95", entity.PressureP95),
-                    new SQLiteParameter("@PressureMedian", entity.PressureMedian),
-                    new SQLiteParameter("@FlowMax", entity.FlowMax),
-                    new SQLiteParameter("@FlowP95", entity.FlowP95),
-                    new SQLiteParameter("@FlowMedian", entity.FlowMedian),
-                    new SQLiteParameter("@LeakMax", entity.LeakMax),
-                    new SQLiteParameter("@LeakP95", entity.LeakP95),
-                    new SQLiteParameter("@LeakMedian", entity.LeakMedian),
-                    new SQLiteParameter("@TidalVolumeMax", entity.TidalVolumeMax),
-                    new SQLiteParameter("@TidalVolumeP95", entity.TidalVolumeP95),
-                    new SQLiteParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
-                    new SQLiteParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
-                    new SQLiteParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
-                    new SQLiteParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
-                    new SQLiteParameter("@SpO2Max", entity.SpO2Max),
-                    new SQLiteParameter("@SpO2P95", entity.SpO2P95),
-                    new SQLiteParameter("@SpO2Median", entity.SpO2Median),
-                    new SQLiteParameter("@PulseRateMax", entity.PulseRateMax),
-                    new SQLiteParameter("@PulseRateP95", entity.PulseRateP95),
-                    new SQLiteParameter("@PulseRateMedian", entity.PulseRateMedian),
-                    new SQLiteParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
-                    new SQLiteParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
-                    new SQLiteParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
-                    new SQLiteParameter("@IERatioMax", entity.IERatioMax),
-                    new SQLiteParameter("@IERatioP95", entity.IERatioP95),
-                    new SQLiteParameter("@IERatioMedian", entity.IERatioMedian),
-                    new SQLiteParameter("@IPAPMax", entity.IPAPMax),
-                    new SQLiteParameter("@IPAPP95", entity.IPAPP95),
-                    new SQLiteParameter("@IPAPMedian", entity.IPAPMedian),
-                    new SQLiteParameter("@EPAPMax", entity.EPAPMax),
-                    new SQLiteParameter("@EPAPP95", entity.EPAPP95),
-                    new SQLiteParameter("@EPAPMedian", entity.EPAPMedian)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, insert,
+                    new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@ProductId", entity.ProductId),
+                    new SqlParameter("@TherapyMode", entity.TherapyMode),
+                    new SqlParameter("@DataTime", entity.DataTime),
+                    new SqlParameter("@TotalUsage", entity.TotalUsage),
+                    new SqlParameter("@CountAHI", entity.CountAHI),
+                    new SqlParameter("@CountAI", entity.CountAI),
+                    new SqlParameter("@CountHI", entity.CountHI),
+                    new SqlParameter("@CountSnore", entity.CountSnore),
+                    new SqlParameter("@CountPassive", entity.CountPassive),
+                    new SqlParameter("@PressureMax", entity.PressureMax),
+                    new SqlParameter("@PressureP95", entity.PressureP95),
+                    new SqlParameter("@PressureMedian", entity.PressureMedian),
+                    new SqlParameter("@FlowMax", entity.FlowMax),
+                    new SqlParameter("@FlowP95", entity.FlowP95),
+                    new SqlParameter("@FlowMedian", entity.FlowMedian),
+                    new SqlParameter("@LeakMax", entity.LeakMax),
+                    new SqlParameter("@LeakP95", entity.LeakP95),
+                    new SqlParameter("@LeakMedian", entity.LeakMedian),
+                    new SqlParameter("@TidalVolumeMax", entity.TidalVolumeMax),
+                    new SqlParameter("@TidalVolumeP95", entity.TidalVolumeP95),
+                    new SqlParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
+                    new SqlParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
+                    new SqlParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
+                    new SqlParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
+                    new SqlParameter("@SpO2Max", entity.SpO2Max),
+                    new SqlParameter("@SpO2P95", entity.SpO2P95),
+                    new SqlParameter("@SpO2Median", entity.SpO2Median),
+                    new SqlParameter("@PulseRateMax", entity.PulseRateMax),
+                    new SqlParameter("@PulseRateP95", entity.PulseRateP95),
+                    new SqlParameter("@PulseRateMedian", entity.PulseRateMedian),
+                    new SqlParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
+                    new SqlParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
+                    new SqlParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
+                    new SqlParameter("@IERatioMax", entity.IERatioMax),
+                    new SqlParameter("@IERatioP95", entity.IERatioP95),
+                    new SqlParameter("@IERatioMedian", entity.IERatioMedian),
+                    new SqlParameter("@IPAPMax", entity.IPAPMax),
+                    new SqlParameter("@IPAPP95", entity.IPAPP95),
+                    new SqlParameter("@IPAPMedian", entity.IPAPMedian),
+                    new SqlParameter("@EPAPMax", entity.EPAPMax),
+                    new SqlParameter("@EPAPP95", entity.EPAPP95),
+                    new SqlParameter("@EPAPMedian", entity.EPAPMedian)
                     );
             }
         }
@@ -179,7 +180,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Insert(SQLiteTransaction transaction, ProductWorkingStatisticsData entity)
+        public virtual void Insert(SqlTransaction transaction, ProductWorkingStatisticsData entity)
         {
             if (Disposed)
             {
@@ -187,50 +188,50 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
-                    new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@ProductId", entity.ProductId),
-                    new SQLiteParameter("@TherapyMode", entity.TherapyMode),
-                    new SQLiteParameter("@DataTime", entity.DataTime),
-                    new SQLiteParameter("@TotalUsage", entity.TotalUsage),
-                    new SQLiteParameter("@CountAHI", entity.CountAHI),
-                    new SQLiteParameter("@CountAI", entity.CountAI),
-                    new SQLiteParameter("@CountHI", entity.CountHI),
-                    new SQLiteParameter("@CountSnore", entity.CountSnore),
-                    new SQLiteParameter("@CountPassive", entity.CountPassive),
-                    new SQLiteParameter("@PressureMax", entity.PressureMax),
-                    new SQLiteParameter("@PressureP95", entity.PressureP95),
-                    new SQLiteParameter("@PressureMedian", entity.PressureMedian),
-                    new SQLiteParameter("@FlowMax", entity.FlowMax),
-                    new SQLiteParameter("@FlowP95", entity.FlowP95),
-                    new SQLiteParameter("@FlowMedian", entity.FlowMedian),
-                    new SQLiteParameter("@LeakMax", entity.LeakMax),
-                    new SQLiteParameter("@LeakP95", entity.LeakP95),
-                    new SQLiteParameter("@LeakMedian", entity.LeakMedian),
-                    new SQLiteParameter("@TidalVolumeMax", entity.TidalVolumeMax),
-                    new SQLiteParameter("@TidalVolumeP95", entity.TidalVolumeP95),
-                    new SQLiteParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
-                    new SQLiteParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
-                    new SQLiteParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
-                    new SQLiteParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
-                    new SQLiteParameter("@SpO2Max", entity.SpO2Max),
-                    new SQLiteParameter("@SpO2P95", entity.SpO2P95),
-                    new SQLiteParameter("@SpO2Median", entity.SpO2Median),
-                    new SQLiteParameter("@PulseRateMax", entity.PulseRateMax),
-                    new SQLiteParameter("@PulseRateP95", entity.PulseRateP95),
-                    new SQLiteParameter("@PulseRateMedian", entity.PulseRateMedian),
-                    new SQLiteParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
-                    new SQLiteParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
-                    new SQLiteParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
-                    new SQLiteParameter("@IERatioMax", entity.IERatioMax),
-                    new SQLiteParameter("@IERatioP95", entity.IERatioP95),
-                    new SQLiteParameter("@IERatioMedian", entity.IERatioMedian),
-                    new SQLiteParameter("@IPAPMax", entity.IPAPMax),
-                    new SQLiteParameter("@IPAPP95", entity.IPAPP95),
-                    new SQLiteParameter("@IPAPMedian", entity.IPAPMedian),
-                    new SQLiteParameter("@EPAPMax", entity.EPAPMax),
-                    new SQLiteParameter("@EPAPP95", entity.EPAPP95),
-                    new SQLiteParameter("@EPAPMedian", entity.EPAPMedian)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
+                    new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@ProductId", entity.ProductId),
+                    new SqlParameter("@TherapyMode", entity.TherapyMode),
+                    new SqlParameter("@DataTime", entity.DataTime),
+                    new SqlParameter("@TotalUsage", entity.TotalUsage),
+                    new SqlParameter("@CountAHI", entity.CountAHI),
+                    new SqlParameter("@CountAI", entity.CountAI),
+                    new SqlParameter("@CountHI", entity.CountHI),
+                    new SqlParameter("@CountSnore", entity.CountSnore),
+                    new SqlParameter("@CountPassive", entity.CountPassive),
+                    new SqlParameter("@PressureMax", entity.PressureMax),
+                    new SqlParameter("@PressureP95", entity.PressureP95),
+                    new SqlParameter("@PressureMedian", entity.PressureMedian),
+                    new SqlParameter("@FlowMax", entity.FlowMax),
+                    new SqlParameter("@FlowP95", entity.FlowP95),
+                    new SqlParameter("@FlowMedian", entity.FlowMedian),
+                    new SqlParameter("@LeakMax", entity.LeakMax),
+                    new SqlParameter("@LeakP95", entity.LeakP95),
+                    new SqlParameter("@LeakMedian", entity.LeakMedian),
+                    new SqlParameter("@TidalVolumeMax", entity.TidalVolumeMax),
+                    new SqlParameter("@TidalVolumeP95", entity.TidalVolumeP95),
+                    new SqlParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
+                    new SqlParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
+                    new SqlParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
+                    new SqlParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
+                    new SqlParameter("@SpO2Max", entity.SpO2Max),
+                    new SqlParameter("@SpO2P95", entity.SpO2P95),
+                    new SqlParameter("@SpO2Median", entity.SpO2Median),
+                    new SqlParameter("@PulseRateMax", entity.PulseRateMax),
+                    new SqlParameter("@PulseRateP95", entity.PulseRateP95),
+                    new SqlParameter("@PulseRateMedian", entity.PulseRateMedian),
+                    new SqlParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
+                    new SqlParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
+                    new SqlParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
+                    new SqlParameter("@IERatioMax", entity.IERatioMax),
+                    new SqlParameter("@IERatioP95", entity.IERatioP95),
+                    new SqlParameter("@IERatioMedian", entity.IERatioMedian),
+                    new SqlParameter("@IPAPMax", entity.IPAPMax),
+                    new SqlParameter("@IPAPP95", entity.IPAPP95),
+                    new SqlParameter("@IPAPMedian", entity.IPAPMedian),
+                    new SqlParameter("@EPAPMax", entity.EPAPMax),
+                    new SqlParameter("@EPAPP95", entity.EPAPP95),
+                    new SqlParameter("@EPAPMedian", entity.EPAPMedian)
                     );
             }
         }
@@ -247,7 +248,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -274,7 +275,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
+        public virtual void Insert(SqlTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -282,7 +283,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -320,8 +321,8 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -331,7 +332,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="id">一个实体对象的Id</param>
-        public virtual void Delete(SQLiteTransaction transaction, Guid id)
+        public virtual void Delete(SqlTransaction transaction, Guid id)
         {
             if (Disposed)
             {
@@ -339,8 +340,8 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -366,7 +367,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Delete(SQLiteTransaction transaction, ProductWorkingStatisticsData entity)
+        public virtual void Delete(SqlTransaction transaction, ProductWorkingStatisticsData entity)
         {
             if (Disposed)
             {
@@ -374,7 +375,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entity != null)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     Delete(entity);
@@ -412,7 +413,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
                     sb.Append(',');
                 }
                 sb.Remove(sb.Length - 2, 1);
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteByIds, new SQLiteParameter("@Ids", sb.ToString()));
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteByIds, new SqlParameter("@Ids", sb.ToString()));
                 sb.Clear();
                 sb = null;
             }
@@ -423,7 +424,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
+        public virtual void Delete(SqlTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -443,7 +444,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="productId">productId</param>
-        public virtual void DeleteByProductId(SQLiteTransaction transaction, Guid productId)
+        public virtual void DeleteByProductId(SqlTransaction transaction, Guid productId)
         {
             if (Disposed)
             {
@@ -451,8 +452,8 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (productId != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductId,
-                   new SQLiteParameter("@ProductId", productId)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductId,
+                   new SqlParameter("@ProductId", productId)
                    );
             }
 
@@ -473,50 +474,50 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@ProductId", entity.ProductId),
-                    new SQLiteParameter("@TherapyMode", entity.TherapyMode),
-                    new SQLiteParameter("@DataTime", entity.DataTime),
-                    new SQLiteParameter("@TotalUsage", entity.TotalUsage),
-                    new SQLiteParameter("@CountAHI", entity.CountAHI),
-                    new SQLiteParameter("@CountAI", entity.CountAI),
-                    new SQLiteParameter("@CountHI", entity.CountHI),
-                    new SQLiteParameter("@CountSnore", entity.CountSnore),
-                    new SQLiteParameter("@CountPassive", entity.CountPassive),
-                    new SQLiteParameter("@PressureMax", entity.PressureMax),
-                    new SQLiteParameter("@PressureP95", entity.PressureP95),
-                    new SQLiteParameter("@PressureMedian", entity.PressureMedian),
-                    new SQLiteParameter("@FlowMax", entity.FlowMax),
-                    new SQLiteParameter("@FlowP95", entity.FlowP95),
-                    new SQLiteParameter("@FlowMedian", entity.FlowMedian),
-                    new SQLiteParameter("@LeakMax", entity.LeakMax),
-                    new SQLiteParameter("@LeakP95", entity.LeakP95),
-                    new SQLiteParameter("@LeakMedian", entity.LeakMedian),
-                    new SQLiteParameter("@TidalVolumeMax", entity.TidalVolumeMax),
-                    new SQLiteParameter("@TidalVolumeP95", entity.TidalVolumeP95),
-                    new SQLiteParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
-                    new SQLiteParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
-                    new SQLiteParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
-                    new SQLiteParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
-                    new SQLiteParameter("@SpO2Max", entity.SpO2Max),
-                    new SQLiteParameter("@SpO2P95", entity.SpO2P95),
-                    new SQLiteParameter("@SpO2Median", entity.SpO2Median),
-                    new SQLiteParameter("@PulseRateMax", entity.PulseRateMax),
-                    new SQLiteParameter("@PulseRateP95", entity.PulseRateP95),
-                    new SQLiteParameter("@PulseRateMedian", entity.PulseRateMedian),
-                    new SQLiteParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
-                    new SQLiteParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
-                    new SQLiteParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
-                    new SQLiteParameter("@IERatioMax", entity.IERatioMax),
-                    new SQLiteParameter("@IERatioP95", entity.IERatioP95),
-                    new SQLiteParameter("@IERatioMedian", entity.IERatioMedian),
-                    new SQLiteParameter("@IPAPMax", entity.IPAPMax),
-                    new SQLiteParameter("@IPAPP95", entity.IPAPP95),
-                    new SQLiteParameter("@IPAPMedian", entity.IPAPMedian),
-                    new SQLiteParameter("@EPAPMax", entity.EPAPMax),
-                    new SQLiteParameter("@EPAPP95", entity.EPAPP95),
-                    new SQLiteParameter("@EPAPMedian", entity.EPAPMedian),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@ProductId", entity.ProductId),
+                    new SqlParameter("@TherapyMode", entity.TherapyMode),
+                    new SqlParameter("@DataTime", entity.DataTime),
+                    new SqlParameter("@TotalUsage", entity.TotalUsage),
+                    new SqlParameter("@CountAHI", entity.CountAHI),
+                    new SqlParameter("@CountAI", entity.CountAI),
+                    new SqlParameter("@CountHI", entity.CountHI),
+                    new SqlParameter("@CountSnore", entity.CountSnore),
+                    new SqlParameter("@CountPassive", entity.CountPassive),
+                    new SqlParameter("@PressureMax", entity.PressureMax),
+                    new SqlParameter("@PressureP95", entity.PressureP95),
+                    new SqlParameter("@PressureMedian", entity.PressureMedian),
+                    new SqlParameter("@FlowMax", entity.FlowMax),
+                    new SqlParameter("@FlowP95", entity.FlowP95),
+                    new SqlParameter("@FlowMedian", entity.FlowMedian),
+                    new SqlParameter("@LeakMax", entity.LeakMax),
+                    new SqlParameter("@LeakP95", entity.LeakP95),
+                    new SqlParameter("@LeakMedian", entity.LeakMedian),
+                    new SqlParameter("@TidalVolumeMax", entity.TidalVolumeMax),
+                    new SqlParameter("@TidalVolumeP95", entity.TidalVolumeP95),
+                    new SqlParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
+                    new SqlParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
+                    new SqlParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
+                    new SqlParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
+                    new SqlParameter("@SpO2Max", entity.SpO2Max),
+                    new SqlParameter("@SpO2P95", entity.SpO2P95),
+                    new SqlParameter("@SpO2Median", entity.SpO2Median),
+                    new SqlParameter("@PulseRateMax", entity.PulseRateMax),
+                    new SqlParameter("@PulseRateP95", entity.PulseRateP95),
+                    new SqlParameter("@PulseRateMedian", entity.PulseRateMedian),
+                    new SqlParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
+                    new SqlParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
+                    new SqlParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
+                    new SqlParameter("@IERatioMax", entity.IERatioMax),
+                    new SqlParameter("@IERatioP95", entity.IERatioP95),
+                    new SqlParameter("@IERatioMedian", entity.IERatioMedian),
+                    new SqlParameter("@IPAPMax", entity.IPAPMax),
+                    new SqlParameter("@IPAPP95", entity.IPAPP95),
+                    new SqlParameter("@IPAPMedian", entity.IPAPMedian),
+                    new SqlParameter("@EPAPMax", entity.EPAPMax),
+                    new SqlParameter("@EPAPP95", entity.EPAPP95),
+                    new SqlParameter("@EPAPMedian", entity.EPAPMedian),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -526,7 +527,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Update(SQLiteTransaction transaction, ProductWorkingStatisticsData entity)
+        public virtual void Update(SqlTransaction transaction, ProductWorkingStatisticsData entity)
         {
             if (Disposed)
             {
@@ -534,50 +535,50 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@ProductId", entity.ProductId),
-                    new SQLiteParameter("@TherapyMode", entity.TherapyMode),
-                    new SQLiteParameter("@DataTime", entity.DataTime),
-                    new SQLiteParameter("@TotalUsage", entity.TotalUsage),
-                    new SQLiteParameter("@CountAHI", entity.CountAHI),
-                    new SQLiteParameter("@CountAI", entity.CountAI),
-                    new SQLiteParameter("@CountHI", entity.CountHI),
-                    new SQLiteParameter("@CountSnore", entity.CountSnore),
-                    new SQLiteParameter("@CountPassive", entity.CountPassive),
-                    new SQLiteParameter("@PressureMax", entity.PressureMax),
-                    new SQLiteParameter("@PressureP95", entity.PressureP95),
-                    new SQLiteParameter("@PressureMedian", entity.PressureMedian),
-                    new SQLiteParameter("@FlowMax", entity.FlowMax),
-                    new SQLiteParameter("@FlowP95", entity.FlowP95),
-                    new SQLiteParameter("@FlowMedian", entity.FlowMedian),
-                    new SQLiteParameter("@LeakMax", entity.LeakMax),
-                    new SQLiteParameter("@LeakP95", entity.LeakP95),
-                    new SQLiteParameter("@LeakMedian", entity.LeakMedian),
-                    new SQLiteParameter("@TidalVolumeMax", entity.TidalVolumeMax),
-                    new SQLiteParameter("@TidalVolumeP95", entity.TidalVolumeP95),
-                    new SQLiteParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
-                    new SQLiteParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
-                    new SQLiteParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
-                    new SQLiteParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
-                    new SQLiteParameter("@SpO2Max", entity.SpO2Max),
-                    new SQLiteParameter("@SpO2P95", entity.SpO2P95),
-                    new SQLiteParameter("@SpO2Median", entity.SpO2Median),
-                    new SQLiteParameter("@PulseRateMax", entity.PulseRateMax),
-                    new SQLiteParameter("@PulseRateP95", entity.PulseRateP95),
-                    new SQLiteParameter("@PulseRateMedian", entity.PulseRateMedian),
-                    new SQLiteParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
-                    new SQLiteParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
-                    new SQLiteParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
-                    new SQLiteParameter("@IERatioMax", entity.IERatioMax),
-                    new SQLiteParameter("@IERatioP95", entity.IERatioP95),
-                    new SQLiteParameter("@IERatioMedian", entity.IERatioMedian),
-                    new SQLiteParameter("@IPAPMax", entity.IPAPMax),
-                    new SQLiteParameter("@IPAPP95", entity.IPAPP95),
-                    new SQLiteParameter("@IPAPMedian", entity.IPAPMedian),
-                    new SQLiteParameter("@EPAPMax", entity.EPAPMax),
-                    new SQLiteParameter("@EPAPP95", entity.EPAPP95),
-                    new SQLiteParameter("@EPAPMedian", entity.EPAPMedian),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@ProductId", entity.ProductId),
+                    new SqlParameter("@TherapyMode", entity.TherapyMode),
+                    new SqlParameter("@DataTime", entity.DataTime),
+                    new SqlParameter("@TotalUsage", entity.TotalUsage),
+                    new SqlParameter("@CountAHI", entity.CountAHI),
+                    new SqlParameter("@CountAI", entity.CountAI),
+                    new SqlParameter("@CountHI", entity.CountHI),
+                    new SqlParameter("@CountSnore", entity.CountSnore),
+                    new SqlParameter("@CountPassive", entity.CountPassive),
+                    new SqlParameter("@PressureMax", entity.PressureMax),
+                    new SqlParameter("@PressureP95", entity.PressureP95),
+                    new SqlParameter("@PressureMedian", entity.PressureMedian),
+                    new SqlParameter("@FlowMax", entity.FlowMax),
+                    new SqlParameter("@FlowP95", entity.FlowP95),
+                    new SqlParameter("@FlowMedian", entity.FlowMedian),
+                    new SqlParameter("@LeakMax", entity.LeakMax),
+                    new SqlParameter("@LeakP95", entity.LeakP95),
+                    new SqlParameter("@LeakMedian", entity.LeakMedian),
+                    new SqlParameter("@TidalVolumeMax", entity.TidalVolumeMax),
+                    new SqlParameter("@TidalVolumeP95", entity.TidalVolumeP95),
+                    new SqlParameter("@TidalVolumeMedian", entity.TidalVolumeMedian),
+                    new SqlParameter("@MinuteVentilationMax", entity.MinuteVentilationMax),
+                    new SqlParameter("@MinuteVentilationP95", entity.MinuteVentilationP95),
+                    new SqlParameter("@MinuteVentilationMedian", entity.MinuteVentilationMedian),
+                    new SqlParameter("@SpO2Max", entity.SpO2Max),
+                    new SqlParameter("@SpO2P95", entity.SpO2P95),
+                    new SqlParameter("@SpO2Median", entity.SpO2Median),
+                    new SqlParameter("@PulseRateMax", entity.PulseRateMax),
+                    new SqlParameter("@PulseRateP95", entity.PulseRateP95),
+                    new SqlParameter("@PulseRateMedian", entity.PulseRateMedian),
+                    new SqlParameter("@RespiratoryRateMax", entity.RespiratoryRateMax),
+                    new SqlParameter("@RespiratoryRateP95", entity.RespiratoryRateP95),
+                    new SqlParameter("@RespiratoryRateMedian", entity.RespiratoryRateMedian),
+                    new SqlParameter("@IERatioMax", entity.IERatioMax),
+                    new SqlParameter("@IERatioP95", entity.IERatioP95),
+                    new SqlParameter("@IERatioMedian", entity.IERatioMedian),
+                    new SqlParameter("@IPAPMax", entity.IPAPMax),
+                    new SqlParameter("@IPAPP95", entity.IPAPP95),
+                    new SqlParameter("@IPAPMedian", entity.IPAPMedian),
+                    new SqlParameter("@EPAPMax", entity.EPAPMax),
+                    new SqlParameter("@EPAPP95", entity.EPAPP95),
+                    new SqlParameter("@EPAPMedian", entity.EPAPMedian),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -594,7 +595,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -621,7 +622,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
+        public virtual void Update(SqlTransaction transaction, ICollection<ProductWorkingStatisticsData> entitys)
         {
             if (Disposed)
             {
@@ -629,7 +630,7 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -669,8 +670,8 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             ProductWorkingStatisticsData result = null;
             if (id != Guid.Empty)
             {
-                using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
-                      new SQLiteParameter("@Id", id)
+                using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectById,
+                      new SqlParameter("@Id", id)
                       ))
                 {
                     if (reader.HasRows)
@@ -745,9 +746,9 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<ProductWorkingStatisticsData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectPaging,
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -824,21 +825,21 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             {
                 throw new ObjectDisposedException(ToString());
             }
-            recordCount = Convert.ToInt32(SQLiteHelper.ExecuteScalar(sQLiteConnection, CommandType.Text, selectByProductIdTherapyModeDataTimeCount,
-                  new SQLiteParameter("@ProductId", productId),
-                new SQLiteParameter("@TherapyMode", therapyMode),
-                new SQLiteParameter("@StartTime", startTime),
-                new SQLiteParameter("@EndTime", endTime)
+            recordCount = Convert.ToInt32(SqlHelper.ExecuteScalar(sqlConnection, CommandType.Text, selectByProductIdTherapyModeDataTimeCount,
+                  new SqlParameter("@ProductId", productId),
+                new SqlParameter("@TherapyMode", therapyMode),
+                new SqlParameter("@StartTime", startTime),
+                new SqlParameter("@EndTime", endTime)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<ProductWorkingStatisticsData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime,
-                new SQLiteParameter("@ProductId", productId),
-                new SQLiteParameter("@TherapyMode", therapyMode),
-                new SQLiteParameter("@StartTime", startTime),
-                new SQLiteParameter("@EndTime", endTime),
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime,
+                new SqlParameter("@ProductId", productId),
+                new SqlParameter("@TherapyMode", therapyMode),
+                new SqlParameter("@StartTime", startTime),
+                new SqlParameter("@EndTime", endTime),
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -914,10 +915,10 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
 
             ICollection<ProductWorkingStatisticsData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime3,
-                new SQLiteParameter("@ProductId", productId),
-                new SQLiteParameter("@TherapyMode", therapyMode),
-                new SQLiteParameter("@DataTime", dataTime)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime3,
+                new SqlParameter("@ProductId", productId),
+                new SqlParameter("@TherapyMode", therapyMode),
+                new SqlParameter("@DataTime", dataTime)
                 ))
             {
                 if (reader.HasRows)
@@ -993,11 +994,11 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
             }
 
             ICollection<ProductWorkingStatisticsData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime2,
-                new SQLiteParameter("@ProductId", productId),
-                new SQLiteParameter("@TherapyMode", therapyMode),
-                new SQLiteParameter("@StartTime", startTime),
-                new SQLiteParameter("@EndTime", endTime)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByProductIdTherapyModeDataTime2,
+                new SqlParameter("@ProductId", productId),
+                new SqlParameter("@TherapyMode", therapyMode),
+                new SqlParameter("@StartTime", startTime),
+                new SqlParameter("@EndTime", endTime)
                 ))
             {
                 if (reader.HasRows)
@@ -1064,11 +1065,11 @@ WHERE ProductId=@ProductId AND TherapyMode=@TherapyMode AND DataTime=@DataTime "
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            if (!Equals(sQLiteConnection, null))
+            if (!Equals(sqlConnection, null))
             {
-                sQLiteConnection.Close();
-                sQLiteConnection.Dispose();
-                sQLiteConnection = null;
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+                sqlConnection = null;
             }
         }
 

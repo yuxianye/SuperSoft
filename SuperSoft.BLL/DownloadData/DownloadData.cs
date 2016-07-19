@@ -241,7 +241,7 @@ namespace SuperSoft.BLL.DownloadData
                 }
                 else
                 {
-                    //为找到产品
+                    //未找到产品
                     throw new Exception(ResourceHelper.LoadString("ProductNotExist"));
                 }
                 indexFileField.ProductId = productId;
@@ -266,7 +266,8 @@ namespace SuperSoft.BLL.DownloadData
             parallelOptions.MaxDegreeOfParallelism = Environment.ProcessorCount;
             var objLock = new object();
 
-            ICollection<FileSystemInfo> datFileInfos = new Collection<FileSystemInfo>();
+            System.Collections.Concurrent.BlockingCollection<FileSystemInfo> datFileInfos = new System.Collections.Concurrent.BlockingCollection<FileSystemInfo>();
+            //ICollection<FileSystemInfo> datFileInfos = new Collection<FileSystemInfo>();
             //非法文件目录和文件名过滤。I:\140904\173416.DAT,(根目录-->******(年月日)******.DAT(时分秒) )
             Parallel.ForEach(searchedFileInfos, parallelOptions, datFile =>
             {
@@ -278,19 +279,15 @@ namespace SuperSoft.BLL.DownloadData
                     {
                         //验证路径的格式 "140904\173416.DAT" 去掉扩展名和路径分隔符。
                         //如果文件名格式不正确则不处理
-                        var strPath =
-                            datFile.FullName.Replace(rootName, "")
-                                .Replace("\\", "")
-                                .Replace(Const.RMSFileExtensionData, "");
-                        var dateTime = DateTime.ParseExact(strPath,
-                            "yyMMddHHmmss",
-                            CultureInfo.InvariantCulture);
+                        var strPath = datFile.FullName.Replace(rootName, "").Replace("\\", "").Replace(Const.RMSFileExtensionData, "");
+                        var dateTime = DateTime.ParseExact(strPath, Const.DeteyyMMddHHmmss, CultureInfo.InvariantCulture);
+                        //var dateTime = DateTime.ParseExact(strPath, "yyMMddHHmmss", CultureInfo.InvariantCulture);
 
-                        //
-                        lock (objLock)
-                        {
-                            datFileInfos.Add(datFile);
-                        }
+                        ////
+                        //lock (objLock)
+                        //{
+                        datFileInfos.Add(datFile);
+                        //}
                     }
                     catch
                     {
@@ -298,6 +295,35 @@ namespace SuperSoft.BLL.DownloadData
                     }
                 }
             });
+            //foreach (var datFile in searchedFileInfos)
+            //{
+            //    parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+
+            //    if (datFile.Attributes != FileAttributes.Directory)
+            //    {
+            //        try
+            //        {
+            //            //验证路径的格式 "140904\173416.DAT" 去掉扩展名和路径分隔符。
+            //            //如果文件名格式不正确则不处理
+            //            var strPath =
+            //                datFile.FullName.Replace(rootName, "")
+            //                    .Replace("\\", "")
+            //                    .Replace(Const.RMSFileExtensionData, "");
+            //            var dateTime = DateTime.ParseExact(strPath, Const.DeteyyMMddHHmmss, CultureInfo.InvariantCulture);
+            //            //var dateTime = DateTime.ParseExact(strPath, "yyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            //            ////
+            //            //lock (objLock)
+            //            //{
+            //            datFileInfos.Add(datFile);
+            //            //}
+            //        }
+            //        catch
+            //        {
+            //            //LogHelper.Info("File Path Format Error:" + datFile.FullName);
+            //        }
+            //    }
+            //}
 
             if (backgroundWorker.CancellationPending)
             {
@@ -314,11 +340,40 @@ namespace SuperSoft.BLL.DownloadData
 
             //循环处理每个dat文件
 
+            //System.Collections.Concurrent.BlockingCollection<IEnumerable<NeedUpDateTherapyMode>> needUpdata = new System.Collections.Concurrent.BlockingCollection<IEnumerable<NeedUpDateTherapyMode>>();
             var needUpdata = new List<NeedUpDateTherapyMode>();
             var progress = 0;
             var datFileCount = datFileInfos.Count();
             ////循环需要处理的每个文件，采用并行迭代
-            //Parallel.ForEach(datFileInfos, parallelOptions, datFile =>
+            Parallel.ForEach(datFileInfos, parallelOptions, datFile =>
+            {
+                parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+                IEnumerable<NeedUpDateTherapyMode> needUpdataTmp = new Collection<NeedUpDateTherapyMode>();
+                //如果文件存在则继续执行
+                if (datFile.Exists)
+                {
+                    var DetailedFileUnpack = new DetailedFileUnpack(indexFileField, datFile.FullName);
+                    needUpdataTmp = DetailedFileUnpack.StartUnpackAndSaveToDataBase();
+                }
+                //if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
+                //{
+                //needUpdata.AddRange(needUpdataTmp);
+                //}
+                //更新进度
+                lock (objLock)
+                {
+                    if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
+                    {
+                        needUpdata.AddRange(needUpdataTmp);
+                    }
+                    progress++;
+                    // 前面有2% 
+                    var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
+                    CallProgressChanged(new ProgressChangedEventArgs(a, null));
+                }
+
+            });
+            //foreach (var datFile in datFileInfos)
             //{
             //    parallelOptions.CancellationToken.ThrowIfCancellationRequested();
             //    IEnumerable<NeedUpDateTherapyMode> needUpdataTmp = new Collection<NeedUpDateTherapyMode>();
@@ -330,44 +385,19 @@ namespace SuperSoft.BLL.DownloadData
             //    }
 
             //    //更新进度
-            //    lock (objLock)
+            //    //lock (objLock)
+            //    //{
+            //    if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
             //    {
-            //        if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
-            //        {
-            //            needUpdata.AddRange(needUpdataTmp);
-            //        }
-
-            //        progress++;
-            //        // 前面有2% 
-            //        var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
-            //        CallProgressChanged(new ProgressChangedEventArgs(a, null));
+            //        needUpdata.AddRange(needUpdataTmp);
             //    }
-            //});
-            foreach (var datFile in datFileInfos)
-            {
-                parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-                IEnumerable<NeedUpDateTherapyMode> needUpdataTmp = new Collection<NeedUpDateTherapyMode>();
-                //如果文件存在则继续执行
-                if (datFile.Exists)
-                {
-                    var DetailedFileUnpack = new DetailedFileUnpack(indexFileField, datFile.FullName);
-                    needUpdataTmp = DetailedFileUnpack.StartUnpackAndSaveToDataBase();
-                }
 
-                //更新进度
-                //lock (objLock)
-                //{
-                if (needUpdataTmp != null && needUpdataTmp.Count() > 0)
-                {
-                    needUpdata.AddRange(needUpdataTmp);
-                }
-
-                progress++;
-                // 前面有2% 
-                var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
-                CallProgressChanged(new ProgressChangedEventArgs(a, null));
-                //}
-            }
+            //    progress++;
+            //    // 前面有2% 
+            //    var a = (int)(progress / (float)datFileCount * 100 * 0.9) + 2;
+            //    CallProgressChanged(new ProgressChangedEventArgs(a, null));
+            //    //}
+            //}
 
 
             //更新产品型号

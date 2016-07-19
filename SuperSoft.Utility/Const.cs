@@ -14,7 +14,9 @@ namespace SuperSoft.Utility
     {
         #region
 
-        public const string SQLiteConnectionString = @"Data Source=Database\SuperSoft.db";
+        //public const string DbConnectionString = @"Data Source=(localdb)\MSSQLLocalDb\Database\SuperSoft.mdf";
+        public const string DbConnectionString = @"Data Source=(localdb)\MSSQLLocalDb;Integrated Security=True;AttachDBFilename=|DataDirectory|\Database\SuperSoft.mdf";
+        //public const string DbConnectionString = @"Data Source=(localdb)\MSSQLLocalDb;Integrated Security=True;AttachDBFilename=\Database.mdf";
 
         #endregion
 
@@ -198,6 +200,11 @@ namespace SuperSoft.Utility
         /// HH:mm
         /// </summary>
         public const string DeteHHmm = @"HH:mm";
+
+        /// <summary>
+        /// yyMMddHHmmss
+        /// </summary>
+        public const string DeteyyMMddHHmmss = @"yyMMddHHmmss";
 
         #endregion
 

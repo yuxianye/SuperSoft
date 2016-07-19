@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -53,6 +54,7 @@
     <Compile Include="PropertySortCondition.cs" />
     <Compile Include="TaskAsyncHelper.cs" />
     <Compile Include="ValueConvert.cs" />
+    <Compile Include="Windows\MyDependencyObject.cs" />
     <Compile Include="Windows\ResourceHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

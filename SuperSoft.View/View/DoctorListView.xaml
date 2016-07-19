@@ -83,31 +83,31 @@
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         Header="{DynamicResource Selected}"
                                         Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_FirstName}"
+                <DataGridTextColumn Header="{DynamicResource FirstName}"
                                     Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_LastName}"
+                <DataGridTextColumn Header="{DynamicResource LastName}"
                                     Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_DateOfBirth}"
+                <DataGridTextColumn Header="{DynamicResource DateOfBirth}"
                                     Binding="{Binding DateOfBirth,StringFormat='yyyy/MM/dd'}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Age}"
+                <DataGridTextColumn Header="{DynamicResource Age}"
                                     Binding="{Binding Age}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Weight}"
+                <DataGridTextColumn Header="{DynamicResource Weight}"
                                     Binding="{Binding Weight}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Height}"
+                <DataGridTextColumn Header="{DynamicResource Height}"
                                     Binding="{Binding Height}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_BMI}"
+                <DataGridTextColumn Header="{DynamicResource BMI}"
                                     Binding="{Binding BMI,StringFormat={}{0:N}}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Gender}"
+                <DataGridTextColumn Header="{DynamicResource Gender}"
                                     Binding="{Binding Gender,Converter={StaticResource genderConverter}}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_TelephoneNumbers}"
+                <DataGridTextColumn Header="{DynamicResource TelephoneNumbers}"
                                     Binding="{Binding TelephoneNumbers}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_EMail}"
+                <DataGridTextColumn Header="{DynamicResource EMail}"
                                     Binding="{Binding EMail}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_PostalCode}"
+                <DataGridTextColumn Header="{DynamicResource PostalCode}"
                                     Binding="{Binding PostalCode}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Address}"
+                <DataGridTextColumn Header="{DynamicResource Address}"
                                     Binding="{Binding Address}" />
-                <DataGridTextColumn Header="{DynamicResource DoctorListView_Diagnosis}"
+                <DataGridTextColumn Header="{DynamicResource Diagnosis}"
                                     Binding="{Binding Diagnosis}" />
             </DataGrid.Columns>
             <DataGrid.Style>

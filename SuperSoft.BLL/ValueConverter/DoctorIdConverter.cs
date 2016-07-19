@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Respircare.PatientManagementSystem.BLL
+namespace SuperSoft.BLL
 {
     public class DoctorIdConverter : IValueConverter
     {

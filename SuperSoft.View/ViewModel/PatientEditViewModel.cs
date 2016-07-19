@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
+
 namespace SuperSoft.View.ViewModel
 {
     public class PatientEditViewModel : MyViewModelBase
@@ -23,6 +25,7 @@ namespace SuperSoft.View.ViewModel
         protected override void OnParameterChanged()
         {
             base.OnParameterChanged();
+            DoctorList = initDoctorList();
             this.Patient = StaticDatas.CurrentSelectedPatient.Clone() as Patient;
             initPatientProductSn();
         }
@@ -38,7 +41,6 @@ namespace SuperSoft.View.ViewModel
         }
 
         #endregion
-
 
         #region ConfirmCommand
 
@@ -127,6 +129,40 @@ namespace SuperSoft.View.ViewModel
         {
             this.Patient = new Model.Patient();
         }
+
+        #region DoctorList SelectedDoctor
+
+        private Dictionary<Guid, string> doctorList;
+
+        public Dictionary<Guid, string> DoctorList
+        {
+            get { return doctorList; }
+            set { Set(ref doctorList, value); }
+        }
+
+        /// <summary>
+        /// 初始化医生列表
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<Guid, string> initDoctorList()
+        {
+            var dictionaryList = new Dictionary<Guid, string>();
+            int count;
+            using (var doctorBLL = new DoctorBLL())
+            {
+                var result = doctorBLL.SelectPaging(1, short.MaxValue, out count);
+                if (result != null && result.Count > 0)
+                {
+                    foreach (var v in result)
+                    {
+                        dictionaryList.Add(v.Id, v.FirstName + " " + v.LastName);
+                    }
+                }
+            }
+            return dictionaryList;
+        }
+
+        #endregion
 
     }
 }

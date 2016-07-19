@@ -3,7 +3,7 @@ using SuperSoft.Utility;
 using SuperSoft.Utility.Windows;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace SuperSoft.BLL
@@ -69,7 +69,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Insert(SQLiteTransaction transaction, ProductWorkingSummaryData entity)
+        public virtual void Insert(SqlTransaction transaction, ProductWorkingSummaryData entity)
         {
             if (Disposed)
             {
@@ -116,7 +116,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
+        public virtual void Insert(SqlTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -168,7 +168,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="id">一个实体对象的Id</param>
-        public virtual void Delete(SQLiteTransaction transaction, Guid id)
+        public virtual void Delete(SqlTransaction transaction, Guid id)
         {
             if (Disposed)
             {
@@ -216,7 +216,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Delete(SQLiteTransaction transaction, ProductWorkingSummaryData entity)
+        public virtual void Delete(SqlTransaction transaction, ProductWorkingSummaryData entity)
         {
             if (Disposed)
             {
@@ -264,7 +264,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
+        public virtual void Delete(SqlTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {
@@ -317,7 +317,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Update(SQLiteTransaction transaction, ProductWorkingSummaryData entity)
+        public virtual void Update(SqlTransaction transaction, ProductWorkingSummaryData entity)
         {
             if (Disposed)
             {
@@ -364,7 +364,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
+        public virtual void Update(SqlTransaction transaction, ICollection<ProductWorkingSummaryData> entitys)
         {
             if (Disposed)
             {

@@ -105,7 +105,7 @@ namespace SuperSoft.Model
         /// <summary>
         /// 医生Id
         /// </summary>
-        public System.Guid DoctorId { get; set; }
+        public Nullable<System.Guid> DoctorId { get; set; }
 
         #endregion
 
@@ -167,7 +167,7 @@ namespace SuperSoft.Model
             {
                 if (columnName == "FirstName" && string.IsNullOrWhiteSpace(FirstName))
                 {
-                    return ResourceHelper.LoadString("PatientAddView_FirstNameValidationRequired");
+                    return ResourceHelper.LoadString("FirstNameValidationRequired");
                 }
                 //if (columnName == "FirstName" && !string.IsNullOrWhiteSpace(FirstName) && FirstName.Length > 32)
                 //{
@@ -175,7 +175,7 @@ namespace SuperSoft.Model
                 //}
                 if (columnName == "LastName" && string.IsNullOrWhiteSpace(LastName))
                 {
-                    return ResourceHelper.LoadString("PatientAddView_LastNameValidationRequired");
+                    return ResourceHelper.LoadString("LastNameValidationRequired");
                 }
                 //if (columnName == "LastName" && !string.IsNullOrWhiteSpace(LastName) && LastName.Length > 32)
                 //{
@@ -183,16 +183,16 @@ namespace SuperSoft.Model
                 //}
                 if (columnName == "Weight" && (Weight < 0 || Weight > 255))
                 {
-                    return ResourceHelper.LoadString("PatientAddView_WeightValidation");
+                    return ResourceHelper.LoadString("WeightValidation");
                 }
                 if (columnName == "Height" && (Height < 0 || Height > 255))
                 {
-                    return ResourceHelper.LoadString("PatientAddView_HeightValidation");
+                    return ResourceHelper.LoadString("HeightValidation");
                 }
                 //if (columnName == "TelephoneNumbers" && !string.IsNullOrWhiteSpace(TelephoneNumbers) &&
                 //    TelephoneNumbers.Length > 32)
                 //{
-                //    return ResourceHelper.LoadString("PatientAddView_TelephoneNumbersValidation");
+                //    return ResourceHelper.LoadString("TelephoneNumbersValidation");
                 //}
                 //if (columnName == "EMail" && !string.IsNullOrWhiteSpace(EMail) && EMail.Length > 32)
                 //{
@@ -205,7 +205,7 @@ namespace SuperSoft.Model
                             @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
                     if (!reg.IsMatch(EMail))
                     {
-                        return ResourceHelper.LoadString("PatientAddView_EMailValidationFormat");
+                        return ResourceHelper.LoadString("EMailValidationFormat");
                     }
                 }
                 //if (columnName == "PostalCode" && !string.IsNullOrWhiteSpace(PostalCode) && PostalCode.Length > 32)
@@ -222,18 +222,18 @@ namespace SuperSoft.Model
                 //}
                 //if (columnName == "Diagnosis" && DoctorId == Guid.Empty)
                 //{
-                //    return ResourceHelper.LoadString("PatientAddView_DiagnosisValidation");
+                //    return ResourceHelper.LoadString("DiagnosisValidation");
                 //}
                 if (columnName == "SerialNumber")
                 {
                     if (string.IsNullOrWhiteSpace(SerialNumber))
                     {
-                        return ResourceHelper.LoadString("PatientAddView_SerialNumberValidation");
+                        return ResourceHelper.LoadString("SerialNumberValidation");
                     }
                     var reg = new Regex(@"^\d{18}$");
                     if (!reg.IsMatch(SerialNumber))
                     {
-                        return ResourceHelper.LoadString("PatientAddView_SerialNumberValidation");
+                        return ResourceHelper.LoadString("SerialNumberValidation");
                     }
                 }
 

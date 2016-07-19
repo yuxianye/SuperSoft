@@ -16,17 +16,25 @@ namespace SuperSoft.View.ViewModel
     {
         public PatientAddViewModel()
         {
+            IsParameterRepeatChanged = true;
             ConfirmCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteConfirmCommand, OnCanExecuteConfirmCommand);
             CancelCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand(OnExecuteCancelCommand);
-            DoctorList = initDoctorList();
         }
 
         protected override void OnParameterChanged()
         {
             base.OnParameterChanged();
             string sn = base.Parameter as string;
-            IsEnabledSerialNumbeControl = false;
+            if (string.IsNullOrWhiteSpace(sn))
+            {
+                IsEnabledSerialNumbeControl = true;
+            }
+            else
+            {
+                IsEnabledSerialNumbeControl = false;
+            }
             Patient.SerialNumber = sn;
+            DoctorList = initDoctorList();
         }
 
         #region IsEnabledSerialNumbeControl
@@ -76,13 +84,14 @@ namespace SuperSoft.View.ViewModel
                 patientsProduct.ProductId = product.Id;
 
                 //使用事物提交
-                using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString))
+                using (System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(Const.DbConnectionString))
                 {
                     conn.Open();
-                    using (System.Data.SQLite.SQLiteTransaction tran = conn.BeginTransaction())
+                    using (System.Data.SqlClient.SqlTransaction tran = conn.BeginTransaction())
                     {
                         productBLL.Insert(tran, product);
                         patientBLL.Insert(tran, Patient);
+                        //int a = int.Parse("1a");
                         patientsProductBLL.Insert(tran, patientsProduct);
                         tran.Commit();
                     }
@@ -115,7 +124,10 @@ namespace SuperSoft.View.ViewModel
                     patientsProductBLL = null;
                 }
                 Messenger.Default.Send<object>(null, Model.MessengerToken.ClosePopup);
-                Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+                if (isEnabledSerialNumbeControl)//数据下载时新增患者之后不转到患者列表
+                {
+                    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+                }
             }
         }
 
@@ -159,7 +171,7 @@ namespace SuperSoft.View.ViewModel
         private void clearData()
         {
             this.Patient = new Patient();
-            IsEnabledSerialNumbeControl = true;
+            //IsEnabledSerialNumbeControl = true;
         }
 
         #region DoctorList SelectedDoctor

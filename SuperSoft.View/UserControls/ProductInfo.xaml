@@ -1,0 +1,62 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.UserControls.ProductInfo"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    xmlns:localBll="clr-namespace:SuperSoft.BLL;assembly=SuperSoft.BLL"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <UserControl.Resources>
+        <localBll:ProductModelConverter x:Key="productModelConverter"></localBll:ProductModelConverter>
+    </UserControl.Resources>
+    <Expander Header="{DynamicResource ProductInfo}"
+              IsExpanded="True"
+              Visibility="{Binding PatientsProductInfoVisibility}">
+        <Grid>
+            <WrapPanel Orientation="Horizontal">
+                <StackPanel    Orientation="Horizontal"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource ProductModel}"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent4Style}"
+                               Text="{Binding ViewPatientsProduct.ProductModel,Converter={StaticResource productModelConverter}}"></TextBlock>
+                </StackPanel   >
+                <StackPanel   Orientation="Horizontal"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource SerialNumber}"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent4Style}"
+                               Text="{Binding ViewPatientsProduct.SerialNumber}"></TextBlock>
+                </StackPanel >
+                <StackPanel   Orientation="Horizontal"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource TotalWorkingTime}"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent7Style}"
+                               Text="{Binding ViewPatientsProduct.TotalWorkingTime }"></TextBlock>
+                </StackPanel>
+                <StackPanel   Orientation="Horizontal"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource ProductVersion}"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":"></TextBlock>
+                    <TextBlock Style="{DynamicResource TextBlockContent4Style}"
+                               Text="{Binding ViewPatientsProduct.ProductVersion }"></TextBlock>
+                </StackPanel>
+            </WrapPanel>
+        </Grid>
+    </Expander>
+</ss:UserControlBase>

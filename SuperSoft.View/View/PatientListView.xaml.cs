@@ -1,5 +1,7 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.ServiceLocation;
 using SuperSoft.Model;
+using SuperSoft.Utility;
 using SuperSoft.View.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -27,32 +29,23 @@ namespace SuperSoft.View.View
         public PatientListView()
         {
             InitializeComponent();
-            //DataContext = ServiceLocator.Current.GetInstance<DoctorAddViewModel>();
         }
-
-        ///// <summary>
-        ///// 搜索条件的构造
-        ///// </summary>
-        ///// <param name="condition"></param>
-        //public PatientListView(Expression<Func<Patient, bool>> condition)
-        //{
-        //    InitializeComponent();
-        //    //DataContext = new PatientListViewModel(condition);
-        //}
 
         private void DataGridAllPatientList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //var dataContext = this.DataContext as PatientListViewModel;
-            //if (!Equals(dataContext, null) && StaticDatas.IsCurrentSelectedPatientHaveProduct)
-            //{
-            //    dataContext.ViewManagement.Navigate(ViewNames.PatientHomeView);
-            //}
-            //else
-            //{
-            //    MessageBox.Show(Application.Current.MainWindow, ResourceHelper.LoadString("NoProductData"),
-            //        dataContext.SelectedPatient.FirstName + " " + dataContext.SelectedPatient.LastName,
-            //        MessageBoxButton.OK, MessageBoxImage.Information);
-            //}
+            var dataContext = this.DataContext as PatientListViewModel;
+            if (!Equals(dataContext, null))
+            {
+                try
+                {
+                    StaticDatas.CurrentOpenedPatient = dataContext.SelectedPatient;
+                    Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientHomeView, ViewType.View, StaticDatas.CurrentOpenedPatient), Model.MessengerToken.Navigate);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ToString(), ex);
+                }
+            }
         }
     }
 }

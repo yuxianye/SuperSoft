@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SuperSoft.View.ViewModel
 {
@@ -25,6 +26,7 @@ namespace SuperSoft.View.ViewModel
         {
             base.OnParameterChanged();
             this.Patient = StaticDatas.CurrentSelectedPatient;
+            DoctorList = initDoctorList();
             initPatientProductSn();
         }
 
@@ -46,8 +48,8 @@ namespace SuperSoft.View.ViewModel
 
         private void OnExecuteConfirmCommand()
         {
+            Application.Current.MainWindow.Cursor = Cursors.Wait;
             PatientBLL patientBLL = new PatientBLL();
-
             try
             {
                 //删除患者所有信息包括产品运行信息等数据
@@ -70,6 +72,7 @@ namespace SuperSoft.View.ViewModel
                 clearData();
                 Messenger.Default.Send<object>(null, Model.MessengerToken.ClosePopup);
                 Messenger.Default.Send<ViewInfo>(new ViewInfo(ViewName.PatientListView, ViewType.View), Model.MessengerToken.Navigate);
+                Application.Current.MainWindow.Cursor = Cursors.Arrow;
             }
         }
 
@@ -109,5 +112,38 @@ namespace SuperSoft.View.ViewModel
             this.Patient = new Model.Patient();
         }
 
+        #region DoctorList SelectedDoctor
+
+        private Dictionary<Guid, string> doctorList;
+
+        public Dictionary<Guid, string> DoctorList
+        {
+            get { return doctorList; }
+            set { Set(ref doctorList, value); }
+        }
+
+        /// <summary>
+        /// 初始化医生列表
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<Guid, string> initDoctorList()
+        {
+
+            var dictionaryList = new Dictionary<Guid, string>();
+            if (Patient.DoctorId.HasValue)
+            {
+                using (var doctorBLL = new DoctorBLL())
+                {
+                    var result = doctorBLL.GetById(Patient.DoctorId.Value);
+                    if (result != null)
+                    {
+                        dictionaryList.Add(result.Id, result.FirstName + " " + result.LastName);
+                    }
+                }
+            }
+            return dictionaryList;
+        }
+
+        #endregion
     }
 }

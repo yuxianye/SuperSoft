@@ -2,7 +2,7 @@
 using SuperSoft.Utility;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -19,14 +19,14 @@ namespace SuperSoft.DAL
         /// </summary>
         public ViewPatientsProductDAL()
         {
-            sQLiteConnection = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString);
-            sQLiteConnection.Open();
+            sqlConnection = new SqlConnection(Const.DbConnectionString);
+            sqlConnection.Open();
         }
 
         /// <summary>
         /// 链接对象
         /// </summary>
-        private System.Data.SQLite.SQLiteConnection sQLiteConnection;
+        private SqlConnection sqlConnection;
 
         #region 数据库操作字符串SQL语句
         //8个字段
@@ -52,8 +52,8 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber";
                 throw new ObjectDisposedException(ToString());
             }
             ICollection<ViewPatientsProduct> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByPatientId,
-                new SQLiteParameter("@PatientId", patientId)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByPatientId,
+                new SqlParameter("@PatientId", patientId)
                 ))
             {
                 if (reader.HasRows)
@@ -91,8 +91,8 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber";
             }
 
             ICollection<ViewPatientsProduct> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectBySerialNumber,
-                new SQLiteParameter("@SerialNumber", serialNumber)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectBySerialNumber,
+                new SqlParameter("@SerialNumber", serialNumber)
                 ))
             {
                 if (reader.HasRows)
@@ -124,11 +124,11 @@ FROM ViewPatientsProducts WHERE SerialNumber=@SerialNumber";
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            if (!Equals(sQLiteConnection, null))
+            if (!Equals(sqlConnection, null))
             {
-                sQLiteConnection.Close();
-                sQLiteConnection.Dispose();
-                sQLiteConnection = null;
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+                sqlConnection = null;
             }
         }
 

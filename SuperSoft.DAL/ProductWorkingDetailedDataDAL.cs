@@ -3,7 +3,8 @@ using SuperSoft.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
+using System.Data.SqlClient;
+
 using System.Linq;
 using System.Text;
 
@@ -19,14 +20,14 @@ namespace SuperSoft.DAL
         /// </summary>
         public ProductWorkingDetailedDataDAL()
         {
-            sQLiteConnection = new System.Data.SQLite.SQLiteConnection(Const.SQLiteConnectionString);
-            sQLiteConnection.Open();
+            sqlConnection = new SqlConnection(Const.DbConnectionString);
+            sqlConnection.Open();
         }
 
         /// <summary>
         /// 链接对象
         /// </summary>
-        private System.Data.SQLite.SQLiteConnection sQLiteConnection;
+        private SqlConnection sqlConnection;
 
         #region 数据库操作字符串SQL语句
         //3个字段
@@ -62,7 +63,7 @@ namespace SuperSoft.DAL
             {
                 throw new ObjectDisposedException(ToString());
             }
-            return SQLiteHelper.ExecuteScalar(sQLiteConnection, System.Data.CommandType.Text, selectCount).GetInt();
+            return SqlHelper.ExecuteScalar(sqlConnection, System.Data.CommandType.Text, selectCount).GetInt();
         }
 
         #endregion
@@ -81,10 +82,10 @@ namespace SuperSoft.DAL
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, insert,
-                    new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
-                    new SQLiteParameter("@Content", entity.Content)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, insert,
+                    new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
+                    new SqlParameter("@Content", entity.Content)
                     );
             }
         }
@@ -94,7 +95,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Insert(SQLiteTransaction transaction, ProductWorkingDetailedData entity)
+        public virtual void Insert(SqlTransaction transaction, ProductWorkingDetailedData entity)
         {
             if (Disposed)
             {
@@ -102,10 +103,10 @@ namespace SuperSoft.DAL
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
-                    new SQLiteParameter("@Id", entity.Id),
-                    new SQLiteParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
-                    new SQLiteParameter("@Content", entity.Content)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, insert,
+                    new SqlParameter("@Id", entity.Id),
+                    new SqlParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
+                    new SqlParameter("@Content", entity.Content)
                     );
             }
         }
@@ -122,7 +123,7 @@ namespace SuperSoft.DAL
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -149,7 +150,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Insert(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
+        public virtual void Insert(SqlTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -157,7 +158,7 @@ namespace SuperSoft.DAL
             }
             if (entitys != null && entitys.Count() > 0)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -195,8 +196,8 @@ namespace SuperSoft.DAL
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -206,7 +207,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="id">一个实体对象的Id</param>
-        public virtual void Delete(SQLiteTransaction transaction, Guid id)
+        public virtual void Delete(SqlTransaction transaction, Guid id)
         {
             if (Disposed)
             {
@@ -214,8 +215,8 @@ namespace SuperSoft.DAL
             }
             if (id != Guid.Empty)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
-                   new SQLiteParameter("@Id", id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteById,
+                   new SqlParameter("@Id", id)
                    );
             }
         }
@@ -241,7 +242,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Delete(SQLiteTransaction transaction, ProductWorkingDetailedData entity)
+        public virtual void Delete(SqlTransaction transaction, ProductWorkingDetailedData entity)
         {
             if (Disposed)
             {
@@ -249,7 +250,7 @@ namespace SuperSoft.DAL
             }
             if (entity != null)
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     Delete(entity);
@@ -287,7 +288,7 @@ namespace SuperSoft.DAL
                     sb.Append(',');
                 }
                 sb.Remove(sb.Length - 2, 1);
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, deleteByIds, new SQLiteParameter("@Ids", sb.ToString()));
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, deleteByIds, new SqlParameter("@Ids", sb.ToString()));
                 sb.Clear();
                 sb = null;
             }
@@ -298,7 +299,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
+        public virtual void Delete(SqlTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -318,7 +319,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="productWorkingSummaryDataIds">集合</param>
-        public virtual void DeleteByProductWorkingSummaryDataIds(SQLiteTransaction transaction, ICollection<Guid> productWorkingSummaryDataIds)
+        public virtual void DeleteByProductWorkingSummaryDataIds(SqlTransaction transaction, ICollection<Guid> productWorkingSummaryDataIds)
         {
             if (Disposed)
             {
@@ -333,8 +334,8 @@ namespace SuperSoft.DAL
                     sb.Append(',');
                 }
                 sb.Remove(sb.Length - 2, 1);
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductWorkingSummaryDataIds,
-                    new SQLiteParameter("@ProductWorkingSummaryDataIds", sb.ToString()));
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, deleteByProductWorkingSummaryDataIds,
+                    new SqlParameter("@ProductWorkingSummaryDataIds", sb.ToString()));
                 sb.Clear();
                 sb = null;
             }
@@ -355,10 +356,10 @@ namespace SuperSoft.DAL
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(sQLiteConnection, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
-                    new SQLiteParameter("@Content", entity.Content),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(sqlConnection, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
+                    new SqlParameter("@Content", entity.Content),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -368,7 +369,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public virtual void Update(SQLiteTransaction transaction, ProductWorkingDetailedData entity)
+        public virtual void Update(SqlTransaction transaction, ProductWorkingDetailedData entity)
         {
             if (Disposed)
             {
@@ -376,10 +377,10 @@ namespace SuperSoft.DAL
             }
             if (entity != null)
             {
-                SQLiteHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
-                    new SQLiteParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
-                    new SQLiteParameter("@Content", entity.Content),
-                    new SQLiteParameter("@Id", entity.Id)
+                SqlHelper.ExecuteNonQuery(transaction, System.Data.CommandType.Text, updateById,
+                    new SqlParameter("@ProductWorkingSummaryDataId", entity.ProductWorkingSummaryDataId),
+                    new SqlParameter("@Content", entity.Content),
+                    new SqlParameter("@Id", entity.Id)
                     );
             }
         }
@@ -396,7 +397,7 @@ namespace SuperSoft.DAL
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = sQLiteConnection.BeginTransaction();
+                SqlTransaction tran = sqlConnection.BeginTransaction();
                 try
                 {
                     foreach (var v in entitys)
@@ -423,7 +424,7 @@ namespace SuperSoft.DAL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
+        public virtual void Update(SqlTransaction transaction, ICollection<ProductWorkingDetailedData> entitys)
         {
             if (Disposed)
             {
@@ -431,7 +432,7 @@ namespace SuperSoft.DAL
             }
             if (entitys.Any())
             {
-                SQLiteTransaction tran = transaction;
+                SqlTransaction tran = transaction;
                 try
                 {
                     foreach (var v in entitys)
@@ -471,8 +472,8 @@ namespace SuperSoft.DAL
             ProductWorkingDetailedData result = null;
             if (id != Guid.Empty)
             {
-                using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectById,
-                      new SQLiteParameter("@Id", id)
+                using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectById,
+                      new SqlParameter("@Id", id)
                       ))
                 {
                     if (reader.HasRows)
@@ -516,9 +517,9 @@ namespace SuperSoft.DAL
             recordCount = this.Count();
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<ProductWorkingDetailedData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectPaging,
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectPaging,
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -561,15 +562,15 @@ namespace SuperSoft.DAL
             {
                 throw new ObjectDisposedException(ToString());
             }
-            recordCount = Convert.ToInt32(SQLiteHelper.ExecuteScalar(sQLiteConnection, CommandType.Text, selectByProductWorkingSummaryDataIdCount,
-                 new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
+            recordCount = Convert.ToInt32(SqlHelper.ExecuteScalar(sqlConnection, CommandType.Text, selectByProductWorkingSummaryDataIdCount,
+                 new SqlParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
                  ));
             int offsetCount = (pageIndex - 1) * pageSize;
             ICollection<ProductWorkingDetailedData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId,
-                new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId),
-                new SQLiteParameter("@PageSize", pageSize),
-                new SQLiteParameter("@OffsetCount", offsetCount)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId,
+                new SqlParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId),
+                new SqlParameter("@PageSize", pageSize),
+                new SqlParameter("@OffsetCount", offsetCount)
                 ))
             {
                 if (reader.HasRows)
@@ -611,8 +612,8 @@ namespace SuperSoft.DAL
             }
 
             ICollection<ProductWorkingDetailedData> resultList = null;
-            using (var reader = SQLiteHelper.ExecuteReader(sQLiteConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId2,
-                new SQLiteParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
+            using (var reader = SqlHelper.ExecuteReader(sqlConnection, System.Data.CommandType.Text, selectByProductWorkingSummaryDataId2,
+                new SqlParameter("@ProductWorkingSummaryDataId", productWorkingSummaryDataId)
                 ))
             {
                 if (reader.HasRows)
@@ -648,11 +649,11 @@ namespace SuperSoft.DAL
         protected override void DisposeManagedResources()
         {
             base.DisposeManagedResources();
-            if (!Equals(sQLiteConnection, null))
+            if (!Equals(sqlConnection, null))
             {
-                sQLiteConnection.Close();
-                sQLiteConnection.Dispose();
-                sQLiteConnection = null;
+                sqlConnection.Close();
+                sqlConnection.Dispose();
+                sqlConnection = null;
             }
         }
 

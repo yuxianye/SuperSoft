@@ -1,10 +1,10 @@
-﻿using Respircare.Utility;
+﻿using SuperSoft.Utility.Windows;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Respircare.PatientManagementSystem.BLL
+namespace SuperSoft.BLL
 {
     /// <summary>
     /// 0:关  X:m-n

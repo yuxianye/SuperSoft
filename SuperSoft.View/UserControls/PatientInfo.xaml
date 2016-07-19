@@ -1,0 +1,166 @@
+﻿<ss:UserControlBase x:Class="SuperSoft.View.UserControls.PatientInfo"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:local="clr-namespace:SuperSoft.View.UserControls"
+                    xmlns:ss="clr-namespace:SuperSoft.View"
+                    xmlns:localBll="clr-namespace:SuperSoft.BLL;assembly=SuperSoft.BLL"
+                    mc:Ignorable="d"
+                    d:DesignHeight="300"
+                    d:DesignWidth="300">
+    <UserControl.Resources>
+        <localBll:GenderConverter x:Key="genderConverter" />
+        <localBll:DoctorIdConverter x:Key="doctorIdConverter" />
+    </UserControl.Resources>
+    <Expander Header="{Binding ExpanderHeader}"
+              IsExpanded="{Binding IsExpanded}"
+              Visibility="{Binding PatientInfoVisibility}">
+        <Grid>
+            <WrapPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource FirstName}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":"
+                               VerticalAlignment="Center" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.FirstName}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock  Style="{DynamicResource TextBlockContentTitle1Style}"
+                                Text="{DynamicResource LastName}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.LastName}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource DateOfBirth}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.DateOfBirth,StringFormat='yyyy/MM/dd'}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Age}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.Age}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Weight}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.Weight}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Height}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.Height}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource BMI}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.BMI,StringFormat={}{0:N}}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Gender}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.Gender ,Converter={StaticResource genderConverter}}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource TelephoneNumbers}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.TelephoneNumbers}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource EMail}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.EMail}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource PostalCode}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.PostalCode}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Address}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent3Style}"
+                               Text="{Binding SelectedPatient.Address}"
+                               ToolTip="{Binding SelectedPatient.Address}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Diagnosis}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent1Style}"
+                               Text="{Binding SelectedPatient.Diagnosis}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left">
+                    <TextBlock Style="{DynamicResource TextBlockContentTitle1Style}"
+                               Text="{DynamicResource Doctor}" />
+                    <TextBlock Style="{DynamicResource TextBlockContent8Style}"
+                               Text=":" />
+                    <TextBlock Style="{DynamicResource TextBlockContent2Style}"
+                               Text="{Binding SelectedPatient.DoctorId,Converter={StaticResource doctorIdConverter}}" />
+                </StackPanel>
+            </WrapPanel>
+        </Grid>
+    </Expander>
+</ss:UserControlBase>

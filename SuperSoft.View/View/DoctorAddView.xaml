@@ -6,7 +6,7 @@
                      xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                      xmlns:ss="clr-namespace:SuperSoft.View"
                      mc:Ignorable="d"
-                     Tag="{DynamicResource DoctorAddView_Title}"
+                     Tag="{DynamicResource AddDoctor}"
                      Width="{DynamicResource PopupWinodwsWidth}"
                      Height="{DynamicResource PopupWinodwsHeight2}"
                      d:DesignHeight="300"
@@ -32,16 +32,16 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0"
                        Style="{StaticResource TextBlockContentTitleDefaultStyle}"
-                       Text="{DynamicResource DoctorAddView_FirstName}" />
+                       Text="{DynamicResource FirstName}" />
             <TextBlock Grid.Row="1"
                        Style="{StaticResource TextBlockContentTitleDefaultStyle}"
-                       Text="{DynamicResource DoctorAddView_LastName}" />
+                       Text="{DynamicResource LastName}" />
             <TextBox Grid.Column="1"
                      Grid.Row="0"
                      VerticalAlignment="Center"
                      MaxLength="16"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource DoctorAddView_FirstNameValidationRequired}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource FirstNameValidationRequired}"
                      Text="{Binding Doctor.FirstName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                      Name="txtbox_FirstName" />
             <TextBox Grid.Column="1"
@@ -49,7 +49,7 @@
                      VerticalAlignment="Center"
                      MaxLength="16"
                      Margin="{DynamicResource ControlMargin}"
-                     Metro:TextBoxHelper.Watermark="{DynamicResource DoctorAddView_LastNameValidationRequired}"
+                     Metro:TextBoxHelper.Watermark="{DynamicResource LastNameValidationRequired}"
                      Text="{Binding Doctor.LastName , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
         </Grid>
         <Grid Grid.Row="1"

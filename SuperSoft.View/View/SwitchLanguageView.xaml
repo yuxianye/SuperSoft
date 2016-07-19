@@ -6,7 +6,7 @@
                      xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                      xmlns:ss="clr-namespace:SuperSoft.View"
                      mc:Ignorable="d"
-                     Tag="{DynamicResource SwitchLanguageView_Title}"
+                     Tag="{DynamicResource Title}"
                      Width="{DynamicResource PopupWinodwsWidth}"
                      Height="{DynamicResource PopupWinodwsHeight}"
                      d:DesignHeight="300"
@@ -34,7 +34,7 @@
             <TextBlock Grid.Row="0"
                        Grid.Column="0"
                        Grid.ColumnSpan="3"
-                       Text="{DynamicResource SwitchLanguageView_LanguageMessage}"
+                       Text="{DynamicResource LanguageMessage}"
                        Style="{DynamicResource TextBlockDefaultStyle}" />
             <ListBox Grid.Row="1"
                      Grid.Column="1"
@@ -47,7 +47,7 @@
             <TextBlock Grid.Row="2"
                        Grid.Column="0"
                        Grid.ColumnSpan="3"
-                       Text="{DynamicResource SwitchLanguageView_LanguageMessage1}"
+                       Text="{DynamicResource LanguageMessage1}"
                        Style="{DynamicResource TextBlockDefaultStyle}" />
         </Grid>
         <Grid Grid.Row="1"

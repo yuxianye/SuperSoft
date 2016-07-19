@@ -2,7 +2,7 @@
 using SuperSoft.Utility.Windows;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace SuperSoft.BLL
@@ -69,7 +69,7 @@ namespace SuperSoft.BLL
         /// </summary>
         /// <param name="transaction">事物对象</param>
         /// <param name="entity">一个实体对象</param>
-        public void Insert(SQLiteTransaction transaction, Patient entity)
+        public void Insert(SqlTransaction transaction, Patient entity)
         {
             if (Disposed)
             {
@@ -88,59 +88,59 @@ namespace SuperSoft.BLL
             }
         }
 
-        /// <summary>
-        /// 创建实体对象集合，内部采用事物整体提交
-        /// </summary>
-        /// <param name="entitys">实体对象集合</param>
-        public void Insert(ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Insert(entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 创建实体对象集合，内部采用事物整体提交
+        ///// </summary>
+        ///// <param name="entitys">实体对象集合</param>
+        //public void Insert(ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Insert(entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 创建实体对象集合，使用显示事物
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="entitys">实体对象集合</param>
-        public void Insert(SQLiteTransaction transaction, ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Insert(transaction, entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 创建实体对象集合，使用显示事物
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="entitys">实体对象集合</param>
+        //public void Insert(SqlTransaction transaction, ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Insert(transaction, entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
         #endregion
 
         #region Delete
 
         /// <summary>
-        /// 删除对象,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        /// 删除对象,调用数据库存储过程,会删除所有患者相关的数据和产品运行信息等数据
         /// </summary>
         /// <param name="id">一个实体对象的Id</param>
         public void Delete(Guid id)
@@ -162,123 +162,123 @@ namespace SuperSoft.BLL
             }
         }
 
-        /// <summary>
-        /// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="id">一个实体对象的Id</param>
-        public virtual void Delete(SQLiteTransaction transaction, Guid id)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (id != Guid.Empty)
-                {
-                    dal.Delete(transaction, id);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="id">一个实体对象的Id</param>
+        //public virtual void Delete(SqlTransaction transaction, Guid id)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (id != Guid.Empty)
+        //        {
+        //            dal.Delete(transaction, id);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 删除对象,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
-        /// </summary>
-        /// <param name="entity">一个实体对象</param>
-        public void Delete(Patient entity)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entity != null)
-                {
-                    dal.Delete(entity.Id);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 删除对象,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        ///// </summary>
+        ///// <param name="entity">一个实体对象</param>
+        //public void Delete(Patient entity)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entity != null)
+        //        {
+        //            dal.Delete(entity.Id);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="entity">一个实体对象</param>
-        public virtual void Delete(SQLiteTransaction transaction, Patient entity)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entity != null)
-                {
-                    dal.Delete(transaction, entity.Id);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 删除对象，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="entity">一个实体对象</param>
+        //public virtual void Delete(SqlTransaction transaction, Patient entity)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entity != null)
+        //        {
+        //            dal.Delete(transaction, entity.Id);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 删除实体对象集合,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
-        /// </summary>
-        /// <param name="entitys">实体对象集合</param>
-        public void Delete(ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Delete(entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 删除实体对象集合,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        ///// </summary>
+        ///// <param name="entitys">实体对象集合</param>
+        //public void Delete(ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Delete(entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 删除实体对象集合，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="entitys">实体对象集合</param>
-        public virtual void Delete(SQLiteTransaction transaction, ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Delete(transaction, entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 删除实体对象集合，使用显示事物,Patients表有触发器,会删除所有患者相关的数据和产品运行信息等数据
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="entitys">实体对象集合</param>
+        //public virtual void Delete(SqlTransaction transaction, ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Delete(transaction, entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
         #endregion
 
@@ -307,76 +307,76 @@ namespace SuperSoft.BLL
             }
         }
 
-        /// <summary>
-        /// 更新对象，使用显示事物
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="entity">一个实体对象</param>
-        public virtual void Update(SQLiteTransaction transaction, Patient entity)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entity != null)
-                {
-                    dal.Update(transaction, entity);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 更新对象，使用显示事物
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="entity">一个实体对象</param>
+        //public virtual void Update(SqlTransaction transaction, Patient entity)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entity != null)
+        //        {
+        //            dal.Update(transaction, entity);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 更新实体对象集合，内部采用事物整体提交
-        /// </summary>
-        /// <param name="entitys">将要编辑的实体对象集合</param>
-        public void Update(ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Update(entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 更新实体对象集合，内部采用事物整体提交
+        ///// </summary>
+        ///// <param name="entitys">将要编辑的实体对象集合</param>
+        //public void Update(ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Update(entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
-        /// <summary>
-        /// 更新实体对象集合，使用显示事物
-        /// </summary>
-        /// <param name="transaction">事物对象</param>
-        /// <param name="entitys">实体对象集合</param>
-        public virtual void Update(SQLiteTransaction transaction, ICollection<Patient> entitys)
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (entitys != null && entitys.Count() > 0)
-                {
-                    dal.Update(transaction, entitys);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-        }
+        ///// <summary>
+        ///// 更新实体对象集合，使用显示事物
+        ///// </summary>
+        ///// <param name="transaction">事物对象</param>
+        ///// <param name="entitys">实体对象集合</param>
+        //public virtual void Update(SqlTransaction transaction, ICollection<Patient> entitys)
+        //{
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (entitys != null && entitys.Count() > 0)
+        //        {
+        //            dal.Update(transaction, entitys);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //}
 
         #endregion
 
@@ -435,34 +435,34 @@ namespace SuperSoft.BLL
             return null;
         }
 
-        /// <summary>
-        /// 分页查询,使用Id desc排序
-        /// </summary>
-        /// <param name="firstName">firstName</param>
-        /// <param name="pageIndex">页号</param>
-        /// <param name="pageSize">页大小</param>
-        /// <param name="recordCount">记录总数</param>
-        /// <returns></returns>
-        public virtual ICollection<Patient> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
-        {
-            recordCount = 0;
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
-            try
-            {
-                if (pageIndex > 0 && pageSize > 0)
-                {
-                    return dal.SelectByFirstName(firstName, pageIndex, pageSize, out recordCount);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
-            }
-            return null;
-        }
+        ///// <summary>
+        ///// 分页查询,使用Id desc排序
+        ///// </summary>
+        ///// <param name="firstName">firstName</param>
+        ///// <param name="pageIndex">页号</param>
+        ///// <param name="pageSize">页大小</param>
+        ///// <param name="recordCount">记录总数</param>
+        ///// <returns></returns>
+        //public virtual ICollection<Patient> SelectByFirstName(string firstName, int pageIndex, int pageSize, out int recordCount)
+        //{
+        //    recordCount = 0;
+        //    if (Disposed)
+        //    {
+        //        throw new ObjectDisposedException(ToString());
+        //    }
+        //    try
+        //    {
+        //        if (pageIndex > 0 && pageSize > 0)
+        //        {
+        //            return dal.SelectByFirstName(firstName, pageIndex, pageSize, out recordCount);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ResourceHelper.LoadString(@"DataAccessError"), ex);
+        //    }
+        //    return null;
+        //}
 
         /// <summary>
         /// 查询,使用Id desc排序
@@ -538,7 +538,6 @@ namespace SuperSoft.BLL
             }
             return null;
         }
-
 
         /// <summary>
         /// 查询,使用Id desc排序

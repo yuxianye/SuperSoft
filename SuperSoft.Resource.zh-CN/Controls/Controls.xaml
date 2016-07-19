@@ -50,6 +50,7 @@
 
         <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.zh-CN;component/Controls/ScrollViewer.xaml" />
         <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.zh-CN;component/Controls/TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/SuperSoft.Resource.zh-CN;component/Controls/TabItem.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
