@@ -1,12 +1,12 @@
 SuperSoft解决方案介绍
 
 1.本解决方案适用于桌面单机类型的软件系统。能够快速搭建各种数据管理类型的系统和专用软件
-2.数据库采用SQLite，能满足中小型数据量的项目
+2.数据库采用SQL Server LocalDB，能满足中小型数据量的项目。
 3.UI界面层采用WPF技术，结合MVVM模式，借助第三方库MahApps.Metro、Fluent、GalaSoft.MvvmLight实现界面层的逻辑
 4.本解决方案类库项目结构如下：
 	SuperSoft.App		可执行启动项目
 	SuperSoft.BLL		业务逻辑
-	SuperSoft.DAL		数据访问层
+	SuperSoft.DAL		数据访问层，采用微软SQLHelper V2.0访问数据库，也可更换其他数据库组件，如果对性能要求不高可以采用Entity Framework。
 	SuperSoft.Model		模型实体，枚举类型
 	SuperSoft.Utility	工具
 	SuperSoft.View		页面视图逻辑
@@ -43,10 +43,8 @@ SuperSoft解决方案介绍
 	1).【SuperSoft.App】项目基本不用改动。其他项目根据业务增加相应的业务逻辑
 	2).页面跳转采用消息通知方式，页面加载利用反射。
 	3).主菜单状态等利用消息通知方式。
-	4).数据访问的事务性：数据访问层具有事物相关的功能，操作（增删改）单个数据访问实体之后使用SaveChanges()方法保存更新。
-		跨数据实体访问的操作在VM层使用 using (var transactionScope = new TransactionScope())  Transaction.Current.Rollback();  
-		transactionScope.Complete();实现事务性
-	5).本解决方案使用的第三方组件包括：MahApps.Metro、Fluent、EntityFramework、System.Data.SQLite.EF6、GalaSoft.MvvmLight，采用nuget获取。
+	4).数据访问的事务性：数据访问层具有事物相关的功能，使用DbTransaction。
+	5).本解决方案使用的第三方组件包括：MahApps.Metro、Fluent、SQLHelper V2.0、GalaSoft.MvvmLight，采用nuget获取。
 		详细信息可参考 https://github.com/ https://www.nuget.org/ 
 
 
